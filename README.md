@@ -2,9 +2,15 @@
 
 ## Folder Description
 
-## Data Description
+`code`: project related code and notebooks.
 
-## Code Guideline
+`data`: input data and output data.
+
+`documents`: source code and PDF of project manual and presentation slides.
+
+`utility`: scripts for generating manual and slides.
+
+## Data Description
 
 ## Tasks and Progress
 - [ ] Learn Git
