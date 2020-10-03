@@ -8,7 +8,7 @@
 
 `data`: input data and output data.
 
-`documents`: source code and PDF of project manual and presentation slides.
+`doc`: source code and PDF of project manual and presentation slides.
 
 `utility`: scripts for generating manual and slides.
 
