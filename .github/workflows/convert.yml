@@ -24,10 +24,10 @@ jobs:
       - name: Convert Jupyter Notebooks to markdown
         run: |
           mkdir output
-          for filename in code/*.ipynb; do jupytext --to md --update-metadata $filename; done
+          for filename in code/*.ipynb; do jupytext --to md $filename; done
           cat code/*.md > output/result.md
       - uses: actions/upload-artifact@master
         with:
-          name: result.md
+          name: result
           path: output/result.md
            
