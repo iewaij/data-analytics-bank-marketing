@@ -1,0 +1,35 @@
+name: Execute
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with: 
+          python-version: 3.x
+      - name: Execute Notebooks
+        uses: yaananth/run-notebook@v1
+        env:
+          RUNNER: ${{ toJson(runner) }}
+          SECRETS: ${{ toJson(secrets) }}
+          GITHUB: ${{ toJson(github) }}
+        with:
+          notebook: "code/*.ipynb"
+          isReport: False
+          poll: True
+      - uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: output
+          path: ${{ RUNNER.temp }}/nb-runner
+        env:
+          RUNNER: ${{ toJson(runner) }}
