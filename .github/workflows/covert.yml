@@ -13,8 +13,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      - name: Install Jupytext
-        run: pip3 install jupytext --upgrade
+      - name: Set up Python and Jupytext
+        uses: actions/setup-python@v2
+        with: 
+          python-version: 3.x
+        run: python -m pip install --upgrade jupytext
       - name: Convert Jupyter Notebooks to markdown
         run: |
           for filename in code/*.ipynb; do jupytext --to md --update-metadata '{"jupytext": {"notebook_metadata_filter":"-all", "cell_metadata_filter":"-all"}}'; done
