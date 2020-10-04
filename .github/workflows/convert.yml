@@ -29,7 +29,12 @@ jobs:
       - name: Convert Markdown to PDF
         uses: docker://pandoc/latex:latest
         with:
-          args: --output=output/result.pdf output/result.md
+          args: |>
+            --output=output/result.pdf 
+            --pdf-engine=xelatex
+            --metadata-file=format/manual.yaml
+            --template=template/manual.latex
+            output/result.md
       - uses: actions/upload-artifact@master
         with:
           name: result
