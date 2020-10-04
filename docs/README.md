@@ -1,5 +1,3 @@
-# Doc
-
 ## Folder Description
 
 `content`: main content and generated from notebooks by `Jupytext`.
