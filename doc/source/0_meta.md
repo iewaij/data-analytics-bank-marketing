@@ -15,8 +15,9 @@ toc: yes
 toc-depth: 2
 numbersections: yes
 secnumdepth: 2
+mainfont: Latin Modern Roman
+monofont: JetBrains Mono
 papersize: a4
-pdf-engine: xelatex
 dpi: 300
 ---
 \newpage

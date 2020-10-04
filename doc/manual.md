@@ -15,23 +15,32 @@ toc: yes
 toc-depth: 2
 numbersections: yes
 secnumdepth: 2
+mainfont: Latin Modern Roman
+monofont: JetBrains Mono
 papersize: a4
-pdf-engine: xelatex
 dpi: 300
 ---
 \newpage
 # Data Preparation
 
-This is data preparation part.
-
-You can write LaTeX, which is a nice tool for generating mathematical formulas like this:
-
-$$
-y = \beta_0 + \beta_1X
-$$
+```python
+import pandas as pd
+```
 
 ```python
-# Insert code here.
+bank_mkt = pd.read_csv("data/BankMarketing.csv")
+```
+
+```python
+bank_mkt
+```
+
+```python
+# convert to categlory data type
+```
+
+```python
+# handle missing values
 ```
 # Exploratory Data Analysis
 
