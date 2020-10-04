@@ -30,13 +30,13 @@ jobs:
         uses: docker://pandoc/latex:latest
         with:
           args: |
-            --output=output/result.pdf \
+            --output=output/manual.pdf \
              --pdf-engine=xelatex \
              --metadata-file=format/manual.yaml \
-             --template=template/manual.latex \
+             --template=docs/template/manual.latex \
              output/result.md
       - uses: actions/upload-artifact@master
         with:
-          name: result
-          path: output/result.pdf
+          name: manual
+          path: output/manual.pdf
            
