@@ -24,13 +24,12 @@ jobs:
       - name: Convert Jupyter Notebooks to markdown
         run: |
           for filename in code/*.ipynb; do jupytext --to md --update-metadata '{"jupytext": {"notebook_metadata_filter":"-all", "cell_metadata_filter":"-all"}}'; done
-          cat code/*.md > output.md
+          cat code/*.md > result.md
       - uses: docker://pandoc/latex:latest
         with:
-          args: |
-            --to=pdf
-            --output=output.pdf
-            --pdf-engine=xelatex
-            --metadata-file=format/manual.yaml
-            output.md
+          args: --output=output/result.pdf result.md
+      - uses: actions/upload-artifact@master
+        with:
+          name: output
+          path: output
            
