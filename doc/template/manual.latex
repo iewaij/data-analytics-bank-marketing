@@ -424,6 +424,10 @@ $for(include-before)$
 $include-before$
 
 $endfor$
+
+% add \pagebreak between title and toc
+\pagebreak
+
 $if(toc)$
 $if(toc-title)$
 \renewcommand*\contentsname{$toc-title$}
@@ -457,6 +461,10 @@ $endif$
 $if(has-frontmatter)$
 \mainmatter
 $endif$
+
+% add \pagebreak between toc and body
+\pagebreak
+
 $body$
 
 $if(has-frontmatter)$
