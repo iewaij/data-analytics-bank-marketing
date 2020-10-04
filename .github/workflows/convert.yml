@@ -28,6 +28,6 @@ jobs:
           cat code/*.md > output/result.md
       - uses: actions/upload-artifact@master
         with:
-          name: output
-          path: output
+          name: result.md
+          path: output/result.md
            
