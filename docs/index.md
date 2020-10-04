@@ -1,37 +1,15 @@
-## Welcome to GitHub Pages
+# Doc
 
-You can use the [editor on GitHub](https://github.com/iewaij/data-analytics-project/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+## Folder Description
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+`content`: main content and generated from notebooks by `Jupytext`.
 
-### Markdown
+`format`: `yaml` files to control the format of generated pdf files.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+`template`: template files for `pandoc` to generate pdf files.
 
-```markdown
-Syntax highlighted code block
+## Documentation and Resources
 
-# Header 1
-## Header 2
-### Header 3
+[Jupytext Documentation](https://jupytext.readthedocs.io/en/latest/)
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/iewaij/data-analytics-project/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[Pandoc User’s Guide](https://pandoc.org/MANUAL.html)
