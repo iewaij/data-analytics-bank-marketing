@@ -1,0 +1,30 @@
+name: Covert Jupyter Notebooks to markdown and PDF
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Jupytext
+        run: pip install jupytext --upgrade
+      - name: Convert Jupyter Notebooks to markdown
+        run: |
+          for filename in code/*.ipynb; do jupytext --to md --update-metadata '{"jupytext": {"notebook_metadata_filter":"-all", "cell_metadata_filter":"-all"}}'; done
+          cat code/*.md > output.md
+      - uses: docker://pandoc/latex:latest
+        with:
+          args: |
+            --to=pdf
+            --output=output.pdf
+            --pdf-engine=xelatex
+            --metadata-file=format/manual.yaml
+            output.md
+           
