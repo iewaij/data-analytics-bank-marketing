@@ -6,7 +6,8 @@
 
 ## Convert
 
+Make sure you have installed all required packages, then run:
+
 ```bash
-cd utility
-./convert.sh
+./utility/convert.sh
 ```
