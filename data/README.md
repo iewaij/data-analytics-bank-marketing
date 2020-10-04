@@ -20,7 +20,7 @@ customer default or not? The data to create the model is stored in the file "Cre
 
 **A. Bank client data:**
 
-`age`: age
+`age`: age (numeric)
 
 `job`: type of job (categorical: 'admin.', 'blue-collar', 'entrepreneur', 'housemaid', 'management',
 'retired', 'self-employed', 'services', 'student', 'technician', 'unemployed', 'unknown')
@@ -53,19 +53,26 @@ realistic predictive model.
 
 **C. Other attributes:**
 
+
 `campaign`: number of contacts performed during this campaign and for this client (numeric,
 includes last contact)
+
 `pdays`: number of days that passed by after the client was last contacted from a previous
 campaign (numeric; 999 means client was not previously contacted)
+
 `previous`: number of contacts performed before this campaign and for this client (numeric)
+
 `poutcome`: outcome of the previous marketing campaign (categorical: 'failure', 'nonexistent',
 'success')
 
 **D. Social and economic context attributes**
 
-`emp`.var.rate: employment variation rate, quarterly indicator (numeric)
-`cons`.price.idx: consumer price index, monthly indicator (numeric)
-`cons`.conf.idx: consumer confidence index, monthly indicator (numeric)
+`emp.var.rate`: employment variation rate, quarterly indicator (numeric)
+
+`cons.price.idx`: consumer price index, monthly indicator (numeric)
+
+`cons.conf.idx`: consumer confidence index, monthly indicator (numeric)
+
 `euribor3m`: euribor 3 month rate, daily indicator (numeric)
 `nr`.employed: number of employees, quarterly indicator (numeric)
 
