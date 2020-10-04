@@ -6,7 +6,7 @@
 
 `template`: template files for `pandoc` to generate pdf files.
 
-## Documentation and Resources
+## Documentation
 
 [Jupytext Documentation](https://jupytext.readthedocs.io/en/latest/)
 
