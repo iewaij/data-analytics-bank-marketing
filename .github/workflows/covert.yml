@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Jupytext
-        run: pip install jupytext --upgrade
+        run: pip3 install jupytext --upgrade
       - name: Convert Jupyter Notebooks to markdown
         run: |
           for filename in code/*.ipynb; do jupytext --to md --update-metadata '{"jupytext": {"notebook_metadata_filter":"-all", "cell_metadata_filter":"-all"}}'; done
