@@ -1,4 +1,4 @@
-name: Convert Jupyter Notebooks to Markdown and PDF
+name: Convert
 
 on:
   push:
@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
@@ -25,13 +23,13 @@ jobs:
         run: |
           mkdir output
           for filename in code/*.ipynb; do jupytext --to md --update-metadata '{"jupytext": {"notebook_metadata_filter":"-all", "cell_metadata_filter":"-all"}}' $filename; done
-          cat code/*.md > output/result.md
+          cat code/*.md > output/manual.md
       - name: Convert Markdown to PDF
         uses: docker://pandoc/latex:latest
         with:
-          args: --output=output/manual.pdf --pdf-engine=xelatex --template=docs/template/manual.latex output/result.md
+          args: --output=output/manual.pdf --pdf-engine=xelatex --metadata-file=format/actions.yaml --template=docs/template/manual.latex output/manual.md
       - uses: actions/upload-artifact@master
         with:
-          name: manual
+          name: manual.pdf
           path: output/manual.pdf
            
