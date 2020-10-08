@@ -13,6 +13,5 @@
 `utility`: scripts for generating manual and slides.
 
 ## Tasks and Progress
-- [ ] Learn Git
-- [ ] Commit to your own Github repo
-- [ ] Open a pull request
+- [ ] Data Preparation
+- [ ] Exploratory Data Analysis
