@@ -74,7 +74,8 @@ campaign (numeric; 999 means client was not previously contacted)
 `cons.conf.idx`: consumer confidence index, monthly indicator (numeric)
 
 `euribor3m`: euribor 3 month rate, daily indicator (numeric)
-`nr`.employed: number of employees, quarterly indicator (numeric)
+
+`nr.employed`: number of employees, quarterly indicator (numeric)
 
 **Output variable (desired target):**
 
