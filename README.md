@@ -13,5 +13,7 @@
 `utility`: scripts for generating manual and slides.
 
 ## Tasks and Progress
-- [ ] Data Preparation
-- [ ] Exploratory Data Analysis
+- [x] Exploratory Data Analysis
+- [x] Data Preparation
+- [ ] Fine Tune Models
+- [ ] Presentation
