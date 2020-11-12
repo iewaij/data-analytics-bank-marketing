@@ -1,6 +1,12 @@
+# Handle warnings
+from warnings import simplefilter
+from statsmodels.tools.sm_exceptions import ConvergenceWarning
+simplefilter('ignore', ConvergenceWarning)
+from warnings import filterwarnings
+filterwarnings("ignore")
 # Data Libraries
 import numpy as np
-np.seterr(divide='ignore', invalid='ignore')
+np.seterr(divide="ignore", invalid="ignore")
 import pandas as pd
 pd.set_option('max_columns', None)
 pd.set_option("max_colwidth", None)
@@ -17,7 +23,7 @@ from sklearn.model_selection import StratifiedShuffleSplit, train_test_split, cr
 from sklearn.dummy import DummyClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression, SGDClassifier
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.kernel_approximation import RBFSampler
 from sklearn.svm import SVC, LinearSVC
 from sklearn.utils.fixes import loguniform
@@ -27,11 +33,6 @@ from sklearn.metrics import accuracy_score, average_precision_score, f1_score, p
 from sklearn.metrics import precision_recall_curve, roc_curve, make_scorer
 from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
-from funcsigs import signature
-import keras
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Dropout
 # Plot Libraries
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -113,7 +114,7 @@ def import_dataset(filename):
     return bank_mkt
 
 
-def split_dataset(data, preprocessor=None, random_state=42):
+def split_dataset(data, preprocessor=None, random_state=62):
     """
     Split dataset into train, test and validation sets using preprocessor.
     Because the random state of validation set is not specified, the validation set will be different each time when the function is called.
@@ -323,6 +324,47 @@ def dftransform(X,
     return X
 
 
+# https://stackoverflow.com/questions/19726663/how-to-save-the-pandas-dataframe-series-data-as-a-figure
+def render_benchmark(data, col_width=3.0, row_height=0.625, font_size=14,
+                     header_color='#334074', row_colors=['#f1f1f2', 'w'], edge_color='w',
+                     bbox=[0, 0, 1, 1], header_columns=0,
+                     ax=None, **kwargs):
+    """
+    Examples
+    --------
+    logit_best = benchmark(bank_mkt, hot_transformer, lrmodel_gs2)
+    fig,ax = render_benchmark(logit_best, header_columns=0, col_width=1.5)
+    fig.savefig("logit_best.png")
+    """
+    data = data.round(decimals=3)
+    #data = data.rename({"index": "Metrics"}, axis=1)
+    if ax is None:
+        size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
+        fig, ax = plt.subplots(figsize=size)
+        ax.axis('off')
+    mpl_table = ax.table(cellText=data.values,
+                         bbox=bbox,
+                         colLabels=data.columns,
+                         rowLabels=data.index,
+                         colLoc="left",
+                         rowLoc="right",
+                         **kwargs)
+    mpl_table.auto_set_font_size(False)
+    mpl_table.set_fontsize(font_size)
+
+    for k, cell in mpl_table._cells.items():
+        cell.set_edgecolor(edge_color)
+        if k[0] == 0:
+            cell.set_text_props(weight='bold', color='w')
+            cell.set_facecolor(header_color)
+        elif k[1] < header_columns:
+            cell.set_text_props(weight='bold')
+            cell.set_facecolor(row_colors[k[0]%len(row_colors)])
+        else:
+            cell.set_facecolor(row_colors[k[0]%len(row_colors)])
+    return ax.get_figure(), ax
+
+
 # # Bank Marketing Data Analytics
 
 # # Exploratory Data Analysis
@@ -456,8 +498,6 @@ previous_na.plot.bar(title="Number of Missing Values in pdays and poutcome");
 corr_heatmap = sns.heatmap(data=bank_mkt.corr(method="pearson")).set_title("Correlation Heatmap")
 
 # # Data Preparation and Feature Engineering
-
-# ![Data Lifecycle](lifecycle.png)
 
 # ## Import Dataset
 
@@ -1025,24 +1065,26 @@ lrmodel = LogisticRegression(class_weight='balanced', max_iter=10000)
 
 #### Grid Search
 param_grid = {'penalty': ['l2'],
-              'C':[0.001,.009,0.01,.09,1,5,10,25,50,100]}
-GS_lrmodel_1 = GridSearchCV(lrmodel, param_grid, scoring='recall')
+              'C':[0.001,.009,0.01,0.05,0.09,5,10,25,50,100]}
+GS_lrmodel_1 = GridSearchCV(lrmodel, param_grid, scoring='average_precision', n_jobs=-1)
 GS_lrmodel_1.fit(X_train, y_train)
 lrmodel_gs1 = lrmodel.set_params(**GS_lrmodel_1.best_params_)
 
 #### use calibrated model on train set
 lrmodel_gs1.fit(X_train, y_train)
 y_train_pred = lrmodel_gs1.predict(X_train)
+y_train_score = lrmodel_gs1.decision_function(X_train)
 cmtr_gs1 = confusion_matrix(y_train, y_train_pred)
 acctr_gs1 = accuracy_score(y_train, y_train_pred)
-aps_train_gs1 = average_precision_score(y_train, y_train_pred)
+aps_train_gs1 = average_precision_score(y_train, y_train_score)
 
 #### test the model
 lrmodel_gs1.fit(X_test, y_test)
 y_test_pred = lrmodel_gs1.predict(X_test)
+y_test_score = lrmodel_gs1.decision_function(X_test)
 cmte_gs1 = confusion_matrix(y_test, y_test_pred)
 accte_gs1 = accuracy_score(y_test, y_test_pred)
-aps_test_gs1 = average_precision_score(y_test, y_test_pred)
+aps_test_gs1 = average_precision_score(y_test, y_test_score)
 
 print('Confusion Matrix:\n',cmtr_gs1,'\nAccuracy Score:\n',acctr_gs1, '\nAPS:\n',aps_train_gs1)
 print('Confusion Matrix:\n',cmte_gs1,'\nAccuracy Score:\n',accte_gs1, '\nAPS:\n',aps_test_gs1)
@@ -1056,27 +1098,29 @@ benchmark(bank_mkt, hot_transformer, lrmodel_gs1)
 lrmodel_gs = LogisticRegression(class_weight='balanced',max_iter=10000)
 
 #### Grid Search
-param_grid = {"C":np.logspace(-2,2,7), 
-              "penalty":["l1","l2"],
+param_grid = {"C":[0.001,.009,0.01,0.05,0.09,5,10,25,50,100], 
+              "penalty":["l1","elasticnet"],
               "solver": ["saga"]}
-GS_lrmodel_2 = GridSearchCV(lrmodel_gs, param_grid, cv=10)
+GS_lrmodel_2 = GridSearchCV(lrmodel_gs, param_grid, scoring='average_precision', n_jobs=-1)
 GS_lrmodel_2.fit(X_train, y_train)
 lrmodel_gs2 = lrmodel_gs.set_params(**GS_lrmodel_2.best_params_)
 
 #### use calibrated model on train set
 lrmodel_gs2.fit(X_train, y_train)
 y_train_pred = lrmodel_gs2.predict(X_train)
+y_train_score = lrmodel_gs1.decision_function(X_train)
 cmtr_gs2 = confusion_matrix(y_train, y_train_pred)
 acctr_gs2 = accuracy_score(y_train, y_train_pred)
 aps_train_gs2 = average_precision_score(y_train, y_train_pred)
 #### test the model
 lrmodel_gs2.fit(X_test, y_test)
 y_test_pred = lrmodel_gs2.predict(X_test)
+y_test_score = lrmodel_gs1.decision_function(X_test)
 cmte_gs2 = confusion_matrix(y_test, y_test_pred)
 accte_gs2 = accuracy_score(y_test, y_test_pred)
-aps_test_gs2 = average_precision_score(y_test, y_test_pred)
+aps_test_gs2 = average_precision_score(y_test, y_test_score)
 
-print('Confusion Matrix:\n',cmtr_gs2,'\nAccuracy Score:\n',acctr_gs2, '\nAPS:\n',aps_train_gs2)
+print('Confusion Matrix:\n',cmtr_gs2,'\nAccuracy Score:\n',acctr_gs1, '\nAPS:\n',aps_train_gs1)
 print('Confusion Matrix:\n',cmte_gs2,'\nAccuracy Score:\n',accte_gs2, '\nAPS:\n',aps_test_gs2)
 print('best parameters:',GS_lrmodel_2.best_params_)
 # -
@@ -1085,12 +1129,32 @@ benchmark(bank_mkt, hot_transformer, lrmodel_gs2)
 
 # ## Statistical Properties
 
-bank_transform = dftransform(bank_mkt)
-X = bank_transform.drop("y", axis=1).astype("float")
-X_encode = hot_scaler.fit_transform(X)
-y = bank_transform["y"].astype("int").to_numpy()
-logit_model = sm.Logit(y, X_encode)
-result = logit_model.fit(maxiter=10000)
+# +
+freq_features = ["job", "marital", "education", "default", "housing", "loan"]
+
+freq_imputer = ColumnTransformer([
+    ("freq_imputer", SimpleImputer(missing_values=-1, strategy="most_frequent"), freq_features)
+], remainder="passthrough")
+
+# Select "job", "marital", "education"
+cat_features = [0,1,2]
+
+# Select "age", "campaign", "pdays", "previous", "emp.var.rate", "cons.price.idx", "cons.conf.idx", "euribor3m", "nr.employed"
+num_features = [5,10,11,12,14,15,16,17,18]
+
+hot_scaler = ColumnTransformer([
+    ("one_hot_encoder", OneHotEncoder(drop="first"), cat_features),
+    ("scaler", StandardScaler(), num_features)
+], remainder="passthrough")
+
+freq_transformer = make_pipeline(FunctionTransformer(dftransform, kw_args={"drop": ["duration", "y"]}), freq_imputer, hot_scaler)
+X = freq_transformer.fit_transform(bank_mkt)
+X = np.array(X, dtype=float)
+y = bank_mkt["y"].astype("int").to_numpy()
+# -
+
+logit_model = sm.Logit(y, X)
+result = logit_model.fit(maxiter=1000)
 print(result.summary())
 
 # # SVM
@@ -1299,9 +1363,6 @@ hot_transformer = make_pipeline(FunctionTransformer(dftransform), hot_scaler)
 X_train, y_train, X_test, y_test, *other_sets = split_dataset(bank_mkt, hot_transformer)
 # -
 
-mlp=MLPClassifier(solver ="lbfgs",random_state=42,max_iter=1000)
-benchmark(bank_mkt, hot_transformer, mlp)
-
 # # Grid Search
 
 # +
@@ -1318,15 +1379,14 @@ grid_search = GridSearchCV(estimator=mlp,
                           param_grid=param_grid,
                           scoring = "average_precision",
                           return_train_score=True,
-                          cv =2,
+                          cv = 5,
                           n_jobs=-1) 
        
-grid_fit = grid_search.fit(X_train, y_train)
-grid_results = grid_search.cv_results_
-grid_best_params = grid_search.best_params_
-grid_best_score = grid_search.best_score_
-
-print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
+#grid_fit = grid_search.fit(X_train, y_train)
+#grid_results = grid_search.cv_results_
+#grid_best_params = grid_search.best_params_
+#grid_best_score = grid_search.best_score_
+#print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
 # +
 mlp_trained=MLPClassifier(solver ="lbfgs",
@@ -1337,8 +1397,10 @@ mlp_trained=MLPClassifier(solver ="lbfgs",
                           hidden_layer_sizes = (100,),
                           learning_rate = 'constant')
 
-benchmark(bank_mkt, hot_transformer, mlp_trained)
+nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 # -
+
+nn_best
 
 # # Decision Tree and Its Ensembles
 
@@ -1389,10 +1451,10 @@ plt.show()
 
 fn= columns
 fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (2,2), dpi=300)
-tree.plot_tree(rnd_clf.estimators_[0],
-               feature_names = fn,
-               filled = True,
-              proportion=True);
+plot_tree(rnd_clf.estimators_[0],
+          feature_names = fn,
+          filled = True,
+          proportion=True);
 fig.savefig('rf_individualtree.png')
 
 # +
@@ -1418,13 +1480,11 @@ AB_validation = AdaBoostClassifier(n_estimators=800,learning_rate=0.8,random_sta
 benchmark(bank_mkt, tree_transformer, AB_validation)
 # -
 
-columns = bank_mkt.drop(["duration", "y"], axis=1).columns.tolist()
-AB_influence = AdaBoostClassifier(n_estimators=800,learning_rate=0.8,random_state=42)
-for name, importance in zip(columns, AB_influence.feature_importances_):
+for name, importance in zip(columns, AB_validation.feature_importances_):
     print(name, "=", importance)
 
 # +
-importances = AB_influence.feature_importances_
+importances = AB_validation.feature_importances_
 indices = np.argsort(importances)
 
 plt.title('Feature Importances')
@@ -1442,7 +1502,8 @@ plt.show()
 bank_mkt = import_dataset("../data/BankMarketing.csv")
 
 # +
-cat_clf = make_pipeline(FunctionTransformer(dftransform, kw_args={"to_float":True}),
+cat_clf = make_pipeline(FunctionTransformer(dftransform, kw_args={"drop": drop_features,
+                                                                  "to_float":True}),
                         CatBoostClassifier(eval_metric="AUC", class_weights=[1, 8], verbose=False))
 
 benchmark(bank_mkt, None, cat_clf)
@@ -1457,11 +1518,9 @@ drop_features = ["age",
                  "default"]
 
 xgb_clf = make_pipeline(FunctionTransformer(dftransform, kw_args= {"drop": drop_features,
-                                                                     "gen": ["days",
-                                                                             "has_previous",
-                                                                             "has_default",
-                                                                             "has_marital"],
-                                                                     "to_float":True}),
+                                                                   "gen": ["has_default",
+                                                                           "has_marital"],
+                                                                   "to_float":True}),
                         XGBClassifier(max_depth=3, gamma=1, min_child_weight=1, scale_pos_weight=8))
 
 benchmark(bank_mkt, None, xgb_clf)
@@ -1484,16 +1543,43 @@ benchmark(bank_mkt, None, stacking_clf)
 
 bank_mkt = import_dataset("../data/BankMarketing.csv")
 
+# +
+drop_features = ["age",
+                 "job",
+                 "marital",
+                 "education",
+                 "housing",
+                 "loan",
+                 "default"]
+
 bank_mkt.loc[bank_mkt.index < 27682, "year"] = 2008
 bank_mkt.loc[(27682<=bank_mkt.index) & (bank_mkt.index<39118), "year"] = 2009
 bank_mkt.loc[39118<=bank_mkt.index, "year"] = 2010
 bank_mkt["year"] = bank_mkt["year"].astype("int")
-bank_transform = dftransform(bank_mkt, fillna=False, to_numpy=True)
+# Drop features improve results in 2008
+bank_transform = dftransform(bank_mkt, drop=drop_features, fillna=False, to_float=True)
 X = bank_transform.drop(["duration", "y"], axis=1)
 y = bank_transform["y"]
 xgb_clf = XGBClassifier(max_depth=3, scale_pos_weight=8)
 bank_mkt["y_pred"] = cross_val_predict(xgb_clf, X, y)
+# -
 
-mistake = bank_mkt[(bank_mkt.y == True) & (bank_mkt.y_pred == False)].reset_index()
-ax = sns.histplot(data=mistake, x="index", stat="count", hue="year", bins=500, legend=False)
-ax.set(xlabel="", ylabel="", title="Mistakes on True Outcomes");
+to = bank_mkt[bank_mkt.y == True].reset_index()
+ax = sns.histplot(data=to, x="index", stat="count", hue="year", bins=500, palette="deep", legend=False)
+ax.set_xlim(0, 42000)
+ax.set(xlabel="", ylabel="", title="True Outcomes");
+
+tp = bank_mkt[bank_mkt.y_pred == True].reset_index()
+ax = sns.histplot(data=tp, x="index", stat="count", hue="year", bins=500, palette="deep", legend=False)
+ax.set_xlim(0, 42000)
+ax.set(xlabel="", ylabel="", title="True Predictions");
+
+wp = bank_mkt[(bank_mkt.y == True) & (bank_mkt.y_pred == False)].reset_index()
+ax = sns.histplot(data=wp, x="index", stat="count", hue="year", bins=500, palette="deep", legend=False)
+ax.set_xlim(0, 42000)
+ax.set(xlabel="", ylabel="", title="Wrong Predictions on True Outcomes");
+
+rp = bank_mkt[(bank_mkt.y == True) & (bank_mkt.y_pred == True)].reset_index()
+ax = sns.histplot(data=rp, x="index", stat="count", hue="year", bins=500, palette="deep", legend=False)
+ax.set_xlim(0, 42000)
+ax.set(xlabel="", ylabel="", title="Right Predictions on True Outcomes");
