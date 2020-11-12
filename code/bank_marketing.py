@@ -13,7 +13,6 @@ pd.set_option("max_colwidth", None)
 # Statistic Libraries
 import statsmodels.api as sm
 # Machine Learning Libraries
-from catboost import CatBoostClassifier
 from sklearn.preprocessing import FunctionTransformer, StandardScaler, MinMaxScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline, make_pipeline
@@ -29,8 +28,7 @@ from sklearn.svm import SVC, LinearSVC
 from sklearn.utils.fixes import loguniform
 from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, VotingClassifier, StackingClassifier
-from sklearn.metrics import accuracy_score, average_precision_score, f1_score, precision_score, recall_score, balanced_accuracy_score, roc_auc_score, confusion_matrix, auc
-from sklearn.metrics import precision_recall_curve, roc_curve, make_scorer
+from sklearn.metrics import accuracy_score, average_precision_score, f1_score, precision_score, recall_score, balanced_accuracy_score, roc_auc_score, roc_curve, precision_recall_curve, confusion_matrix
 from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
 # Plot Libraries
@@ -1455,7 +1453,7 @@ plot_tree(rnd_clf.estimators_[0],
           feature_names = fn,
           filled = True,
           proportion=True);
-fig.savefig('rf_individualtree.png')
+#fig.savefig('rf_individualtree.png')
 
 # +
 AB= AdaBoostClassifier(n_estimators=100,random_state=42,learning_rate=1.0)
@@ -1491,9 +1489,9 @@ plt.title('Feature Importances')
 plt.barh(range(len(indices)), importances[indices], color='b', align='center')
 plt.yticks(range(len(indices)), [columns[i] for i in indices])
 plt.xlabel('Relative Importance')
-plt.savefig("Feature importance.png")
+#plt.savefig("Feature importance.png")
 plt.size=(15,10)
-plt.savefig("Feature importance_ada.png")
+#plt.savefig("Feature importance_ada.png")
 plt.show()
 # -
 
