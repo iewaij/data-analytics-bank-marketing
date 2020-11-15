@@ -1361,7 +1361,7 @@ hot_transformer = make_pipeline(FunctionTransformer(dftransform), hot_scaler)
 X_train, y_train, X_test, y_test, *other_sets = split_dataset(bank_mkt, hot_transformer)
 # -
 
-# # Grid Search
+# ## Grid Search
 
 # +
 mlp=MLPClassifier(random_state=42,max_iter=1000)

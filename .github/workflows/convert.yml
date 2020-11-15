@@ -10,26 +10,17 @@ jobs:
   convert:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with: 
-          python-version: 3.x
-      - name: Install Jupytext
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Concatenate Markdowns
         run: |
-          python -m pip install --upgrade pip
-          pip install --upgrade jupytext
-      - name: Convert Jupyter Notebooks to Markdown
-        run: |
-          mkdir output
-          for filename in code/*.ipynb; do jupytext --to md --update-metadata '{"jupytext": {"notebook_metadata_filter":"-all", "cell_metadata_filter":"-all"}}' $filename; done
-          cat code/*.md > output/manual.md
+          cat docs/content/*.md > output/bank_marketing.md
       - name: Convert Markdown to PDF
         uses: docker://pandoc/latex:latest
         with:
-          args: --output=output/manual.pdf --pdf-engine=xelatex --metadata-file=docs/format/actions.yaml --template=docs/template/manual.latex output/manual.md
+          args: --output=output/bank_marketing.pdf --pdf-engine=xelatex --metadata-file=docs/format/actions.yaml --template=docs/template/manual.latex output/bank_marketing.md
       - uses: actions/upload-artifact@master
         with:
-          name: manual.pdf
-          path: output/manual.pdf
+          name: bank_marketing.pdf
+          path: output/bank_marketing.pdf
            
