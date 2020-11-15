@@ -1,6 +1,6 @@
 ## Folder Description
 
-`content`: main content and generated from notebooks by `Jupytext`.
+`content`: main content.
 
 `format`: `yaml` files to control the format of generated pdf files.
 
