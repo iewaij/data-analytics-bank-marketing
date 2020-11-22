@@ -12,7 +12,17 @@ $endif$
 $if(CJKmainfont)$
 \PassOptionsToPackage{space}{xeCJK}
 $endif$
-%
+
+% Define chapter author functions 
+\makeatletter
+\newcommand{\chapterauthor}[1]{%
+  {\parindent0pt\vspace*{-5pt}%
+  \linespread{1.1}\large\scshape#1%
+  \par\nobreak\vspace*{5pt}}
+  \@afterheading%
+}
+\makeatother
+
 \documentclass[
 $if(fontsize)$
   $fontsize$,
@@ -368,7 +378,7 @@ $endif$
 $if(csl-refs)$
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
-\newenvironment{cslreferences}%
+\newenvironment{CSLReferences}%
   {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
   \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
   {\par}

@@ -10,9 +10,12 @@ toc-own-page: true
 disable-header-and-footer: true
 toc: true
 toc-depth: 2
-numbersections: true
+numbersections: false
 secnumdepth: 2
 monofont: JetBrains Mono
 papersize: a4
 dpi: 300
+bibliography: ../citations/citations.bib
+csl: ../citations/harvard-cite-them-right.csl
+link-citations: true
 ---
