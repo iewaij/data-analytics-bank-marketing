@@ -25,7 +25,7 @@ def uneven_dist():
     bank_year.loc[39118:, "year"] = 2010
     p = bank_year[bank_year.y == True].reset_index()
     ax = sns.histplot(
-        data=p,
+        data=p, 
         x="index",
         stat="count",
         hue="year",
@@ -37,7 +37,7 @@ def uneven_dist():
     ax.set_ylim(0, 60)
     ax.set(xlabel="Index", ylabel="Count")
     fig = ax.get_figure()
-    fig.savefig("../docs/figures/2_uneven_distribution.png")
+    fig.savefig("../docs/figures/2_1_uneven_distribution.png")
 
 
 uneven_dist()
