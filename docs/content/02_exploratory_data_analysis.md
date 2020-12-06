@@ -1,9 +1,9 @@
-# Exploratory Data Analysis
+# 2.Exploratory Data Analysis
 Exploratory Data Analysis is a process to explore the dataset with no assumptions or hypotheses using non-graphical and graphical, univariate and multivariate methods. The objective is to gain intuitive insights, discover distribution characteristics, and find out missing values in the dataset.
 
 <br />
 
-## Exploration of the target variable Y
+## 2.1.Exploration of the target variable Y
 The first thing we investigate is the target variable Y, which is a Y/N binary variable measuring the campaign outcome and representing whether a client has subscribed to a long-term deposit. 
 ![Distribution of campain outcome Y.](../figures/2_1_Y_distribution.png)
 
@@ -18,13 +18,13 @@ Highly relevant to the crisis are the five economic indicators in our dataset, d
 
 <br />
 
-## Missing Values
+## 2.2.Missing Values
 We use the `info()` function to get an overview of our data and notice many missing values, especially for features like Pdays and Poutcome, in which 90% of the rows have missing values, as shown in the bar chart below. These missing values have been an enormous issue for our feature engineering process.
 ![Percentage of missing values.](../figures/2_5_Missing_value_percentage.png)
 
 <br />
 
-## Feature Explorations
+## 2.3.Feature Explorations
 ### Age
 For client profile features, first we plot the distribution of age relative to Y, as shown below.30-50-year-old people are the majority in our dataset. People in their 30s and people older than 60 are more likely to give positive responses. There are not many outrageous outliers, therefore we keep all data for Age.
 ![Age distribution histogram.](../figures/2_6_Age_histogram.png)
@@ -85,7 +85,8 @@ This is the feature that reports the outcome of the previous campaign. Over 35,0
 
 <br />
 
-### Client Data Multivariate Explorations
+## 2.4.Multivariate Explorations
+### Client Data
 Furthermore, we expore some multivariate distributions of positive outcome. First, we found both married and divorced retired people respond positively to our campaign, and single and divorced students are even more enthusiastic. It’s also quite interesting that students, retired and illiterate people are more likely to say ‘yes’ to our long-term deposit. Additionally,  divorced illiterate people respond to our campaign extremely well.
 ![Positive Outcome Percentage by Job and Marital Status.](../figures/2_15_Job+Marital.png)
 ![Positive Outcome Percentage by Job and Marital Status.](../figures/2_15_Job+Education.png)
@@ -105,6 +106,6 @@ With this heatmap, we can get a better look at the correlations among features. 
 
 <br />
 
-### Early Feature Engineering Attempts
+## 2.5.Early Feature Engineering Attempts
 The final figure shows a memorable snapshot of oour early feature engineering attempts, with each line being one version of feature engineering. We tried many ways to handle the data and used the same basic model to compare the results. With this spreadsheet, we were able to compare each others’ ideas and results before we finally decided to settle down with one version, which will be discussed next. 
 ![Correlation heatmap.](../figures/2_18_Early_FE_attempts.png)
