@@ -103,15 +103,8 @@ We also made a scatterplots across important quantitative features, with the out
 With this heatmap, we can get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We were worried about collinearity and tried many ways to deal with these features, such ads deletion or transformation, but all efforts led to relatively poor model results. Then we realise that they are probably very important features in our dataset, so we keep them for the moment. In addition, Some features show great correlations with the outcome, such as Previous and Poutcome. We try to use PCA on the entire dataset to avoid collinearity, but again, all efforts led to poor model results. Therefore, we decide to keep all features and make changes if needed for specific models.
 ![Correlation heatmap.](../figures/2_17_Heatmap.png)
 
-
-
-
-
 <br />
 
-### Age
-
-
-<br />
-
-### Age
+### Early Feature Engineering Attempts
+The final figure shows a memorable snapshot of oour early feature engineering attempts, with each line being one version of feature engineering. We tried many ways to handle the data and used the same basic model to compare the results. With this spreadsheet, we were able to compare each others’ ideas and results before we finally decided to settle down with one version, which will be discussed next. 
+![Correlation heatmap.](../figures/2_18_Early_FE_attempts.png)
