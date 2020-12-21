@@ -1,16 +1,16 @@
 # 6.Logistic Regression
-Logistic regression is commonly used to estimate the probability of an instance belonging to a particular class. If the probability is greater than 50%, the model would classify the instance to that class, otherwise it would not. Therefore, Logistic regression is a binary classifier that can be applied to our dataset. Underlying the model is the logistic sigmoid function as shown below. This classifier can potentially perform very well on linearly separable classes, although this might not be the case for our dataset, we still gave it a try.
+Logistic regression is commonly used to estimate the probability of an instance belonging to a particular class. If the probability is greater than 50%, the model will classify the instance to that class, otherwise, it will not. Therefore, Logistic regression is a binary classifier that can be applied to our dataset. Underlying the model is the logistic sigmoid function as shown below. This classifier can potentially perform very well on linearly separable classes. Although this might not be the case for our dataset, we still give it a try.
 
 $$
 h(x)=1 /\left(1+e^{-\left(t h e t a_{0}+t h e t a_{1} * x_{1}+t h e t a_{2} * x_{2}+t h e t a_{3} * x_{3}+. .+t h e t a_{n} * x_{n}\right)}\right)
 $$
 
-![Logistic Regression](https://miro.medium.com/max/1400/1*RqXFpiNGwdiKBWyLJc_E7g.png)
+![Logistic sigmoid function](https://miro.medium.com/max/1400/1*RqXFpiNGwdiKBWyLJc_E7g.png)
 
 <br />
 
 ## 6.1. Fitting and Testing
-First, we import the Logistic Regression from SKlearn, and set two important parameters: [1] “class weight equals balanced”, which is necessary to handle our imbalanced dataset; [2] The the maximum number of iterations taken for the solvers to converge.The result shows a 79.65% accuracy score, a 23.96% average precision score and an ROC value of 0.783 for the test set. The confusion matrices and performance measures are presented below.
+First, we import the Logistic Regression from SKlearn, and set two important parameters: [1] “class weight equals balanced”, which is necessary to handle our imbalanced dataset; [2] The maximum number of iterations taken for the solvers to converge. The result shows a 79.65% accuracy score, a 44.2% average precision score and a ROC value of 0.783 for the test set. The confusion matrices and performance measures are presented below.
 
 ```python
 lrmodel = LogisticRegression(class_weight='balanced',max_iter=10000) 
@@ -39,7 +39,7 @@ print('Accuracy Score:',accte)
 <br />
 
 ## 6.2. Grid Search
-Next, we jumped right into Grid Search to find the optimal parameters for the model. For the first Grid Search, we picked two parameters: the penalty L2 and its inverse parameter C. The L1, L2 regularisation parameters are used to avoid overfitting of data due to either collinearity or high-dimensionality. They both shrink the estimates of the regression coefficients towards zero.When two predictors are highly correlated, L1 will simply pick one of the two predictors, and in contrast, L2 will keep both of them and jointly shrink the coefficients together a little bit. Parameter C is the inverse of the regularization strength, with smaller values leading to stronger regularization. 
+Next, we jumped right into Grid Search to find the optimal parameters for the model. For the first Grid Search, we picked two parameters: the penalty L2 and its inverse parameter C. The L1, L2 regularisation parameters are used to avoid overfitting of data due to either collinearity or high-dimensionality. They both shrink the estimates of the regression coefficients towards zero. When two predictors are highly correlated, L1 will pick one of the two predictors, and in contrast, L2 will keep both of them and jointly shrink the coefficients together a little bit. Parameter C is the inverse of the regularization strength, with smaller values leading to stronger regularization. 
 
 ```python
 #### Try the 1st GridSearch param_grid combination:
@@ -69,13 +69,13 @@ print('Confusion Matrix:\n',cmte_gs1,'\nAccuracy Score:\n',accte_gs1, '\nAPS:\n'
 print('best parameters:',GS_lrmodel_1.best_params_)
 ```
 
-The results show a sligh improvement compared to the initial model, with a 78.69% accuracy score, a 44.18% average precision score and an ROC value of 0.783 for the test set. Additionally, this Grid Search found {'C': 10, 'penalty': 'l2'} the best parameter combination. The confusion matrices and performance measures are presented below.
+The results show a slight improvement compared to the initial model, with a 78.69% accuracy score, a 44.18% average precision score and an ROC value of 0.783 for the test set. Additionally, this Grid Search finds {'C': 10, 'penalty': 'l2'} as the best parameter combination. The confusion matrices and performance measures are presented below.
 
 ![Performance measurement.](../figures/6_2_GS1_Scores.png)
 ![Confusion matrix for Train set.](../figures/6_2_GS1_CM_Train.png)
 ![Confusion matrix for Test set.](../figures/6_2_GS1_CM_Test.png)
 
-For the second Grid Search, we used L1 penalty and Elasticnet penalty, which combines L1 and L2 penalties and will give a result in between. We also used the solver “Saga”, which supports the non-smooth penalty L1 and is often used to handle the potential multinomial loss in the regression.
+For the second Grid Search, we used the L1 penalty and Elasticnet penalty, which combines L1 and L2 penalties and will give a result in between. We also used the solver “Saga”, which supports the non-smooth penalty L1 and is often used to handle the potential multinomial loss in the regression.
 
 ```python
 #### Try the 2nd GridSearch param_grid combination:
@@ -115,7 +115,7 @@ The results from the second Grid Search are almost identical to that of the firs
 <br />
 
 ## 6.3. Statistical Summary
-Finally, we used the `sm.Logit(y, X)` and `summary()` functions to summarise the performance of the Logistic Regression using raw data. Some features showed very promising predictive power such as the economic indicators, Marital and Education.
-However, Logistic Regression only achieved a 20% Pseudo R-square value with our dataset.Therefore, Logistic Regression is just not the most ideal model to handle our dataset.
+Finally, we used the `sm.Logit(y, X)` and `summary()` functions to summarise the performance of the Logistic Regression using raw data. Some features showed very promising predictive power, such as the economic indicators, Marital and Education.
+However, Logistic Regression only achieved a 20% Pseudo R-square value with our dataset. Therefore, Logistic Regression is not an ideal model to handle our dataset.
 
-![Performance measurement.](../figures/6_3_Statistics.png)
+![Statistical Summary.](../figures/6_3_Statistics.png)
