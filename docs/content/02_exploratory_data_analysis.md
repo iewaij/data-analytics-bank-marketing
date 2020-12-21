@@ -1,4 +1,4 @@
-# 2.Exploratory Data Analysis
+# 2. Exploratory Data Analysis
 Exploratory Data Analysis is a process to explore the dataset with no assumptions or hypotheses using non-graphical and graphical, univariate and multivariate methods. The objective is to gain intuitive insights, discover distribution characteristics, and find out missing values in the dataset.
 
 <br />
@@ -85,7 +85,7 @@ This is the feature that reports the outcomes of the previous campaign. Over 35,
 
 <br />
 
-## 2.4.Multivariate Explorations
+## 2.4. Multivariate Explorations
 ### Client Data
 Furthermore, we explore some multivariate distributions of the positive outcome. First, we found both married and divorced retired people respond positively to our campaign, and single and divorced students are even more enthusiastic. It is also quite interesting that students, retired and illiterate people are more likely to say ‘yes’ to our long-term deposit. Additionally,  divorced illiterate people respond to our campaign extremely well.
 ![Positive Outcome Percentage by Job and Marital Status.](../figures/2_15_Job+Marital.png)
@@ -106,6 +106,6 @@ With this heatmap, we get a better look at the correlations among features. Four
 
 <br />
 
-## 2.5.Early Feature Engineering Attempts
+## 2.5. Early Feature Engineering Attempts
 The final figure shows a memorable snapshot of our early feature engineering attempts, with each row being one version of feature engineering. We have tried many ways to handle the data and used the same basic model to compare the results. With this spreadsheet, we can compare each others’ ideas and results before we finally decide to settle down with one version, which will be discussed next. 
 ![Early feature engineering attempts.](../figures/2_18_Early_FE_attempts.png)
