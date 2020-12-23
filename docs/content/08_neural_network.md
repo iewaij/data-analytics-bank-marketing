@@ -8,11 +8,8 @@ Neural Network is a "brain structure" with the following components:
 4. A set of weights and biases between each layer
 5. An activation function for each hiddeb layer
 
-Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of these 2 steps:
+Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of Forward Propagation and Backpropagation. The Forward Propagation is a process where the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer. The Backpropagation is to fine tune the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected ouputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
 
-    Forward Propagation: the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer.
-
-    Backpropagation: fine tuning the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected ouputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
 
 ## Hyperparameters
 
@@ -74,7 +71,16 @@ mlp_trained=MLPClassifier(solver ="lbfgs",
 nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 ```
 
-![Result](https://i.imgur.com/oTbqRaz.png)
+|      | Train    | Validate | Test     |
+| ---: | :------  | :------  |:------   |
+|  TNR | 0.984219 | 0.959117 | 0.969896 |
+|  TPR | 0.470192 | 0.295148 | 0.310145 |
+| bACC | 0.727206 | 0.627133 | 0.640120 |
+|  ROC | 0.900857 | 0.730865 | 0.746097 |
+|  REC | 0.470192 | 0.295148 | 0.310345 |
+|  PRE | 0.790935 | 0.478166 | 0.566929 |
+|  AP  | 0.688217 | 0.354089 | 0.396211 |
+
 
 ## Reflections
 
