@@ -67,8 +67,15 @@ RF_validation = RandomForestClassifier(random_state=42,class_weight="balanced",m
                                        max_leaf_nodes=1000)
 benchmark(bank_mkt, tree_transformer, RF_validation)
 ```
-
-<img src="C:\Users\Strahinja\AppData\Roaming\Typora\typora-user-images\image-20201221181311573.png" alt="image-20201221181311573" style="zoom:67%;" />
+|      | Train    | Validate | Test     |
+|------|----------|----------|----------|
+| TNR  | 0.866655 | 0.864865 | 0.870963 |
+| TPR  | 0.627821 | 0.629380 | 0.618534 |
+| bACC | 0.747238 | 0.747122 | 0.744749 |
+| ROC  | 0.813153 | 0.801666 | 0.801848 |
+| REC  | 0.627821 | 0.629380 | 0.618534 |
+| PRE  | 0.374147 | 0.371519 | 0.378378 |
+| AP   | 0.503536 | 0.449784 | 0.474725 |
 
 As can be seen from the table RandomForestClassifier gives strong values in AUC ROC and proves in our dataset to be one of the best performing models. 
 
@@ -152,7 +159,16 @@ AB_validation = AdaBoostClassifier(n_estimators=800,learning_rate=0.8,random_sta
 benchmark(bank_mkt, tree_transformer, AB_validation)
 ```
 
-<img src="C:\Users\Strahinja\AppData\Roaming\Typora\typora-user-images\image-20201221184305737.png" alt="image-20201221184305737" style="zoom:67%;" />
+|      | Train    | Validate | Test     |
+|------|----------|----------|----------|
+| TNR  | 0.985982 | 0.972650 | 0.979312 |
+| TPR  | 0.393488 | 0.262162 | 0.272630 |
+| bACC | 0.689715 | 0.617406 | 0.625971 |
+| ROC  | 0.878366 | 0.743267 | 0.757640 |
+| REC  | 0.393448 | 0.262162 | 0.272630 |
+| PRE  | 0.780308 | 0.58023  | 0.628933 |
+| F1   | 0.523125 | 0.354662 | 0.380386 |
+| AP   | 0.632423 | 0.374018 | 0.423666 |
 
 In a similar fashion we derive feature importance as well:
 
