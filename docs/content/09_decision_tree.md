@@ -123,8 +123,8 @@ The process of tuning this parameter can at starts feel counterintuitive. Why wo
 
 The other important hyperparameters to tune in the AdaBoost Classifier are
 
-- **learning_rate: **float, *default=1* ; Learning rate shrinks the contribution of each classifier by `learning_rate`. There is a trade-off between `learning_rate` and `n_estimators`.
-- **n_estimators: **int, *default=50* ; The maximum number of estimators at which boosting is terminated. In case of perfect fit, the learning procedure is stopped early.
+- **learning_rate:** float, *default=1* ; Learning rate shrinks the contribution of each classifier by `learning_rate`. There is a trade-off between `learning_rate` and `n_estimators`.
+- **n_estimators:** int, *default=50* ; The maximum number of estimators at which boosting is terminated. In case of perfect fit, the learning procedure is stopped early.
 
 ```python
 AB= AdaBoostClassifier(n_estimators=100,random_state=42,learning_rate=1.0)
