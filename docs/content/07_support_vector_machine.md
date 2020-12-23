@@ -24,7 +24,7 @@ In the realm of loss function of Logistic Regression, the individual loss contri
 By replacing the individual loss contribution to $max(0,1−\vecθ^{ T}⋅\vec x^{(i)})$ and $max(0,1+\vecθ^{ T}⋅\vec x^{(i)})$ for $y^{(i)}= 1$ and $y^{(i)}= 0$ respectively, SVM penalizes the margin violation more than logistic regression by requiring a prediction bigger than 1 for y =1 and a prediction smaller than -1 if y = 0.
 
 
-![Screenshot 2020-12-04 at 14.17.12](https://i.imgur.com/4quBUfZ.png)
+![LG SVM Comparison](https://i.imgur.com/4quBUfZ.png)
 
 ### Regularizaiton and Trade-off (C parameter)
 
@@ -91,7 +91,16 @@ linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="bala
 # best parameters found: {'C': 1}, with mean test score: 0.43356240611668306
 ```
 
-![Result](https://i.imgur.com/YGWpNr6.png)
+|      | Train    | Validate | Test     |
+| ---: | :------  | :------  |:------   |
+|  TNR | 0.795108 | 0.791310 | 0.795703 |
+|  TPR | 0.664534 | 0.691375 | 0.659483 |
+| bACC | 0.729821 | 0.741342 | 0.727593 |
+|  ROC | 0.785562 | 0.786010 | 0.781580 |
+|  REC | 0.664534 | 0.691375 | 0.659483 |
+|  PRE | 0.291691 | 0.296018 | 0.290736 |
+|  AP  | 0.435728 | 0.432823 | 0.437258 |
+
 
 ## Non-Linear SVM
 
@@ -148,7 +157,16 @@ rbf_sgd_tuned = rbf_sgd_clf.set_params(rbf__gamma=0.0009, svm__alpha=1e-6)
 benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
 ```
 
-![Result](https://i.imgur.com/ARATCWl.png)
+|      | Train    | Validate | Test     |
+| ---: | :------  | :------  |:------   |
+|  TNR | 0.792798 | 0.797639 | 0.644499 |
+|  TPR | 0.678680 | 0.681941 | 0.752155 |
+| bACC | 0.735739 | 0.739790 | 0.698327 |
+|  ROC | 0.791381 | 0.789337 | 0.786777 |
+|  REC | 0.678680 | 0.681941 | 0.752155 |
+|  PRE | 0.293732 | 0.299586 | 0.211772 |
+|  AP  | 0.436139 | 0.444426 | 0.437136 |
+
 
 ```python
 
@@ -201,7 +219,16 @@ print(f"best parameters found: {grid_best_params}, with mean test score: {grid_b
 rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 ```
 
-![Result](https://i.imgur.com/bjDrpV4.png)
+|      | Train    | Validate | Test     |
+| ---: | :------  | :------  |:------   |
+|  TNR | 0.788906 | 0.787889 | 0.794745 |
+|  TPR | 0.677669 | 0.676550 | 0.668103 |
+| bACC | 0.733288 | 0.732220 | 0.731424 |
+|  ROC | 0.787619 | 0.782527 | 0.784626 |
+|  REC | 0.677669 | 0.676550 | 0.688103 |
+|  PRE | 0.289580 | 0.288175 | 0.292453 |
+|  AP  | 0.437404 | 0.453640 | 0.440392 |
+
 
 ### References
 
