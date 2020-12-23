@@ -1,9 +1,8 @@
 # SVM
 
-The purpose of Support Vector Machine is to find a hyperplane that distinctly classifies the data points in an N-dimensional space. Hyperplane is the decision boundary that classifies the data points and support vecotrs are the data points that are closer to the hyperplane which influence the position and orientation of the hyperplane.
+The purpose of the Support Vector Machine is to find a hyperplane that distinctly classifies the data points in an N-dimensional space. The hyperplane is the decision boundary that classifies the data points and support vectors are the data points that are closer to the hyperplane which influences the position and orientation of the hyperplane.
 
-The worth of the classifier is how well it classifies the unseen data points and therefore our objective is to find a plane with the maximum margin i.e the distance of an observaiton from the hyperplane. The margin brings in extra confidence that the further data points will be classified correctly.
-
+The worth of the classifier is how well it classifies the unseen data points and therefore our objective is to find a plane with the maximum margin i.e the distance of an observation from the hyperplane. The margin brings in extra confidence that the further data points will be classified correctly.
 ## Theory and Hyperparameter
 
 ### Maximum Margin
@@ -28,19 +27,19 @@ By replacing the individual loss contribution to $max(0,1−\vecθ^{ T}⋅\vec x
 
 ### Regularizaiton and Trade-off (C parameter)
 
-The regularization term plays the role of widening the distance between the two margins and tells SVM how much we want to avoid the wrong misclassification. A hyperplane with maximal margin might be extremely sensitve to a change in the data points and may lead to overfitting problems.
+The regularization term plays the role of widening the distance between the two margins and tells SVM how much we want to avoid the wrong misclassification. A hyperplane with maximal margin might be extremely sensitive to a change in the data points and may lead to overfitting problems.
 
-To achieve the balance of a greater robustness and better classification of the model, we may consider it worthwhile to misclassify a few training data points to do a better job in separating the furture data points.
+To achieve the balance of greater robustness and better classification of the model, we may consider it worthwhile to misclassify a few training data points to do a better job in separating the future data points.
 
-Hyperparameter C in SVM allows us to dictate the tradeoff between having a wide margin and correctly classiying the training data points. In other words, a large value for C will shrink the margin distance of hyperplane while a small value for C will aim for a larger-margin separator even if it misclassifies some data points.
+Hyperparameter C in SVM allows us to dictate the tradeoff between having a wide margin and correctly classifying the training data points. In other words, a large value for C will shrink the margin distance of hyperplane while a small value for C will aim for a larger-margin separator even if it misclassifies some data points.
 
 ### Gamma 
 
-Gamma controls how far the influence of a single obeservation  on the decision boundary. The high Gamma indicates only the points closer to the plausible hyperplane are considered and vice versa.
+Gamma controls how far the influence of a single observation on the decision boundary. The high Gamma indicates only the points closer to the plausible hyperplane are considered and vice versa.
 
 ### Kernel
 
-For linearly separable and almost linearly separable data, SVM works well. For data that is not linearly separable, we can project the data to a space where it is linearly separable. What Kernel Trick does is utilizing the existing features and applying some transformations to create new features and calculates the nonlinear decision boundary in higher dimension by using these features.
+For linearly separable and almost linearly separable data, SVM works well. For data that is not linearly separable, we can project the data to space where it is linearly separable. What Kernel Trick does is utilizing the existing features and applying some transformations to create new features and calculates the nonlinear decision boundary in higher dimension by using these features.
 
 ## Linear SVM
 
