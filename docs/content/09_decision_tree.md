@@ -12,7 +12,7 @@ Here is an outline of hyperparameters most commonly tuned for performance:
 - **criterion:**  {“gini”, “entropy”}, *default=”gini”*  ; The function to measure the quality of a split. Supported criteria are “gini” for the Gini impurity and “entropy” for the information gain. Note: this parameter is tree-specific.
 - **min_samples_leaf:** int or float, *default=1* ; The minimum number of samples required to be at a leaf node.
 - **class_weight:** {“balanced”, “balanced_subsample”},  *default=None* ; Weights associated with classes in the form `{class_label: weight}`. If not given, all classes are supposed to have weight one.
-- **random_state: **int or RandomState, *default=None*; Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node.
+- **random_state:** int or RandomState, *default=None*; Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node.
 
 It is important to note that Decision Trees can be combined to form Forests and can be used as primitive estimators in AdaBoost. This makes them redundant in terms of accuracy to these more advanced models that use them as a base. It is still however necessary to understand the individual tree estimator in order to understand how these more advance structures work. The tree is also cheaper in terms of computing requirements and can be used as an initial estimator or for feature importance analysis. 
 
@@ -22,7 +22,7 @@ To keep the scope of this paper reasonable, we will focus on elaborating on thes
 
 The Random Forest represents a collection of decision trees.  They a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of reducing the variance. This comes at the expense of a small increase in the bias and some loss of interpretability, but generally greatly boosts the performance in the final model.
 
-<img src="C:\Users\Strahinja\AppData\Roaming\Typora\typora-user-images\image-20201221174403621.png" alt="image-20201221174403621" style="zoom:50%;" />
+![Spread](../figures/09_01_chart.png)
 
 In order to prepare the data for the Forest we initially ran it through our standard transformer, explained in the pipeline section of this text.
 
