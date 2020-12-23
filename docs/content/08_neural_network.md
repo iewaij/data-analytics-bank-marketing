@@ -8,7 +8,7 @@ Neural Network is a "brain structure" with the following components:
 4. A set of weights and biases between each layer
 5. An activation function for each hiddeb layer
 
-Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of Forward Propagation and Backpropagation. The Forward Propagation is a process where the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer. The Backpropagation is to fine tune the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected ouputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
+Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of Forward Propagation and Backpropagation. The Forward Propagation is a process where the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer. The Backpropagation is to fine tune the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected outputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
 
 
 ## Hyperparameters
@@ -17,13 +17,13 @@ Training the neural network model is to find the right values for the weights an
 
 Learning rate controls how much we are adjusting the weights of our network with respect to the loss gradient.
 
-A small learning rate will only make slight change to the weights each update and therefore requires more training epochs and travels along the downward slope slowly, whereas a large learning rate leads to rapid changes to the weight. However, a too large learning rate may cause the model to converge too quickly to a local minima or overshoot the optimal solution.
+A small learning rate will only make a slight change to the weights each update and therefore requires more training epochs and travels along the downward slope slowly, whereas a large learning rate leads to rapid changes to the weight. However, a too large learning rate may cause the model to converge too quickly to a local minimum or overshoot the optimal solution.
 
 ### Hidden layer sizes
 
-This hyperparameter defines how many hidden layers and how many neurons on each layer we want to have when we are building the achitechture of the neural network. 
+This hyperparameter defines how many hidden layers and how many neurons on each layer we want to have when we are building the architecture of the neural network. 
 
-We want to keep the neural network archtechture as simple as possible so that it can be trained fast and well generalized and meanwhile, we also need it to classify the input data well, which may require a relatively complex architecture.
+We want to keep the neural network architecture as simple as possible so that it can be trained fast and well generalized and meanwhile, we also need it to classify the input data well, which may require a relatively complex architecture.
 
 ### L2 Regularization
 
@@ -35,7 +35,7 @@ The regularization term will drive down the weights of the matrix and decorrelat
 
 Activation functions are mathematical equations attached to each neuron in the network and they determine the output of the learning model, the accuracy and the computational efficiency of training the model.
 
-With the use of Non-linear activation function, we are able to create complex mapping between the network's inputs and outputs which are essential for learning and modeling complex data.
+With the use of Non-linear activation function, we can create a complex mapping between the network's inputs and outputs which are essential for learning and modelling complex data.
 
 ## GridSearch
 
@@ -84,7 +84,7 @@ nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 
 ## Reflections
 
-In machine learning, data can be roughly divided into four categories: Image, Sequence , Graph and Tabular data. The first three types of data have obvious patterns, such as the spatial locality of images and graphs, the contextual relationship and timing dependence of sequences, and so on. However,in tabular data, each feature represents an attribute, such as gender, price, etc. There is generally no obvious and common pattern between features.
+In machine learning, data can be roughly divided into four categories: Image, Sequence, Graph and Tabular data. The first three types of data have obvious patterns, such as the spatial locality of images and graphs, the contextual relationship and timing dependence of sequences, and so on. However, in tabular data, each feature represents an attribute, such as gender, price, etc. There is generally no obvious and common pattern between features.
 
 Neural networks are more suitable for the first three types of data, that is, data with obvious patterns. Because we can design the corresponding network structure according to the data pattern, so as to select features more efficiently. For example, the  CNN (Convolutional Neural Network) is designed for images, and the RNN (Recurrent Neural Network) is designed for sequence data.
 
