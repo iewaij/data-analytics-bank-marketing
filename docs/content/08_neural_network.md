@@ -40,7 +40,7 @@ Activation functions are mathematical equations attached to each neuron in the n
 
 With the use of Non-linear activation function, we are able to create complex mapping between the network's inputs and outputs which are essential for learning and modeling complex data.
 
-# GridSearchCV and Results
+## GridSearch
 
 ```python
 mlp=MLPClassifier(random_state=42,max_iter=1000)
@@ -76,7 +76,7 @@ nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 
 ![Result](https://i.imgur.com/oTbqRaz.png)
 
-# Reflection
+## Reflections
 
 In machine learning, data can be roughly divided into four categories: Image, Sequence , Graph and Tabular data. The first three types of data have obvious patterns, such as the spatial locality of images and graphs, the contextual relationship and timing dependence of sequences, and so on. However,in tabular data, each feature represents an attribute, such as gender, price, etc. There is generally no obvious and common pattern between features.
 
@@ -86,7 +86,7 @@ For tabular data where there is no obvious pattern, an inefficient fully connect
 
 In the case of tabular data, feature engineering might be more important because it integrates the prior knowledge into the data and makes the model understand the data better.
 
-### Reference
+## References
 
 [@loy_how_2020]
 

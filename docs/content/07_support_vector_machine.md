@@ -21,7 +21,7 @@ where
 
 In the realm of loss function of Logistic Regression, the individual loss contribution to the overall function is $−log(p̂^{(i)})$ if $y^{(i)}= 1$ and $−log(1−p̂^{(i)})$ if $y^{(i)}= 0$.
 
-By replacing the individual loss contribution to $max(0,1−\vecθ^{ T}⋅\vec x^{(i)})$ and $ max(0,1+\vecθ^{ T}⋅\vec x^{(i)})$ for $y^{(i)}= 1$ and $y^{(i)}= 0$ respectively, SVM penalizes the margin violation more than logistic regression by requiring a prediction bigger than 1 for y =1 and a prediction smaller than -1 if y = 0.
+By replacing the individual loss contribution to $max(0,1−\vecθ^{ T}⋅\vec x^{(i)})$ and $max(0,1+\vecθ^{ T}⋅\vec x^{(i)})$ for $y^{(i)}= 1$ and $y^{(i)}= 0$ respectively, SVM penalizes the margin violation more than logistic regression by requiring a prediction bigger than 1 for y =1 and a prediction smaller than -1 if y = 0.
 
 
 ![Screenshot 2020-12-04 at 14.17.12](https://i.imgur.com/4quBUfZ.png)

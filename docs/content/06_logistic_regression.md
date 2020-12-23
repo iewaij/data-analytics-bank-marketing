@@ -104,8 +104,17 @@ print('best parameters:',GS_lrmodel_2.best_params_)
 
 The results from the second Grid Search are almost identical to that of the first Grid Search. However, in the second case, {'C': 0.05, 'penalty': 'l1', 'solver': 'saga'} has been identified as the best parameter combination.
 
+|      | animal  |
+| ---: | :------ |
+|    0 | elk     |
+|    1 | pig     |
+|    2 | dog     |
+|    3 | quetzal |
+
 ![Performance measurement.](../figures/6_2_GS2_Scores.png)
+
 ![Confusion matrix for Train set.](../figures/6_2_GS2_CM_Train.png)
+
 ![Confusion matrix for Test set.](../figures/6_2_GS2_CM_Test.png)
 
 ## Statistical Summary
