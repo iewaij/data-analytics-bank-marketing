@@ -4,6 +4,8 @@ After inspecting and exploring the dataset, this chapter focuses on data prepara
 
 ![Data Life Cycle](../figures/3_1_Data_Lifecycle.png)
 
+## Import Data
+
 First, the `BankMarkteting.csv` file is imported using `read_csv()` from `pandas` and duplicated rows, missing values, categorical and boolean data are properly processed. The import process is abstracted into the function `import_dataset()`. A sample code is shown below:
 
 ```python
@@ -30,7 +32,9 @@ bank_mkt = bank_mkt.drop_duplicates().reset_index(drop=True)
         }
 ```
 
-After importing the data, we need split the dataset into trainning set and test set. The models will be trained and tuned on the trainning set and test set will be used only for final validation purposes. However, simply sampling the dataset may lead to unrepresenatative partition given that our dataset is imbalanced and clients have different features. To solve this problem, `scikit-learn` provides a useful function `StratifiedShuffleSplit()` to select representative data into test set and train set, which is shown below as sample code:
+## Partition Data
+
+After importing the data, we need split the dataset into train set and test set. The models will be trained and tuned on the trainning set and test set will be used only for final validation purposes. However, simply sampling the dataset may lead to unrepresenatative partition given that our dataset is imbalanced and clients have different features. To solve this problem, `scikit-learn` provides a useful function `StratifiedShuffleSplit()` to select representative data into test set and train set, which is shown below as sample code:
 
 ```python
 from sklearn.model_selection import StratifiedShuffleSplit
@@ -47,6 +51,8 @@ y_train = train_set["y"].astype("int").to_numpy()
 X_test = test_set.drop(["duration", "y"], axis=1)
 y_test = test_set["y"].astype("int").to_numpy()
 ```
+
+## Build Custom Preprocess Pipeline
 
 After data partition, the train set and test set should be preprocessed into sutiable data type and shape for machine learning models. The train set and test set should also be preprocessed seperately to avoid leaking test sample infomation into train set. If we scale data using both train set and test set, the scaling will ultimately be impacted by some test samples, which is not disired. To avoid the leakage, `scikit-learn` provides pipeline functionality that allows different treatments on train set and test set using `fit_transform()` and `transform()` as demostrated in the code below:
 
@@ -108,11 +114,13 @@ X_train = hot_preprocessor.fit_transform(X_train, y_train)
 X_test = hot_preprocessor.transform(X_test)
 ```
 
+## From Pipeline To Workflow
+
 In our project, the data partition and preprocessing is combined by the function `split_dataset()` which accepts `preprocessor` as a parameter. Its functionality will be further extended by the benchmarking function `benchmark()` which accepts `data`, `preprocessor`, `clf` as parameters and output model performance. Therefore, the ideal workflow will be:
 
 1. Import data using `import_dataset()`;
 2. Build a proper preprocessing pipeline `preprocessor`;
 3. Build and tune an estimator `clf`;
-4. Show model performance calling `benchmark(data, preprocessor, clf)`.
+4. Show model performance by calling `benchmark(data, preprocessor, clf)`.
 
 Such workflow will be extensively reflected in the following chapters.

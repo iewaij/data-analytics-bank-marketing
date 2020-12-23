@@ -1,39 +1,40 @@
-# Introduction
+# Neural Network
 
 Neural Network is a "brain structure" with the following components:
-1 An input layer
-2 An arbitrary amount of hidden layer
-3 An output layer
-4 A set of weights and biases between each layer
-5 An activation function for each hiddeb layer
+
+1. An input layer
+2. An arbitrary amount of hidden layer
+3. An output layer
+4. A set of weights and biases between each layer
+5. An activation function for each hiddeb layer
 
 Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of these 2 steps:
 
-Forward Propagation: the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer.
+    Forward Propagation: the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer.
 
-Backpropagation: fine tuning the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected ouputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
+    Backpropagation: fine tuning the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected ouputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
 
-# Hyperparameter Explanation
+## Hyperparameters
 
-## Learning rate
+### Learning rate
 
 Learning rate controls how much we are adjusting the weights of our network with respect to the loss gradient.
 
 A small learning rate will only make slight change to the weights each update and therefore requires more training epochs and travels along the downward slope slowly, whereas a large learning rate leads to rapid changes to the weight. However, a too large learning rate may cause the model to converge too quickly to a local minima or overshoot the optimal solution.
 
-## Hidden layer sizes
+### Hidden layer sizes
 
 This hyperparameter defines how many hidden layers and how many neurons on each layer we want to have when we are building the achitechture of the neural network. 
 
 We want to keep the neural network archtechture as simple as possible so that it can be trained fast and well generalized and meanwhile, we also need it to classify the input data well, which may require a relatively complex architecture.
 
-## L2 Regularization
+### L2 Regularization
 
 The regularization term will drive down the weights of the matrix and decorrelate the neural network, which in turn decreases the effects of the activation function and prevent overfitting by fitting a less complex model to the data.
 
-## Activation Function
+### Activation Function
 
-![Screenshot 2020-12-04 at 16.59.05](https://i.imgur.com/nMy80J1.png)
+![Activation Function](https://i.imgur.com/nMy80J1.png)
 
 Activation functions are mathematical equations attached to each neuron in the network and they determine the output of the learning model, the accuracy and the computational efficiency of training the model.
 
@@ -61,10 +62,6 @@ grid_fit = grid_search.fit(X_train, y_train)
 grid_results = grid_search.cv_results_
 grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
-print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
-```
-
-```python
 
 mlp_trained=MLPClassifier(solver ="lbfgs",
                           random_state=42,
@@ -77,7 +74,7 @@ mlp_trained=MLPClassifier(solver ="lbfgs",
 nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 ```
 
-![Screenshot 2020-12-04 at 15.14.28](https://i.imgur.com/oTbqRaz.png)
+![Result](https://i.imgur.com/oTbqRaz.png)
 
 # Reflection
 

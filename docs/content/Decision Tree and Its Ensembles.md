@@ -1,36 +1,6 @@
 # Decision Tree and Its Ensembles
 
-#### **Decision Tree**
-
-- Concept and Application
-- Inferiority Comparing to the Forest in our Dataset
-
-#### **Random Forest**
-
-- From Tree to Forest
-- Hyperparameter Tuning
-- Performance Matrix
-- Feature Importance
-
-- #### AdaBoost Classifier
-
-- What is an AdaBoost Classifier
-
-- How is it different than a Random Forest
-
-- Hyperparameter Tuning
-
-- Performance Matrix
-
-- Feature Importance
-
-
-
-<p style="text-align: center;">  <font size="+2">
-Decision Tree</font></p>
-
-
-
+## Decison Tree
 A decision tree is a flowchart-like structure in which each internal node represents a "test" on an attribute (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules.
 
 In Machine Learning this type of structure can be used to advise in classification and regression problems. Since our project's topic was a classification problem in its nature, we will focus on the decision Tree as a classifier in the remainder of the text.
@@ -48,8 +18,7 @@ It is important to note that Decision Trees can be combined to form Forests and 
 
 To keep the scope of this paper reasonable, we will focus on elaborating on these more advanced models (Forest and AdaBoost) while keeping in mind that in their very foundation there is a tree, silently doing it's job.
 
-<p style="text-align: center;">  <font size="+2">
-Random Forest</font></p>
+## Random Forest
 
 The Random Forest represents a collection of decision trees.  They a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of reducing the variance. This comes at the expense of a small increase in the bias and some loss of interpretability, but generally greatly boosts the performance in the final model.
 
@@ -115,7 +84,7 @@ for name, importance in zip(columns, rnd_clf.feature_importances_):
 
 The features that constantly proved to be the most important for the model are:
 
-<img src="https://lh6.googleusercontent.com/EcYZq536Y5wJWX3_BFZpHy726LqA-cMujEkA1ohXdABN__eqZKE2r5XZgJWHPUh8ifc-pIU8k8ie8JIP0nAcHpbsObB9RQ5CaJUjhb6qX4LT9xKv9f7Jka_LsXigbOLv0OVv3zOFEWA" alt="img" />
+![](https://lh6.googleusercontent.com/EcYZq536Y5wJWX3_BFZpHy726LqA-cMujEkA1ohXdABN__eqZKE2r5XZgJWHPUh8ifc-pIU8k8ie8JIP0nAcHpbsObB9RQ5CaJUjhb6qX4LT9xKv9f7Jka_LsXigbOLv0OVv3zOFEWA)
 
 This can also be plotted to give an informative picture about how features rank by importance:
 
@@ -131,15 +100,11 @@ plt.savefig("Feature importance.png")
 plt.size=(15,10)
 plt.show()
 ```
-
-<img src="https://lh4.googleusercontent.com/M_3QyBZPNBvKUitLcjVzO-FkzipnksPpmU8yGq19VGwRBizZh-aDxeSJUtyc_2kgtHEvzxWb3LFAUr0iGU1XYBp9dO3JbcPECcdy5Pm1F8ut0YoGQbSsCc3XL_tcxUKU51fVl1Sw4kg" alt="img" style="zoom:50%;" />
-
-
+![](https://lh4.googleusercontent.com/M_3QyBZPNBvKUitLcjVzO-FkzipnksPpmU8yGq19VGwRBizZh-aDxeSJUtyc_2kgtHEvzxWb3LFAUr0iGU1XYBp9dO3JbcPECcdy5Pm1F8ut0YoGQbSsCc3XL_tcxUKU51fVl1Sw4kg)
 
 All in all the Random Forest lived up to its expectation. By adding just a small amount of bias it greatly improves the performance of Decision Trees. They are very robust and require little to none work in terms of encoding and feature manipulation. 
 
-<p style="text-align: center;">  <font size="+2">
-AdaBoost Classifier</font></p>
+## AdaBoost
 
 An AdaBoost classifier is a meta-estimator that begins by fitting a classifier on the original dataset and then fits additional copies of the classifier on the same dataset but where the weights of incorrectly classified instances are adjusted such that subsequent classifiers focus more on difficult cases.
 
@@ -153,8 +118,6 @@ The other important hyperparameters to tune in the AdaBoost Classifier are
 
 - **learning_rate: **float, *default=1* ; Learning rate shrinks the contribution of each classifier by `learning_rate`. There is a trade-off between `learning_rate` and `n_estimators`.
 - **n_estimators: **int, *default=50* ; The maximum number of estimators at which boosting is terminated. In case of perfect fit, the learning procedure is stopped early.
-
-In our code
 
 ```python
 AB= AdaBoostClassifier(n_estimators=100,random_state=42,learning_rate=1.0)
@@ -173,14 +136,14 @@ grid_best_estimator = CV_RFmodel.best_estimator_
 print(f"best mean test score: {grid_best_score}, for {grid_best_estimator}")
 ```
 
-Which gave us the optimal model set up of
+Which gave us the optimal model set up:
 
 ```
 best mean test score: 0.448988423603947, for AdaBoostClassifier(base_estimator=DecisionTreeClassifier(max_depth=1),
                    learning_rate=0.8, n_estimators=800, random_state=42)
 ```
 
-We proceeded to find the full performance matrix
+We proceeded to find the full performance matrix:
 
 ```python
 AB_validation = AdaBoostClassifier(n_estimators=800,learning_rate=0.8,random_state=42,
@@ -191,14 +154,13 @@ benchmark(bank_mkt, tree_transformer, AB_validation)
 
 <img src="C:\Users\Strahinja\AppData\Roaming\Typora\typora-user-images\image-20201221184305737.png" alt="image-20201221184305737" style="zoom:67%;" />
 
-In a similar fashion we derive feature importance as well
+In a similar fashion we derive feature importance as well:
 
 ```python
 for name, importance in zip(columns, AB_validation.feature_importances_):
     print(name, "=", importance)
 ```
-
-<img src="https://lh5.googleusercontent.com/S_vlaaJDVBL2wXCQZcQSPc-xw5hrqQkOijovVgFN95K-Kc4Byknq7yqyTE-82Ora0l-jl8rCtb19VaRuHjl3b16EMkJe_qcDU3zwE53sLoaRM3YCtLjjTkHcmBXy2brEwMuoFIWmKWc" alt="img" style="zoom:100%;" />
+![](https://lh5.googleusercontent.com/S_vlaaJDVBL2wXCQZcQSPc-xw5hrqQkOijovVgFN95K-Kc4Byknq7yqyTE-82Ora0l-jl8rCtb19VaRuHjl3b16EMkJe_qcDU3zwE53sLoaRM3YCtLjjTkHcmBXy2brEwMuoFIWmKWc)
 
 ```python
 importances = AB_validation.feature_importances_
@@ -214,7 +176,7 @@ plt.size=(15,10)
 plt.show()
 ```
 
-<img src="https://lh4.googleusercontent.com/x72n3t-gQNcTyD60U7_8buRePCaop6zyI5MUkxQk0Cfp6PKNZ1TzkDT9E7HT3iR1wN5LpFSO-VHndq_6pWIhqUR1OFLGT8fU0qVal8PuUTZk7rjZH9q7dZfeNqYegcOjByj4c1DHkGU" alt="img" style="zoom:25%;" />
+![](https://lh4.googleusercontent.com/x72n3t-gQNcTyD60U7_8buRePCaop6zyI5MUkxQk0Cfp6PKNZ1TzkDT9E7HT3iR1wN5LpFSO-VHndq_6pWIhqUR1OFLGT8fU0qVal8PuUTZk7rjZH9q7dZfeNqYegcOjByj4c1DHkGU)
 
 As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown (according to the Central Limit Theorem).
 

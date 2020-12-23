@@ -2,8 +2,8 @@
 
 ## Impute Missing Values
 
-## Weight
+## Incorporate Dates
 
-## Delete Features
+## Drop Features
 
-## Date
+## Sample Weights

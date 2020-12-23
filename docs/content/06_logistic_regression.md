@@ -1,4 +1,4 @@
-# 6. Logistic Regression
+# Logistic Regression
 Logistic regression is commonly used to estimate the probability of an instance belonging to a particular class. If the probability is greater than 50%, the model will classify the instance to that class, otherwise, it will not. Therefore, Logistic regression is a binary classifier that can be applied to our dataset. Underlying the model is the logistic sigmoid function as shown below. This classifier can potentially perform very well on linearly separable classes. Although this might not be the case for our dataset, we still give it a try.
 
 $$
@@ -7,9 +7,7 @@ $$
 
 ![Logistic sigmoid function](https://miro.medium.com/max/1400/1*RqXFpiNGwdiKBWyLJc_E7g.png)
 
-<br />
-
-## 6.1. Fitting and Testing
+## Fitting and Testing
 First, we import the Logistic Regression from SKlearn, and set two important parameters: [1] “class weight equals balanced”, which is necessary to handle our imbalanced dataset; [2] The maximum number of iterations taken for the solvers to converge. The result shows a 79.65% accuracy score, a 44.2% average precision score and a ROC value of 0.783 for the test set. The confusion matrices and performance measures are presented below.
 
 ```python
@@ -36,9 +34,7 @@ print('Accuracy Score:',accte)
 ![Confusion matrix for Test set.](../figures/6_1_LR_CM_Test.png)
 ![ROC & AUC.](../figures/6_1_LR_ROC.png)
 
-<br />
-
-## 6.2. Grid Search
+## Grid Search
 Next, we jumped right into Grid Search to find the optimal parameters for the model. For the first Grid Search, we picked two parameters: the penalty L2 and its inverse parameter C. The L1, L2 regularisation parameters are used to avoid overfitting of data due to either collinearity or high-dimensionality. They both shrink the estimates of the regression coefficients towards zero. When two predictors are highly correlated, L1 will pick one of the two predictors, and in contrast, L2 will keep both of them and jointly shrink the coefficients together a little bit. Parameter C is the inverse of the regularization strength, with smaller values leading to stronger regularization. 
 
 ```python
@@ -112,9 +108,7 @@ The results from the second Grid Search are almost identical to that of the firs
 ![Confusion matrix for Train set.](../figures/6_2_GS2_CM_Train.png)
 ![Confusion matrix for Test set.](../figures/6_2_GS2_CM_Test.png)
 
-<br />
-
-## 6.3. Statistical Summary
+## Statistical Summary
 Finally, we used the `sm.Logit(y, X)` and `summary()` functions to summarise the performance of the Logistic Regression using raw data. Some features showed very promising predictive power, such as the economic indicators, Marital and Education.
 However, Logistic Regression only achieved a 20% Pseudo R-square value with our dataset. Therefore, Logistic Regression is not an ideal model to handle our dataset.
 

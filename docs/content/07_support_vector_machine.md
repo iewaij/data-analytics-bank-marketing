@@ -1,12 +1,12 @@
-# Introduction
+# SVM
 
 The purpose of Support Vector Machine is to find a hyperplane that distinctly classifies the data points in an N-dimensional space. Hyperplane is the decision boundary that classifies the data points and support vecotrs are the data points that are closer to the hyperplane which influence the position and orientation of the hyperplane.
 
 The worth of the classifier is how well it classifies the unseen data points and therefore our objective is to find a plane with the maximum margin i.e the distance of an observaiton from the hyperplane. The margin brings in extra confidence that the further data points will be classified correctly.
 
-# Theory and Hyperparameter
+## Theory and Hyperparameter
 
-## Maximum Margin
+### Maximum Margin
 
 The understanding of SVM is derived from the loss function of Logistic Regression with l2 regularization:
 
@@ -26,7 +26,7 @@ By replacing the individual loss contribution to $max(0,1−\vecθ^{ T}⋅\vec x
 
 ![Screenshot 2020-12-04 at 14.17.12](https://i.imgur.com/4quBUfZ.png)
 
-## Regularizaiton and Trade-off (C parameter)
+### Regularizaiton and Trade-off (C parameter)
 
 The regularization term plays the role of widening the distance between the two margins and tells SVM how much we want to avoid the wrong misclassification. A hyperplane with maximal margin might be extremely sensitve to a change in the data points and may lead to overfitting problems.
 
@@ -34,17 +34,15 @@ To achieve the balance of a greater robustness and better classification of the 
 
 Hyperparameter C in SVM allows us to dictate the tradeoff between having a wide margin and correctly classiying the training data points. In other words, a large value for C will shrink the margin distance of hyperplane while a small value for C will aim for a larger-margin separator even if it misclassifies some data points.
 
-## Gamma 
+### Gamma 
 
 Gamma controls how far the influence of a single obeservation  on the decision boundary. The high Gamma indicates only the points closer to the plausible hyperplane are considered and vice versa.
 
-## Kernel
+### Kernel
 
 For linearly separable and almost linearly separable data, SVM works well. For data that is not linearly separable, we can project the data to a space where it is linearly separable. What Kernel Trick does is utilizing the existing features and applying some transformations to create new features and calculates the nonlinear decision boundary in higher dimension by using these features.
 
-# GridSearchCV and Results
-
-## SVM in Linear Separable Cases
+## Linear SVM
 
 ``` python
 linear_svm = LinearSVC(dual=False, class_weight="balanced", random_state=42)
@@ -65,11 +63,10 @@ grid_best_params = random_search.best_params_
 grid_best_score = random_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
-```
 
-best parameters found: {'C': 1.1361548657024574, 'loss': 'squared_hinge'}, with mean test score: 0.43354326475418103
+# Output
+# best parameters found: {'C': 1.1361548657024574, 'loss': 'squared_hinge'}, with mean test score: 0.43354326475418103
 
-```python
 param_grid = [
     {"C": [5,2,1]}
     ]
@@ -90,26 +87,21 @@ print(f"best parameters found: {grid_best_params}, with mean test score: {grid_b
 
 linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="balanced", random_state=42)
 
+# Output
+# best parameters found: {'C': 1}, with mean test score: 0.43356240611668306
 ```
 
-best parameters found: {'C': 1}, with mean test score: 0.43356240611668306
+![Result](https://i.imgur.com/YGWpNr6.png)
 
-## Linear SVM Results
+## Non-Linear SVM
 
-![Screenshot 2020-12-04 at 14.45.15](https://i.imgur.com/YGWpNr6.png)
-
-## SVM in Linear Non-separable Cases
-
-We use pipeline to ensure that in the cross validation set, the kernel function is only applied to training fold which is exactly the same fold used for fitting the model. 
-
-We also do a comparison between SGDClassifier and Linear SVC and the latter one gave us slightly better AP rate.
+We use pipeline to ensure that in the cross validation set, the kernel function is only applied to training fold which is exactly the same fold used for fitting the model. We also do a comparison between SGDClassifier and Linear SVC and the latter one gave us slightly better AP rate.
 
 ```python
 rbf_sgd_clf = Pipeline([
     ("rbf", RBFSampler(random_state=42)),
     ("svm", SGDClassifier(class_weight="balanced"))
 ])
-
 
 param_distributions = {
     "rbf__gamma": loguniform(1e-6, 1e-3),
@@ -128,11 +120,9 @@ grid_best_params = random_search.best_params_
 grid_best_score = random_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
-```
 
-best parameters found: {'rbf__gamma': 0.0007087711398938291, 'svm__alpha': 1.2269339879156183e-07}, with mean test score: 0.4350168498949894
-
-```python
+# Output
+# best parameters found: {'rbf__gamma': 0.0007087711398938291, 'svm__alpha': 1.2269339879156183e-07}, with mean test score: 0.4350168498949894
 
 param_grid = {
     "rbf__gamma": [0.0008, 0.0001, 0.001],
@@ -150,17 +140,15 @@ grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
-```
 
-best parameters found: {'rbf__gamma': 0.0008, 'svm__alpha': 1e-06}, with mean test score: 0.4403394302575112
-
-```python
+# Output
+# best parameters found: {'rbf__gamma': 0.0008, 'svm__alpha': 1e-06}, with mean test score: 0.4403394302575112
 
 rbf_sgd_tuned = rbf_sgd_clf.set_params(rbf__gamma=0.0009, svm__alpha=1e-6)
 benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
 ```
 
-![Screenshot 2020-12-04 at 14.47.51](https://i.imgur.com/ARATCWl.png)
+![Result](https://i.imgur.com/ARATCWl.png)
 
 ```python
 
@@ -187,11 +175,9 @@ grid_best_score = random_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
-```
+# Output
+# best parameters found: {'rbf__gamma': 0.00026560333125098774, 'svm__C': 6.5900965177317055}, with mean test score: 0.4381080007088255
 
-best parameters found: {'rbf__gamma': 0.00026560333125098774, 'svm__C': 6.5900965177317055}, with mean test score: 0.4381080007088255
-
-```python
 param_grid = {
     "rbf__gamma": [0.0001, 0.001, 0.01],
     "svm__C": [1, 10, 20]}
@@ -208,17 +194,14 @@ grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
-```
 
-best parameters found: {'rbf__gamma': 0.001, 'svm__C': 10}, with mean test score: 0.43986477417883973
-
-```python
+# Output
+# best parameters found: {'rbf__gamma': 0.001, 'svm__C': 10}, with mean test score: 0.43986477417883973
 
 rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
-
 ```
 
-![Screenshot 2020-12-04 at 14.48.40](https://i.imgur.com/bjDrpV4.png)
+![Result](https://i.imgur.com/bjDrpV4.png)
 
 ### References
 
