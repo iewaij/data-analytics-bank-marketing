@@ -8,7 +8,9 @@ $$
 ![Logistic sigmoid function](https://miro.medium.com/max/1400/1*RqXFpiNGwdiKBWyLJc_E7g.png)
 
 ## Fitting and Testing
-First, we import the Logistic Regression from SKlearn, and set two important parameters: [1] “class weight equals balanced”, which is necessary to handle our imbalanced dataset; [2] The maximum number of iterations taken for the solvers to converge. The result shows a 79.65% accuracy score, a 44.2% average precision score and a ROC value of 0.783 for the test set. The confusion matrices and performance measures are presented below.
+First, we import the Logistic Regression from SKlearn, and set two important parameters: 
+1. “class weight equals balanced”, which is necessary to handle our imbalanced dataset; 
+2. The maximum number of iterations taken for the solvers to converge. The result shows a 79.65% accuracy score, a 44.2% average precision score and a ROC value of 0.783 for the test set. The confusion matrices and performance measures are presented below.
 
 ```python
 lrmodel = LogisticRegression(class_weight='balanced',max_iter=10000) 
@@ -74,23 +76,23 @@ The results show a slight improvement compared to the initial model, with a 78.6
 For the second Grid Search, we used the L1 penalty and Elasticnet penalty, which combines L1 and L2 penalties and will give a result in between. We also used the solver “Saga”, which supports the non-smooth penalty L1 and is often used to handle the potential multinomial loss in the regression.
 
 ```python
-#### Try the 2nd GridSearch param_grid combination:
+# Try the 2nd GridSearch param_grid combination:
 lrmodel_gs = LogisticRegression(class_weight='balanced',max_iter=10000)
-#### Grid Search
+# Grid Search
 param_grid = {"C":[0.001,.009,0.01,0.05,0.09,5,10,25,50,100], 
               "penalty":["l1","elasticnet"],
               "solver": ["saga"]}
 GS_lrmodel_2 = GridSearchCV(lrmodel_gs, param_grid, scoring='average_precision', n_jobs=-1)
 GS_lrmodel_2.fit(X_train, y_train)
 lrmodel_gs2 = lrmodel_gs.set_params(**GS_lrmodel_2.best_params_)
-#### use calibrated model on train set
+# use calibrated model on train set
 lrmodel_gs2.fit(X_train, y_train)
 y_train_pred = lrmodel_gs2.predict(X_train)
 y_train_score = lrmodel_gs1.decision_function(X_train)
 cmtr_gs2 = confusion_matrix(y_train, y_train_pred)
 acctr_gs2 = accuracy_score(y_train, y_train_pred)
 aps_train_gs2 = average_precision_score(y_train, y_train_pred)
-#### test the model
+# test the model
 lrmodel_gs2.fit(X_test, y_test)
 y_test_pred = lrmodel_gs2.predict(X_test)
 y_test_score = lrmodel_gs1.decision_function(X_test)
