@@ -1,5 +1,5 @@
 # Exploratory Data Analysis
-Exploratory Data Analysis is a process to explore the dataset with no assumptions or hypotheses using non-graphical and graphical, univariate and multivariate methods. The objective is to gain intuitive insights, discover distribution characteristics, and find out missing values in the dataset.
+Exploratory Data Analysis is a process of exploring the dataset with no assumptions or hypotheses made, using non-graphical and graphical, univariate and multivariate methods. The objective is to gain intuitive insights, discover distribution characteristics and find out missing values in the dataset.
 
 ## Explorations of the Target Variable Y
 The first thing we investigate is the target variable Y, which is a Y/N binary variable measuring the campaign outcome, representing whether a client has subscribed to a long-term deposit or not during our campaign.
@@ -10,7 +10,7 @@ There are more than 40,000 observations in our dataset, and only 11.3% of them h
 
 ![Uneven distribution of positive outcome during the financial crisis.](../figures/2_2_Uneven_distribution.png)
 
-In the graph above, the thin orange line indicates the outbreak of the financial crisis. We can see a massive surge in positive campaign outcomes afterward, meaning people were actively taking advantage of certain economic factors, such as lower interest rates. We can also see a steady growth of the positive outcome rate since July 2009 from the graph below.
+In the graph above, the thin orange line indicates the outbreak of the financial crisis. We can see a massive surge in positive campaign outcomes afterwards, meaning people were actively taking advantage of certain economic factors, such as lower interest rates. We can also see a steady growth of the positive outcome rate since July 2009 from the graph below.
 
 ![Positive outcome rates by month.](../figures/2_3_Positive_rate_by_month.png)
 
@@ -41,7 +41,7 @@ In terms of Education, although most people in our dataset have above-high-schoo
 ![Outcome percentage and distribution by Education.](../figures/2_8_Education.png)
 
 ### Default
-Default is a peculiar feature that captures whether people previously had credit default, and it is a highly sensitive piece of information. As presented in the figure below, the majority of clients declare no default record, however, 8600 instances are “unknown”. Given the private nature of this feature, we believe there are hidden stories open for interpretations behind the “unknown” values and they might influence people's financial decisions. Therefore, we decide to treat the unknown values as an individual category and let it speak for itself.
+Default is a peculiar feature that captures whether people previously had defaulted on credit, and it is a highly sensitive piece of information. As presented in the figure below, the majority of clients declare no default record, however, 8600 instances are “unknown”. Given the private nature of this feature, we believe there are hidden stories open for interpretations behind the “unknown” values and they might influence people's financial decisions. Therefore, we decide to treat the unknown values as an individual category and let it speak for itself.
 
 ![Outcome percentage and distribution by Default.](../figures/2_9_Default.png)
 
@@ -65,11 +65,11 @@ The Previous feature is also very challenging, which measures the number of cont
 ![Outcome percentage and distribution by Previous.](../figures/2_13_Previous.png)
 
 ### Poutcome
-This is the feature that reports the outcomes of the previous campaign. Over 35,000 observations have missing values, as presented below. However, when combining this featuring with Pdays and Previous, there seem to be some contradictory stories.
+This is the feature that reports the outcomes of the previous campaign. Over 35,000 observations have missing values, as presented below. However, when combining this featuring with Pdays and Previous, there seem to be some contradictions.
 
 ![Poutcome distribution.](../figures/2_14_Poutcome.png)
 
- Missing values in Pdays mean that the clients were not previously contacted and therefore should not have values in Poutcome. But Poutcome has fewer missing values than Pdays dose, as seen in the second graph below. We print out the 4110 rows where clients have not been contacted but have Poutcome values and see how many times they have been contacted before. The results suggest that maybe these clients have been actually contacted, but it was more than 30 days ago, thus the contact date was not recorded.
+ Missing values in Pdays mean that the clients were not previously contacted and therefore should not have values in Poutcome. But Poutcome has fewer missing values than Pdays does, as seen in the second graph below. We print out the 4110 rows where clients have not been contacted but have Poutcome values and see how many times they have been contacted before. The results suggest that maybe these clients have been actually contacted, but it was more than 30 days ago, thus the contact date was not recorded.
 
 ![Pdays and Poutcome.](../figures/2_14_Pdays+Previous.png)
 
@@ -89,11 +89,11 @@ We also made a scatterplot across important quantitative features, with the outc
 ![Scatterplots of key numerical features.](../figures/2_16_Numerial_features.png)
 
 ### Correlation Heatmap
-With this heatmap, we get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We are worried about collinearity and try many ways to deal with these features, such as deletion or transformation, but all efforts lead to relatively poor model results. Then we realize that they are probably very important features in our dataset, so we keep them for the moment. In addition, Some features show great correlations with the outcome, such as Previous and Poutcome. We try to use PCA on the entire dataset to avoid collinearity, but again, all efforts lead to poor model results. Therefore, we decide to keep all features and make changes if needed for specific models.
+With this heatmap, we get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We were worried about collinearity and tried many ways to deal with these features, such as deletion or transformation, but all efforts lead to relatively poor model results. Then we realized that they are probably very important features in our dataset, so we kept them for the moment. In addition, some features show great correlations with the outcome, such as Previous and Poutcome. We tried to use PCA on the entire dataset to avoid collinearity, but again, all efforts led to poor model results. Therefore, we decided to keep all features and make changes if needed for specific models.
 
 ![Correlation heatmap.](../figures/2_17_Heatmap.png)
 
 ##  Early Feature Engineering Attempts
-The final figure shows a memorable snapshot of our early feature engineering attempts, with each row being one version of feature engineering. We have tried many ways to handle the data and used the same basic model to compare the results. With this spreadsheet, we can compare each others’ ideas and results before we finally decide to settle down with one version, which will be discussed next.
+The final figure shows a memorable snapshot of our early feature engineering attempts, with each row being one version of feature engineering. We have tried many ways to handle the data and used the same basic model to compare the results. With this spreadsheet, we could compare each others’ ideas and results before we finally decide to settle down with one version, which will be discussed next.
 
 ![Early feature engineering attempts.](../figures/2_18_Early_FE_attempts.png)
