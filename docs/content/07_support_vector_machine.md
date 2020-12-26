@@ -39,7 +39,7 @@ Gamma controls how far the influence of a single observation on the decision bou
 
 ### Kernel
 
-For linearly separable and almost linearly separable data, SVM works well. For data that is not linearly separable, we can project the data to space where it is linearly separable. What Kernel Trick does is utilizing the existing features and applying some transformations to create new features and calculates the nonlinear decision boundary in higher dimension by using these features.
+For linearly separable and almost linearly separable data, SVM works well. For data that is not linearly separable, we can project the data to a space where it is linearly separable. What Kernel Trick does it utilizes the existing features and applies some transformations to create new features and calculates the nonlinear decision boundary in higher dimension by using these features.
 
 ## Linear SVM
 
@@ -103,7 +103,7 @@ linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="bala
 
 ## Non-Linear SVM
 
-We use pipeline to ensure that in the cross validation set, the kernel function is only applied to training fold which is exactly the same fold used for fitting the model. We also do a comparison between SGDClassifier and Linear SVC and the latter one gave us slightly better AP rate.
+We use the pipeline to ensure that in the cross validation set, the kernel function is only applied to training fold which is exactly the same fold used for fitting the model. We also do a comparison between SGDClassifier and Linear SVC and the latter one gave us slightly better AP rate.
 
 ```python
 rbf_sgd_clf = Pipeline([
