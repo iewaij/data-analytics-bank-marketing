@@ -1,6 +1,6 @@
 # Evaluation
 
-From the Confusion Matrix, we can deride some key performance metrics. The false positive rate (FPR) measures the error rate of the negative outcomes:
+From the Confusion Matrix, we can derive some key performance metrics. The false positive rate (FPR) measures the error rate of the negative outcomes:
 
 $$
 FPR = \frac{FP}{N} = \frac{FP}{FP+TN}
