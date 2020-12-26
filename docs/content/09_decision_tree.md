@@ -68,7 +68,7 @@ RF_validation = RandomForestClassifier(random_state=42,class_weight="balanced",m
 benchmark(bank_mkt, tree_transformer, RF_validation)
 ```
 |      | Train    | Validate | Test     |
-|------|----------|----------|----------|
+| ---- | -------- | -------- | -------- |
 | TNR  | 0.866655 | 0.864865 | 0.870963 |
 | TPR  | 0.627821 | 0.629380 | 0.618534 |
 | bACC | 0.747238 | 0.747122 | 0.744749 |
@@ -160,7 +160,7 @@ benchmark(bank_mkt, tree_transformer, AB_validation)
 ```
 
 |      | Train    | Validate | Test     |
-|------|----------|----------|----------|
+| ---- | -------- | -------- | -------- |
 | TNR  | 0.985982 | 0.972650 | 0.979312 |
 | TPR  | 0.393488 | 0.262162 | 0.272630 |
 | bACC | 0.689715 | 0.617406 | 0.625971 |
@@ -196,6 +196,6 @@ plt.show()
 
 As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown (according to the Central Limit Theorem).
 
-Feature importance for both AdaBoost and the Random Forest was strikingly similar. In section 7 of the paper *Random Forests* (Breiman, 1999), the author states the following conjecture: "AdaBoost is a Random Forest". This is an interesting claim , yet to be proven or disproven but AdaBoost with the base estimator of a tree stump can in certain datasets behave very much like a Random Forest of sorts. 
+Feature importance for both AdaBoost and the Random Forest was strikingly similar. In section 7 of the paper Random Forests (Breiman, 1999), the author states the following conjecture: "AdaBoost is a Random Forest". This is an interesting claim , yet to be proven or disproven but AdaBoost with the base estimator of a tree stump can in certain datasets behave very much like a Random Forest of sorts. 
 Proven or disproven it just confirms once more what we discussed in class, that Machine Learning is a trial and error process and data speaks its own language. There are no universal truths and *ad-hoc* solutions in this exciting field.
 
