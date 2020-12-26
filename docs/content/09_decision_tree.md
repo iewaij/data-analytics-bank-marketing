@@ -12,7 +12,7 @@ Here is an outline of hyperparameters most commonly tuned for performance:
 - **criterion:**  {“gini”, “entropy”}, *default=”gini”*  ; The function to measure the quality of a split. Supported criteria are “gini” for the Gini impurity and “entropy” for the information gain. Note: this parameter is tree-specific.
 - **min_samples_leaf:** int or float, *default=1* ; The minimum number of samples required to be at a leaf node.
 - **class_weight:** {“balanced”, “balanced_subsample”},  *default=None* ; Weights associated with classes in the form `{class_label: weight}`. If not given, all classes are supposed to have weight one.
-- **random_state: **int or RandomState, *default=None*; Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node.
+- **random_state:** int or RandomState, *default=None*; Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node.
 
 It is important to note that Decision Trees can be combined to form Forests and can be used as primitive estimators in AdaBoost. This makes them redundant in terms of accuracy to these more advanced models that use them as a base. It is still however necessary to understand the individual tree estimator in order to understand how these more advance structures work. The tree is also cheaper in terms of computing requirements and can be used as an initial estimator or for feature importance analysis. 
 
@@ -22,7 +22,7 @@ To keep the scope of this paper reasonable, we will focus on elaborating on thes
 
 The Random Forest represents a collection of decision trees.  They a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of reducing the variance. This comes at the expense of a small increase in the bias and some loss of interpretability, but generally greatly boosts the performance in the final model.
 
-<img src="C:\Users\Strahinja\AppData\Roaming\Typora\typora-user-images\image-20201221174403621.png" alt="image-20201221174403621" style="zoom:50%;" />
+![Spread](../figures/09_01_chart.png)
 
 In order to prepare the data for the Forest we initially ran it through our standard transformer, explained in the pipeline section of this text.
 
@@ -67,8 +67,15 @@ RF_validation = RandomForestClassifier(random_state=42,class_weight="balanced",m
                                        max_leaf_nodes=1000)
 benchmark(bank_mkt, tree_transformer, RF_validation)
 ```
-
-<img src="C:\Users\Strahinja\AppData\Roaming\Typora\typora-user-images\image-20201221181311573.png" alt="image-20201221181311573" style="zoom:67%;" />
+|      | Train    | Validate | Test     |
+|------|----------|----------|----------|
+| TNR  | 0.866655 | 0.864865 | 0.870963 |
+| TPR  | 0.627821 | 0.629380 | 0.618534 |
+| bACC | 0.747238 | 0.747122 | 0.744749 |
+| ROC  | 0.813153 | 0.801666 | 0.801848 |
+| REC  | 0.627821 | 0.629380 | 0.618534 |
+| PRE  | 0.374147 | 0.371519 | 0.378378 |
+| AP   | 0.503536 | 0.449784 | 0.474725 |
 
 As can be seen from the table RandomForestClassifier gives strong values in AUC ROC and proves in our dataset to be one of the best performing models. 
 
@@ -110,14 +117,14 @@ An AdaBoost classifier is a meta-estimator that begins by fitting a classifier o
 
 The AdaBoost uses simple, primitive individual classifiers but in comparison with the Random Forest it gives them different, ever changing weights to their final decision. The individual primitive estimator is one of the hyperparameters
 
-- **base_estimator: **object, *default=None* ; The base estimator from which the boosted ensemble is built. Support for sample weighting is required, as well as proper `classes_` and `n_classes_` attributes. If `None`, then the base estimator is `DecisionTreeClassifier(max_depth=1)`.
+- **base_estimator:** object, *default=None* ; The base estimator from which the boosted ensemble is built. Support for sample weighting is required, as well as proper `classes_` and `n_classes_` attributes. If `None`, then the base estimator is `DecisionTreeClassifier(max_depth=1)`.
 
 The process of tuning this parameter can at starts feel counterintuitive. Why wouldn't a tree of max_depth=2 return better overall results than this stump with only depth level of one. In this question lies the beauty and genius of this model. Because many individually primitive estimators with weighted, individually adjusted  decisions will overall provide with a more effective and efficient model.
 
 The other important hyperparameters to tune in the AdaBoost Classifier are
 
-- **learning_rate: **float, *default=1* ; Learning rate shrinks the contribution of each classifier by `learning_rate`. There is a trade-off between `learning_rate` and `n_estimators`.
-- **n_estimators: **int, *default=50* ; The maximum number of estimators at which boosting is terminated. In case of perfect fit, the learning procedure is stopped early.
+- **learning_rate:** float, *default=1* ; Learning rate shrinks the contribution of each classifier by `learning_rate`. There is a trade-off between `learning_rate` and `n_estimators`.
+- **n_estimators:** int, *default=50* ; The maximum number of estimators at which boosting is terminated. In case of perfect fit, the learning procedure is stopped early.
 
 ```python
 AB= AdaBoostClassifier(n_estimators=100,random_state=42,learning_rate=1.0)
@@ -152,7 +159,16 @@ AB_validation = AdaBoostClassifier(n_estimators=800,learning_rate=0.8,random_sta
 benchmark(bank_mkt, tree_transformer, AB_validation)
 ```
 
-<img src="C:\Users\Strahinja\AppData\Roaming\Typora\typora-user-images\image-20201221184305737.png" alt="image-20201221184305737" style="zoom:67%;" />
+|      | Train    | Validate | Test     |
+|------|----------|----------|----------|
+| TNR  | 0.985982 | 0.972650 | 0.979312 |
+| TPR  | 0.393488 | 0.262162 | 0.272630 |
+| bACC | 0.689715 | 0.617406 | 0.625971 |
+| ROC  | 0.878366 | 0.743267 | 0.757640 |
+| REC  | 0.393448 | 0.262162 | 0.272630 |
+| PRE  | 0.780308 | 0.58023  | 0.628933 |
+| F1   | 0.523125 | 0.354662 | 0.380386 |
+| AP   | 0.632423 | 0.374018 | 0.423666 |
 
 In a similar fashion we derive feature importance as well:
 

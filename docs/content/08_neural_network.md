@@ -3,16 +3,13 @@
 Neural Network is a "brain structure" with the following components:
 
 1. An input layer
-2. An arbitrary amount of hidden layer
+2. An arbitrary amount of hidden layers
 3. An output layer
 4. A set of weights and biases between each layer
-5. An activation function for each hiddeb layer
+5. An activation function for each hidden layer
 
-Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of these 2 steps:
+Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of Forward Propagation and Backpropagation. The Forward Propagation is a process where the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer. The Backpropagation is to fine tune the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected outputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
 
-    Forward Propagation: the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer.
-
-    Backpropagation: fine tuning the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected ouputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
 
 ## Hyperparameters
 
@@ -20,13 +17,13 @@ Training the neural network model is to find the right values for the weights an
 
 Learning rate controls how much we are adjusting the weights of our network with respect to the loss gradient.
 
-A small learning rate will only make slight change to the weights each update and therefore requires more training epochs and travels along the downward slope slowly, whereas a large learning rate leads to rapid changes to the weight. However, a too large learning rate may cause the model to converge too quickly to a local minima or overshoot the optimal solution.
+A small learning rate will only make a slight change to the weights each update and therefore requires more training epochs and travels along the downward slope slowly, whereas a large learning rate leads to rapid changes to the weight. However, a too large learning rate may cause the model to converge too quickly to a local minimum or overshoot the optimal solution.
 
 ### Hidden layer sizes
 
-This hyperparameter defines how many hidden layers and how many neurons on each layer we want to have when we are building the achitechture of the neural network. 
+This hyperparameter defines how many hidden layers and how many neurons on each layer we want to have when we are building the architecture of the neural network. 
 
-We want to keep the neural network archtechture as simple as possible so that it can be trained fast and well generalized and meanwhile, we also need it to classify the input data well, which may require a relatively complex architecture.
+We want to keep the neural network architecture as simple as possible so that it can be trained fast and well generalized and meanwhile, we also need it to classify the input data well, which may require a relatively complex architecture.
 
 ### L2 Regularization
 
@@ -38,7 +35,7 @@ The regularization term will drive down the weights of the matrix and decorrelat
 
 Activation functions are mathematical equations attached to each neuron in the network and they determine the output of the learning model, the accuracy and the computational efficiency of training the model.
 
-With the use of Non-linear activation function, we are able to create complex mapping between the network's inputs and outputs which are essential for learning and modeling complex data.
+With the use of Non-linear activation function, we can create a complex mapping between the network's inputs and outputs which are essential for learning and modelling complex data.
 
 ## GridSearch
 
@@ -74,11 +71,20 @@ mlp_trained=MLPClassifier(solver ="lbfgs",
 nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 ```
 
-![Result](https://i.imgur.com/oTbqRaz.png)
+|      | Train    | Validate | Test     |
+| ---: | :------  | :------  |:------   |
+|  TNR | 0.984219 | 0.959117 | 0.969896 |
+|  TPR | 0.470192 | 0.295148 | 0.310145 |
+| bACC | 0.727206 | 0.627133 | 0.640120 |
+|  ROC | 0.900857 | 0.730865 | 0.746097 |
+|  REC | 0.470192 | 0.295148 | 0.310345 |
+|  PRE | 0.790935 | 0.478166 | 0.566929 |
+|  AP  | 0.688217 | 0.354089 | 0.396211 |
+
 
 ## Reflections
 
-In machine learning, data can be roughly divided into four categories: Image, Sequence , Graph and Tabular data. The first three types of data have obvious patterns, such as the spatial locality of images and graphs, the contextual relationship and timing dependence of sequences, and so on. However,in tabular data, each feature represents an attribute, such as gender, price, etc. There is generally no obvious and common pattern between features.
+In machine learning, data can be roughly divided into four categories: Image, Sequence, Graph and Tabular data. The first three types of data have obvious patterns, such as the spatial locality of images and graphs, the contextual relationship and timing dependence of sequences, and so on. However, in tabular data, each feature represents an attribute, such as gender, price, etc. There is generally no obvious and common pattern between features.
 
 Neural networks are more suitable for the first three types of data, that is, data with obvious patterns. Because we can design the corresponding network structure according to the data pattern, so as to select features more efficiently. For example, the  CNN (Convolutional Neural Network) is designed for images, and the RNN (Recurrent Neural Network) is designed for sequence data.
 

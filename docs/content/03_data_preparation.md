@@ -34,7 +34,7 @@ bank_mkt = bank_mkt.drop_duplicates().reset_index(drop=True)
 
 ## Partition Data
 
-After importing the data, we need split the dataset into train set and test set. The models will be trained and tuned on the trainning set and test set will be used only for final validation purposes. However, simply sampling the dataset may lead to unrepresenatative partition given that our dataset is imbalanced and clients have different features. To solve this problem, `scikit-learn` provides a useful function `StratifiedShuffleSplit()` to select representative data into test set and train set, which is shown below as sample code:
+After importing the data, we need to split the dataset into train set and test set. The models will be trained and tuned on the trainning set and test set will be used only for final validation purposes. However, simply sampling the dataset may lead to unrepresenatative partition given that our dataset is imbalanced and clients have different features. To solve this problem, `scikit-learn` provides a useful function `StratifiedShuffleSplit()` to select representative data into test set and train set, which is shown below as sample code:
 
 ```python
 from sklearn.model_selection import StratifiedShuffleSplit
@@ -54,7 +54,7 @@ y_test = test_set["y"].astype("int").to_numpy()
 
 ## Build Custom Preprocess Pipeline
 
-After data partition, the train set and test set should be preprocessed into sutiable data type and shape for machine learning models. The train set and test set should also be preprocessed seperately to avoid leaking test sample infomation into train set. If we scale data using both train set and test set, the scaling will ultimately be impacted by some test samples, which is not disired. To avoid the leakage, `scikit-learn` provides pipeline functionality that allows different treatments on train set and test set using `fit_transform()` and `transform()` as demostrated in the code below:
+After data partition, the train set and test set should be preprocessed into sutiable data type and shape for machine learning models. The train set and test set should also be preprocessed seperately to avoid leaking test sample infomation into the train set. If we scale data using both train set and test set, the scaling will ultimately be impacted by some test samples, which is not disired. To avoid the leakage, `scikit-learn` provides pipeline functionality that allows different treatments on train set and test set using `fit_transform()` and `transform()` as demostrated in the code below:
 
 ```python
 # preprocessor is a custom pipeline for preprocessing data
@@ -62,7 +62,7 @@ X_train = preprocessor.fit_transform(X_train, y_train)
 X_test = preprocessor.transform(X_test)
 ```
 
-Note that `preprocessor` is a custom preprocessing pipeline that we wrote for this specific project and can be named differently. A simplest preprocessor is a function that do some transformations in `pandas` as the following code:
+Note that `preprocessor` is a custom preprocessing pipeline that we wrote for this specific project and can be named differently. A simplest preprocessor is a function that does some transformations in `pandas` as the following code:
 
 ```python
 from sklearn.preprocessing import FunctionTransformer
