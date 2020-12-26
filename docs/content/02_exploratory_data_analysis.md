@@ -89,7 +89,7 @@ We also made a scatterplot across important quantitative features, with the outc
 ![Scatterplots of key numerical features.](../figures/2_16_Numerial_features.png)
 
 ### Correlation Heatmap
-With this heatmap, we get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We were worried about collinearity and tried many ways to deal with these features, such as deletion or transformation, but all efforts lead to relatively poor model results. Then we realized that they are probably very important features in our dataset, so we kept them for the moment. In addition, some features show great correlations with the outcome, such as Previous and Poutcome. We tried to use PCA on the entire dataset to avoid collinearity, but again, all efforts led to poor model results. Therefore, we decided to keep all features and make changes if needed for specific models.
+With this heatmap, we get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We were worried about collinearity and tried many ways to deal with these features, such as deletion or transformation, but all efforts led to relatively poor model results. Then we realized that they are probably very important features in our dataset, so we kept them for the moment. In addition, some features show great correlations with the outcome, such as Previous and Poutcome. We tried to use PCA on the entire dataset to avoid collinearity, but again, all efforts led to poor model results. Therefore, we decided to keep all features and make changes if needed for specific models.
 
 ![Correlation heatmap.](../figures/2_17_Heatmap.png)
 
