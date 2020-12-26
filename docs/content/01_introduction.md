@@ -2,7 +2,7 @@
 
 ## Understanding the Project
 
-A retail bank has a customer call centre, through which the bank communicates with potential new clients and offers term deposits . Term deposits are defined as 
+A retail bank has a customer call centre as one of its units, through which the bank communicates with potential new clients and offers term deposits. Term deposits are defined as such,
 
 > "A term deposit is a fixed-term investment that includes the deposit of money into an account at a financial institution. Term deposit investments usually carry short-term maturities ranging from one month to a few years and will have varying levels of required minimum deposits." 
 
@@ -12,11 +12,11 @@ The motivation behind the research is clear, by analysing previous phone calls t
 1. The efficiency dimension, or in other words how to reduce the number of phone calls the bank is performing and therefor reduce the costs associated with telemarketing
 2. The effectiveness dimension, or in other words how to potentially improve the result and get more clients or at least the same number to deposit their money with our bank
 
-In order to fully understand the objectives at hand we must also appreciate the economic and historic context from which we draw our data. It is the year 2008 and the world is about to be plunged in the deepest economic recession since the 1930s. After the credit default of The Lehman Brothers the financial world was shook to its core, and governments as well as central banks started unprecedented levels of quantitative easing  in order to save jobs and revitalize the economy. 
+In order to fully understand the objectives at hand we must also appreciate the economic and historic context from which we draw our data. It is the year 2008 and the world is about to be plunged in the deepest economic recession since the 1930s. After the credit default of The Lehman Brothers, the financial world was shook to its core and governments as well as central banks started unprecedented levels of quantitative easing in order to save jobs and revitalize the economy. 
 
 ![Spread](../figures/1_1_TED_spread.png)
 
-As can be seen on the above picture this caused a huge spike in the famous TED spread one of the leading indicators for credit risk, since the difference between a riskless investment (T-Bill) and the risk banks transfer when loaning to each other. It takes no further economic knowledge to conclude that such an event will have major impact not only on the result of the telemarketing campaign but the representability and timelessness of the data connected through it.
+As can be seen on the above picture this caused a huge spike in the famous TED spread, one of the leading indicators for credit risk, since it represents the difference between a riskless investment (T-Bill) and the risk banks transfer when loaning to each other. The wider the spread, the more default risk is priced into the borrowing market. It takes no further economic knowledge to conclude that such an increase in risk will have major impact not only on the result of the telemarketing campaign but the representability and timelessness of the data gathered through it.
 
 At this point in time it would be a good idea to raise a few questions that we plan on answering through this paper.
 
