@@ -114,13 +114,14 @@ X_train = hot_preprocessor.fit_transform(X_train, y_train)
 X_test = hot_preprocessor.transform(X_test)
 ```
 
-## From Pipeline To Workflow
+## Workflows with Pipelines
 
-In our project, the data partition and preprocessing is combined by the function `split_dataset()` which accepts `preprocessor` as a parameter. Its functionality will be further extended by the benchmarking function `benchmark()` which accepts `data`, `preprocessor`, `clf` as parameters and output model performance. Therefore, the ideal workflow will be:
+In our project, the data partition and preprocessing is combined by the function `split_dataset()` which accepts `preprocessor` as a parameter. Its functionality is further extended by the benchmarking function `benchmark()` which accepts `data`, `preprocessor`, `clf` as parameters and output model performance on train, validation and test set. With these functions, a ideal workflow will be:
 
 1. Import data using `import_dataset()`;
-2. Build a proper preprocessing pipeline `preprocessor`;
-3. Build and tune an estimator `clf`;
-4. Show model performance by calling `benchmark(data, preprocessor, clf)`.
+2. Build a preprocessing pipeline `preprocessor`;
+3. Build an estimator `clf`;
+4. Tune the estimator by optimising model's performance on the train and validation set using `benchmark(data, preprocessor, clf)` or `scikit-learn`'s grid search functions;
+5. Output the model's final performance on the test set using `benchmark(data, preprocessor, clf)`.
 
 Such workflow will be extensively reflected in the following chapters.
