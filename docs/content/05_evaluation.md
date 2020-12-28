@@ -6,10 +6,10 @@ $$
 \text{Accuracy} = \frac{\text{Number of Correct Predictions}}{\text{Number of Total Predictions}}
 $$
 
-However, accuracy score may be too simplistic. First, it does not reflect the unbalanced outcome of our dataset. If the model predict every outcome as negative while the majority of the outcomes is negative, the model can still achieve a very high accuracy score. Second, accuracy score does not distinct false positive and false negative errors which may cost the business differently. In the bank marketing context, missing a potential customer (false negative) costs more than phoning an uninterested buyer (false positive). These problems can be solved by using confusion matrix and utilising more metrics for model evaluation. 
+However, the accuracy score may be too simplistic. First, it does not reflect the unbalanced outcome of our dataset. If the model predicts every outcome as negative while the majority of the outcomes is negative, the model can still achieve a very high accuracy score. Second, the accuracy score does not distinct false positive and false negative errors which may cost the business differently. In the bank marketing context, missing a potential customer (false negative) costs more than phoning an uninterested buyer (false positive). These problems can be solved by using a confusion matrix and utilising more metrics for model evaluation. 
 
 ## Confusion Matrix
-The confusion matrix is a contingency table that outputs the counts of the true positive (TP), true negative (TN), false positive (FP), and false negative (FN) predictions. We can use an analogy of fishing to gain more intuitions: The sea consists of fish and rubbish. A fisherman throws the net into the sea and hopes to capture as many fish and as little rubbish as possible. After the fisherman retrives the net, the fish in the net (the wanted capture) is true positive outcome, the rubbish in the net (the unwanted capture) is false positive outcome, the fish in the sea (the wanted leftover) is false nagetive outcome, and the rubbish in the sea (the unwanted leftover) is the true negative outcome.
+The confusion matrix is a contingency table that outputs the counts of the true positive (TP), true negative (TN), false positive (FP), and false negative (FN) predictions. We can use an analogy of fishing to gain more intuitions: The sea consists of fish and rubbish. A fisherman throws the net into the sea and hopes to capture as many fish and as little rubbish as possible. After the fisherman retrieves the net, the fish in the net (the wanted capture) is a true positive outcome, the rubbish in the net (the unwanted capture) is a false positive outcome, the fish in the sea (the wanted leftover) is a false negative outcome, and the rubbish in the sea (the unwanted leftover) is the true negative outcome.
 
 ![Confusion Matrix](../figures/5_1_Conf_Mat.png)
 
@@ -40,7 +40,7 @@ conf_ax.set_ylabel("True")
 
 From the Confusion Matrix, we can derive some key performance metrics such as precision and recall. 
 
-Precision (PRE) measures the accuracy of the predicted positive outcomes. As in the fisherman analogy, precison is the fish in the net divided by the total number of objects (fish and rubbish) in the net.
+Precision (PRE) measures the accuracy of the predicted positive outcomes. As in the fisherman analogy, precision is the fish in the net divided by the total number of objects (fish and rubbish) in the net.
 
 $$
 PRE = \frac{TP}{TP+FP}
@@ -58,7 +58,7 @@ $$
 F_1 = 2 \cdot \frac{PRE \times REC}{PRE + REC}
 $$
 
-The trade-off logic also applies to the true negative rate (TNR) and the true positive rate (TPR). The true negative rate measures the accuracy for the negative samples and the true positive rate measures the accuracy for the negative samples. The false positive rate is simply one minus the true positive rate.
+The trade-off logic also applies to the true negative rate (TNR) and the true positive rate (TPR). The true negative rate measures the accuracy of the negative samples and the true positive rate measures the accuracy of the negative samples. The false positive rate is simply one minus the true positive rate.
 
 $$
 \begin{aligned}
@@ -86,15 +86,51 @@ A performance metric table of classifiers on bank marketing dataset is shown bel
 | PRE  |            0.112659 |          0.111923 |            0.607535 |    0.47973 |      0.352087 |            0.255317 |
 | F1   |            0.202505 |          0.182586 |            0.310532 |   0.070876 |        0.4475 |            0.373981 |
 
-## Metrics From Threshold
+## Metrics From Decision Function
 
-As hinted in the precision-recall trade off, fisherman can narrow or lossen his net. Bank may be happy to capture more potential customers by phoning more clients.Unfortunately, such threshold adjusting mechanism is not reflected by the metrics we have covered. This section introduces receiver operating characteristic (ROC) and average precision (AP) as alternative metrics that incoporate different model thresholds.
+As hinted in the precision-recall trade-off, fisherman can narrow or loss his net. Bank may be happy to capture more potential customers by phoning more clients. A classifier can also adjust its threshold and therefore achieves different precision and recall results. For example, a logistic regression classifier uses the following decision function to distinct the label 0 and 1. When the result of the decision function is 0, the probability for each label is 0.5.
 
-Average precision (AP) summarises precision-recall plot as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight.
+$$
+\text{Decision Function} = b_0 + b_1 x_1 + ... +b_k x_k
+$$
+
+The following code plots the logistic regression's precision and recall against the threshold.
+
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import precision_recall_curve
+
+bank_mkt = import_dataset("../data/BankMarketing.csv")
+preprocessor = FunctionTransformer(dftransform)
+X_train, y_train, *other_sets = split_dataset(bank_mkt, preprocessor)
+clf = LogisticRegression(class_weight="balanced")
+y_score = cross_val_predict(clf, X_train, y_train, cv=5, method="decision_function")
+f, ax = plt.subplots()
+precisions, recalls, thresholds = precision_recall_curve(y_train, y_score)
+pre_rec_df = pd.DataFrame(
+    {"Precision": precisions[:-1], "Recall": recalls[:-1]}, index=thresholds
+)
+pre_rec_ax = pre_rec_df.plot.line(ax=ax, ylim=(-0.05, 1.05))
+threshold = 0
+pre_rec_ax.plot((threshold, threshold), (-2, 2), linestyle="--", linewidth=1)
+```
+
+![Precision-recall curve against the threshold.](../figures/5_3_Pre_Rec_Logi.png)
+
+We can also plot precision and recall against each other as shown in the following graph. For a marketing campaign, the bank wants to capture as many potential clients as possible given certain budget constraints. Therefore the precision-recall curve should be pushed as far as possible. However, such a mechanism is not reflected by the metrics derived from confusion matrix and F1 can be biased towards models with equal precision and recall.
+
+![Precision-recall curve with F1 contour.](../figures/5_4_Pre_Rec_F1.svg)
+
+To solve this problem, we introduce receiver operating characteristic (ROC) and average precision (AP) as alternative metrics that incorporate model thresholds. Average precision (AP) summarises the area under the precision-recall curve as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight.
 
 $$
 AP = \sum_{n} (REC_n - REC_{n-1})PRE_n
 $$
 
-A receiver operating characteristic (ROC) is a graphical plot which illustrates the performance of a binary classifier system as its discrimination threshold is varied. It is created by plotting TPR against FPR at various threshold settings.
+A receiver operating characteristic (ROC) adopts the same logic by plotting TPR against FPR at various threshold settings and calculating the area under the curve, plotted as follows. 
 
+![ROC curve with bACC contour.](../figures/5_5_ROC_bACC.svg)
+
+## Performance Evaluation in Practice
+
+In practice, we utilise multiple metrics to evaluate and optimise our models. When metrics show conflicting results, we prioritise AP for two reasons. First, AP has a range between the minority class percentage and 1. It gives a more straightforward picture of prediction improvements in an imbalanced dataset. Second, AP puts more weight on positive outcomes. In our case, losing a potential subscriber costs the bank more than phoning an uninterested buyer. AP matches this reality more when we evaluate model performance.

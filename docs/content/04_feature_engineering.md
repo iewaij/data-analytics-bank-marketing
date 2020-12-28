@@ -1,10 +1,10 @@
 # Feature Engineering
 
-Feature Engineering is a practice of using domain knowleage to incorporate more features and improve machine learning models. Given that the dataset have relatively few featrues and rows, dimensionality reduction will not be applied. We instead foucus on improving feature quality and generating new features, such as incorporating dates. As a result, our feature engineering approach includes missing value imputaion, feature generation, feature transformations and adjusting sample weights.
+Feature Engineering is a practice of using domain knowledge to incorporate more features and improve machine learning models. Given that the dataset has relatively few features and rows, dimensionality reduction will not be applied. We instead focus on improving feature quality and generating new features, such as incorporating dates. As a result, our feature engineering approach includes missing value imputation, feature generation, feature transformations and adjusting sample weights.
 
 ## Incorporate Dates
 
-The most important feature in the dataset is the date of telemarketing which gives us the economic context. However, the dataset only includes `month` and `day_of_week` while `year` is missing. With the help of the dataset description, we find that the dataset is ordered by date and the telemarketing was conducted from May 2008 to November 2010. Even without such description, we can still reverse engineer the year information using the economic index, such as `CPI`. By manually inspecting `month`, we can infer each row's `year`.
+The most important feature in the dataset is the date of telemarketing which gives us the economic context. However, the dataset only includes `month` and `day_of_week` while `year` is missing. With the help of the dataset description, we find that the dataset is ordered by date and the telemarketing was conducted from May 2008 to November 2010. Even without this description, we can still reverse engineer the year information using the economic index, such as `CPI`. By manually inspecting `month`, we can infer each row's `year`.
 
 ```python
 bank_mkt = import_dataset("../data/BankMarketing.csv")
@@ -20,7 +20,7 @@ With `year` and `month`, we can approximate each marketing call's date as the st
 bank_mkt["date"] = pd.to_datetime(bank_mkt[["month", "year"]].assign(day=1))
 ```
 
-Simply feeding `date` into the models neither incorporate much information nor improve the model performance. Setting focal points instead is a much better way to treat date information. As discussed in chapter 2, there is a surge of success rate after the financial crisis. Therefore, we use the date when Lehman Brothers filed bankruptcy as the focal point and create a new feature `days` which is the days before or after Lehman Brothers bankruptcy.
+Simply feeding `date` into the models neither incorporates much information nor improve the model performance. Setting focal points instead is a much better way to treat date information. As discussed in chapter 2, there is a surge in success rate after the financial crisis. Therefore, we use the date when Lehman Brothers filed bankruptcy as the focal point and create a new feature `days` which is the days before or after Lehman Brothers bankruptcy.
 
 ```python
 bank_mkt["lehman"] = pd.to_datetime("2008-09-15")
@@ -30,7 +30,7 @@ bank_mkt["days"] = bank_mkt["days"].dt.days
 
 ## Impute Missing Values
 
-There are several strategies to handle the missing values. The simplest way is to impute missing value as a different category, such as `-1`, depends on the context. For categorical data, `-1` is used. For `pdays`, both `999` and `-999` are used. Clients who have been contacted but do not have `pdays` record should be encoded as `999`, while clients who have not been contacted should be encoded as `-999`.
+There are several strategies to handle missing values. The simplest way is to impute missing value as a different category, such as `-1`, depends on the context. For categorical data, `-1` is used. For `pdays`, both `999` and `-999` are used. Clients who have been contacted but do not have `pdays` record should be encoded as `999`, while clients who have not been contacted should be encoded as `-999`.
 
 ```python
 # Clients who have been contacted but do not have pdays record should be encoded as 999
@@ -57,7 +57,7 @@ X_train = freq_encoder.fit_transform(X_train, y_train)
 X_test = freq_encoder.transform(X_test), axis=1)
 ```
 
-Another imputation method worth mentioning is iterative imputaion which attempts to estimate missing values. However, this approach may bring overfitting to the models.
+Another imputation method worth mentioning is iterative imputation which attempts to estimate missing values. However, this approach may bring overfitting to the models.
 
 ```python
 from sklearn.experimental import enable_iterative_imputer
@@ -80,7 +80,7 @@ X_test = ite_encoder.transform(X_test), axis=1
 ```
 
 ## Drop Demographic Features
-To our surprise, the biggest improvement is achived by dropping demographic featrues. There are several reasons that contributes to this result. First, the financial crisis and the debt crisis in Portugal may have lowered people’s expectation of their future income and altered their investment choice. Thus, people reacted differently to term deposit after the crisis and demographic data does not matter anymore. Second, we do not have enough data in 2009 and 2010 to learn this abnormal shift of attitude and therefore demographic data becomes noise.
+To our surprise, the biggest improvement is achieved by dropping demographic features. Several reasons contribute to this result. First, the financial crisis and the debt crisis in Portugal may have lowered people’s expectation of their future income and altered their investment choice. Thus, people reacted differently to the term deposit after the crisis and demographic data does not matter anymore. Second, we do not have enough data in 2009 and 2010 to learn this abnormal shift of attitude and therefore demographic data becomes noise.
 
 ```python
 drop_features = ["age",
@@ -94,5 +94,3 @@ drop_features = ["age",
                  "y"]
 bank_mkt = bank_mkt.drop(drop_features, axis=1)
 ```
-
-## Sample Weights

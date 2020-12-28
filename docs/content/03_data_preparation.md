@@ -1,6 +1,6 @@
 # Data Preparation and Pipelines
  
-After inspecting and exploring the dataset, this chapter focuses on data preparation and pipelines which build the foundation for the following chapters. Data preparation or data transfromation is a process that transforms the data into proper types, shapes and sets. For example, categorical data are usually stored as strings in the original dataset and can not be fitted in `scikit-learn` models. To solve this issue, We need to utilise `pandas` or `scikit-learn` to transform such data into integers. It should be noted that simply transforming data in a `jupyter` notebook is not a best practice because such code is not reusable and readable. In our analytical practice, we wrap data preparation code into documented and modular `python` functions and `scikit-learn` pipelines. Such practice ensures that all collaborators can build and evaluate models from the same ground. The high level overview of the data preparation and pipeline is shown in the flow chart. The code implementation will be provided in the appendix section.
+After inspecting and exploring the dataset, this chapter focuses on data preparation and pipelines which build the foundation for the following chapters. Data preparation or data transformation is a process that transforms the data into proper types, shapes and sets. For example, categorical data are usually stored as strings in the original dataset and can not be fitted in `scikit-learn` models. To solve this issue, We need to utilise `pandas` or `scikit-learn` to transform such data into integers. It should be noted that simply transforming data in a `jupyter` notebook is not a best practice because such code is not reusable and readable. In our analytical practice, we wrap the data preparation procesedures into documented and modular `python` functions and `scikit-learn` pipelines. Such practice ensures that all collaborators can build and evaluate models from the same ground. The high-level overview of the data preparation and pipeline is shown in the flow chart. The code implementation will be provided in the appendix section.
 
 ![Data Life Cycle](../figures/3_1_Data_Lifecycle.png)
 
@@ -34,7 +34,7 @@ bank_mkt = bank_mkt.drop_duplicates().reset_index(drop=True)
 
 ## Partition Data
 
-After importing the data, we need to split the dataset into train set and test set. `scikit-learn` models will then be trained and tuned on the trainning set. We only use test set for final validation purposes. However, simply sampling the dataset may lead to unrepresenatative partition given that our dataset is imbalanced and clients have different features. To solve this problem, `scikit-learn` provides a useful function `StratifiedShuffleSplit()` to select representative data into test set and train set, which is shown below as sample code:
+After importing the data, we need to split the dataset into the train set and test set. `scikit-learn` models will then be trained and tuned on the train set. We only use the test set for final validation purposes. However, simply sampling the dataset may lead to unrepresentative partition given that our dataset is imbalanced and clients have different features. To solve this problem, `scikit-learn` provides a useful function `StratifiedShuffleSplit()` to select representative data into the test set and train set, which is shown below as a sample code:
 
 ```python
 from sklearn.model_selection import StratifiedShuffleSplit
@@ -54,7 +54,7 @@ y_test = test_set["y"].astype("int").to_numpy()
 
 ## Build Custom Preprocess Pipeline
 
-After data partition, the train set and test set should be preprocessed into sutiable data type and shape for machine learning models. The train set and test set should also be preprocessed seperately to avoid leaking test sample infomation into the train set. If we scale data using both train set and test set, the scaling will ultimately be impacted by some test samples, which is not disired. To avoid the leakage, `scikit-learn` provides pipeline functionality that allows different treatments on train set and test set using `fit_transform()` and `transform()` as demostrated in the code below:
+After data partition, the train set and test set should be preprocessed into suitable data type and shape for machine learning models. The train set and test set should also be preprocessed separately to avoid leaking test sample information into the train set. If we scale data using both the train set and test set, the scaling will ultimately be impacted by some test samples, which is not desired. To avoid the leakage, `scikit-learn` provides pipeline functionality that allows different treatments on train set and test set using `fit_transform()` and `transform()` as demonstrated in the code below:
 
 ```python
 # preprocessor is a custom pipeline for preprocessing data
@@ -62,7 +62,7 @@ X_train = preprocessor.fit_transform(X_train, y_train)
 X_test = preprocessor.transform(X_test)
 ```
 
-Note that `preprocessor` is a custom preprocessing pipeline that we wrote for this specific project and can be named differently. A simplest preprocessor is a function that does some transformations in `pandas` as the following code:
+Note that `preprocessor` is a custom preprocessing pipeline that we wrote for this specific project and can be named differently. The simplest preprocessor is a function that does some transformations in `pandas` as the following code:
 
 ```python
 from sklearn.preprocessing import FunctionTransformer
@@ -79,7 +79,7 @@ X_train = encode_preprocessor.fit_transform(X_train, y_train)
 X_test = encode_preprocessor.transform(X_test)
 ```
 
-Preprocessing pipeline can be extended according to our needs. For example, we might need one-hot encode categorical features and standardize numerical features after transforming categorical and boolean features into numeric values.
+Preprocessing pipeline can be extended according to our needs. For example, we might need one-hot to encode categorical features and standardize numerical features after transforming categorical and boolean features into numeric values.
 
 ```python
 from sklearn.preprocessing import StandardScaler
@@ -116,7 +116,7 @@ X_test = hot_preprocessor.transform(X_test)
 
 ## Workflows with Pipelines
 
-In our project, the data partition and preprocessing is combined by the function `split_dataset()` which accepts `preprocessor` as a parameter. Its functionality is further extended by the benchmarking function `benchmark()` which accepts `data`, `preprocessor`, `clf` as parameters and output model performance on train, validation and test set. With these functions, a ideal workflow will be:
+In our project, the data partition and preprocessing is combined by the function `split_dataset()` which accepts `preprocessor` as a parameter. Its functionality is further extended by the benchmarking function `benchmark()` which accepts `data`, `preprocessor`, `clf` as parameters and output model performance on train, validation and test set. With these functions, an ideal workflow will be:
 
 1. Import data using `import_dataset()`;
 2. Build a preprocessing pipeline `preprocessor`;
@@ -124,4 +124,4 @@ In our project, the data partition and preprocessing is combined by the function
 4. Tune the estimator by optimising model's performance on the train and validation set using `benchmark(data, preprocessor, clf)` or `scikit-learn`'s grid search functions;
 5. Output the model's final performance on the test set using `benchmark(data, preprocessor, clf)`.
 
-Such workflow will be extensively reflected in the following chapters.
+Such a workflow will be extensively reflected in the following chapters.

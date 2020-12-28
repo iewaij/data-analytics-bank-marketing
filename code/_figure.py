@@ -221,7 +221,7 @@ def conf_mat_knn():
     preprocessor = FunctionTransformer(dftransform)
     X_train, y_train, *other_sets = split_dataset(bank_mkt, preprocessor)
     clf = KNeighborsClassifier(n_neighbors=10)
-    y_pred = cross_val_predict(clf, X_train, y_train, cv=5, n_jobs=-1)
+    y_pred = cross_val_predict(clf, X_train, y_train, cv=5)
     conf_mat = confusion_matrix(y_train, y_pred)
     f, ax = plt.subplots()
     conf_ax = sns.heatmap(
@@ -232,7 +232,29 @@ def conf_mat_knn():
     f.savefig("../docs/figures/5_2_Conf_Mat_KNN.png")
 
 
+def pre_rec_threshold():
+    from sklearn.model_selection import cross_val_predict
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import precision_recall_curve
+
+    bank_mkt = import_dataset("../data/BankMarketing.csv")
+    preprocessor = FunctionTransformer(dftransform)
+    X_train, y_train, *other_sets = split_dataset(bank_mkt, preprocessor)
+    clf = LogisticRegression(class_weight="balanced")
+    y_score = cross_val_predict(clf, X_train, y_train, cv=5, method="decision_function")
+    f, ax = plt.subplots()
+    precisions, recalls, thresholds = precision_recall_curve(y_train, y_score)
+    pre_rec_df = pd.DataFrame(
+        {"Precision": precisions[:-1], "Recall": recalls[:-1]}, index=thresholds
+    )
+    pre_rec_ax = pre_rec_df.plot.line(ax=ax, ylim=(-0.05, 1.05))
+    threshold = 0
+    pre_rec_ax.plot((threshold, threshold), (-2, 2), linestyle="--", linewidth=1)
+    f.savefig("../docs/figures/5_3_Pre_Rec_Logi.png", bbox_inches="tight")
+
+
 if __name__ == "__main__":
     # eda_figures()
-    conf_mat_annot()
-    conf_mat_knn()
+    # conf_mat_annot()
+    # conf_mat_knn()
+    pre_rec_threshold()
