@@ -8,7 +8,7 @@ $$h(x)= \frac{1}{1+e^{ -\theta_{0}+\theta_{1}x_{1}+\theta_{2}x_{2}+\theta_{3}x_{
 ## Fitting and Testing
 First, we import the Logistic Regression from SKlearn, and set two important parameters: 
 1. “class weight equals balanced”, which is necessary to handle our imbalanced dataset; 
-2. The maximum number of iterations taken for the solvers to converge. The result shows a 79.65% accuracy score, a 44.2% average precision score and a ROC value of 0.783 for the test set. The confusion matrices and performance measures are presented below.
+2. The maximum number of iterations taken for the solvers to converge. The result shows a 79.65% accuracy score, a 44.2% average precision score and a ROC AUC value of 0.783 for the test set. The confusion matrices and performance measures are presented below.
 
 ```python
 lrmodel = LogisticRegression(class_weight='balanced',max_iter=10000) 
@@ -35,7 +35,7 @@ print('Accuracy Score:',accte)
 
 ![Confusion matrix for Test set.](../figures/6_1_LR_CM_Test.png)
 
-![ROC & AUC.](../figures/6_1_LR_ROC.png)
+![ROC](../figures/6_1_LR_ROC.png)
 
 ## Grid Search
 Next, we jumped right into Grid Search to find the optimal parameters for the model. For the first Grid Search, we picked two parameters: the penalty L2 and its inverse parameter C. The L1, L2 regularisation parameters are used to avoid overfitting of data due to either collinearity or high-dimensionality. They both shrink the estimates of the regression coefficients towards zero. When two predictors are highly correlated, L1 will pick one of the two predictors, and in contrast, L2 will keep both of them and jointly shrink the coefficients together a little bit. Parameter C is the inverse of the regularization strength, with smaller values leading to stronger regularization. 
