@@ -37,7 +37,7 @@ Activation functions are mathematical equations attached to each neuron in the n
 
 With the use of Non-linear activation function, we can create a complex mapping between the network's inputs and outputs which are essential for learning and modelling complex data.
 
-## GridSearch
+## Grid Search
 
 ```python
 mlp=MLPClassifier(random_state=42,max_iter=1000)
@@ -72,14 +72,14 @@ nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 ```
 
 |      | Train    | Validate | Test     |
-| ---: | :------  | :------  |:------   |
+| ---: | :------- | :------- | :------- |
 |  TNR | 0.984219 | 0.959117 | 0.969896 |
 |  TPR | 0.470192 | 0.295148 | 0.310145 |
 | bACC | 0.727206 | 0.627133 | 0.640120 |
 |  ROC | 0.900857 | 0.730865 | 0.746097 |
 |  REC | 0.470192 | 0.295148 | 0.310345 |
 |  PRE | 0.790935 | 0.478166 | 0.566929 |
-|  AP  | 0.688217 | 0.354089 | 0.396211 |
+|   AP | 0.688217 | 0.354089 | 0.396211 |
 
 
 ## Reflections
@@ -91,8 +91,6 @@ Neural networks are more suitable for the first three types of data, that is, da
 For tabular data where there is no obvious pattern, an inefficient fully connected network may not work as well as the more traditional machine learning models such as Gradient Boosting Tree. 
 
 In the case of tabular data, feature engineering might be more important because it integrates the prior knowledge into the data and makes the model understand the data better.
-
-## References
 
 [@loy_how_2020]
 

@@ -33,6 +33,7 @@ For client profile features, first, we plot the distribution of age relative to 
 
 ### Job
 This next graph shows the outcome Y percentage in each job group, with the orange color denoting positive outcomes. On the right is the instance count distribution of each group. There is a large percentage of technicians, blue-collar workers and admins. However, it is students and retired people that are most likely to say ‘YES’ to the long-term deposit.
+
 ![Outcome percentage and distribution by Job.](../figures/2_7_Job.png)
 
 ### Education
@@ -56,7 +57,8 @@ With regard to the months in which the last contact was made, the distribution c
 ![Outcome percentage and distribution by Month.](../figures/2_11_Month.png)
 
 ### Pdays
-Next is the most challenging feature, Pdays, which represents the number of days passed since the last contact with a client. It has almost 40,000 missing values. As demonstrated in the graph below, the "Na" category on the top dominates the entire distribution. Simultaneously, the other 1500 rows that do have values seem to show positive relationships with the outcome. We spent a significant amount of time and effort to deal with this feature, and this process will be discussed in the feature engineering section. 
+Next is the most challenging feature, Pdays, which represents the number of days passed since the last contact with a client. It has almost 40,000 missing values. As demonstrated in the graph below, the "Na" category on the top dominates the entire distribution. Simultaneously, the other 1500 rows that do have values seem to show positive relationships with the outcome. We spent a significant amount of time and effort to deal with this feature, and this process will be discussed in the feature engineering section.
+
 ![Outcome percentage and distribution by Pdays.](../figures/2_12_Pdays.png)
 
 ### Previous
@@ -92,8 +94,3 @@ We also made a scatterplot across important quantitative features, with the outc
 With this heatmap, we get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We were worried about collinearity and tried many ways to deal with these features, such as deletion or transformation, but all efforts led to relatively poor model results. Then we realized that they are probably very important features in our dataset, so we kept them for the moment. In addition, some features show great correlations with the outcome, such as Previous and Poutcome. We tried to use PCA on the entire dataset to avoid collinearity, but again, all efforts led to poor model results. Therefore, we decided to keep all features and make changes if needed for specific models.
 
 ![Correlation heatmap.](../figures/2_17_Heatmap.png)
-
-##  Early Feature Engineering Attempts
-The final figure shows a memorable snapshot of our early feature engineering attempts, with each row being one version of feature engineering. We have tried many ways to handle the data and used the same basic model to compare the results. With this spreadsheet, we could compare each others’ ideas and results before we finally decide to settle down with one version, which will be discussed next.
-
-![Early feature engineering attempts.](../figures/2_18_Early_FE_attempts.png)

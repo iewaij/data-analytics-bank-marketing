@@ -15,6 +15,12 @@ secnumdepth: 2
 monofont: JetBrains Mono
 papersize: a4
 dpi: 300
+geometry:
+- top=20mm
+- left=20mm
+- right=20mm
+- bottom=20mm
+- heightrounded
 bibliography: ../citations/citations.bib
 csl: ../citations/harvard-cite-them-right.csl
 link-citations: true

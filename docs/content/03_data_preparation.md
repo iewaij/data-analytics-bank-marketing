@@ -70,7 +70,9 @@ from sklearn.preprocessing import FunctionTransformer
 def encode_fn(X):
     """Encode categorical and boolean features into numeric values."""
     X = X.copy()
-    X = X.apply(lambda x: x.cat.codes if pd.api.types.is_categorical_dtype(x) else (x.astype("Int64") if pd.api.types.is_bool_dtype(x) else x))
+    X = X.apply(lambda x: x.cat.codes 
+        if pd.api.types.is_categorical_dtype(x)
+        else (x.astype("Int64") if pd.api.types.is_bool_dtype(x) else x))
     X = X.astype("float")
     return X
 

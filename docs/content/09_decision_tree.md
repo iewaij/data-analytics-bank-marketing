@@ -199,3 +199,5 @@ As we can see the AdaBoost gave strong results in the area underneath the ROC cu
 Feature importance for both AdaBoost and the Random Forest was strikingly similar. In section 7 of the paper Random Forests (Breiman, 1999), the author states the following conjecture: "AdaBoost is a Random Forest". This is an interesting claim , yet to be proven or disproven but AdaBoost with the base estimator of a tree stump can in certain datasets behave very much like a Random Forest of sorts. 
 Proven or disproven it just confirms once more what we discussed in class, that Machine Learning is a trial and error process and data speaks its own language. There are no universal truths and *ad-hoc* solutions in this exciting field.
 
+
+## XGBoost

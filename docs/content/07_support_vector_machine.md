@@ -10,22 +10,22 @@ The worth of the classifier is how well it classifies the unseen data points and
 The understanding of SVM is derived from the loss function of Logistic Regression with l2 regularization:
 
  $$ 
- J(θ)=\frac 1m \sum_{i=1}^m [ y^{(i)}(−log(p̂^{(i)}))+(1−y^{(i)})(−log(1−p̂^{i}))]+ \frac λ {2m} \sum_{j=1}^nθ_2^{(j)} 
+ J(\theta)=\frac 1m \sum_{i=1}^m [y^{i}(−log(\hat{p}^{i}))+(1−y^{i})(−log(1−\hat{p}^{i}))]+ \frac λ {2m} \sum_{j=1}^n\theta_2^{(j)} 
  $$
 
 where
  $$
- p̂^{(i)}=σ(\vecθ^{ T}⋅\vec x^{(i)})=1/(1+e^ {− \vec θ ^T}⋅ \vec x^{(i)})
+ \hat{p}^{i}=σ(\theta^{ T}⋅ x^{i})=1/(1+e^ {−  \theta ^T}⋅  x^{i})
  $$
 
-In the realm of loss function of Logistic Regression, the individual loss contribution to the overall function is $−log(p̂^{(i)})$ if $y^{(i)}= 1$ and $−log(1−p̂^{(i)})$ if $y^{(i)}= 0$.
+In the realm of loss function of Logistic Regression, the individual loss contribution to the overall function is $−log(\hat{p}^{i})$ if $y^{i}= 1$ and $−log(1−\hat{p}^{i})$ if $y^{i}= 0$.
 
-By replacing the individual loss contribution to $max(0,1−\vecθ^{ T}⋅\vec x^{(i)})$ and $max(0,1+\vecθ^{ T}⋅\vec x^{(i)})$ for $y^{(i)}= 1$ and $y^{(i)}= 0$ respectively, SVM penalizes the margin violation more than logistic regression by requiring a prediction bigger than 1 for y =1 and a prediction smaller than -1 if y = 0.
+By replacing the individual loss contribution to $max(0,1−\theta^{ T}⋅ x^{i})$ and $max(0,1+\theta^{T}⋅ x^{i})$ for $y^{i}= 1$ and $y^{i}= 0$ respectively, SVM penalizes the margin violation more than logistic regression by requiring a prediction bigger than 1 for y =1 and a prediction smaller than -1 if y = 0.
 
 
 ![LG SVM Comparison](https://i.imgur.com/4quBUfZ.png)
 
-### Regularizaiton and Trade-off (C parameter)
+### Regularizaiton and Trade-off
 
 The regularization term plays the role of widening the distance between the two margins and tells SVM how much we want to avoid the wrong misclassification. A hyperplane with maximal margin might be extremely sensitive to a change in the data points and may lead to overfitting problems.
 
@@ -91,14 +91,14 @@ linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="bala
 ```
 
 |      | Train    | Validate | Test     |
-| ---: | :------  | :------  |:------   |
+| ---: | :------- | :------- | :------- |
 |  TNR | 0.795108 | 0.791310 | 0.795703 |
 |  TPR | 0.664534 | 0.691375 | 0.659483 |
 | bACC | 0.729821 | 0.741342 | 0.727593 |
 |  ROC | 0.785562 | 0.786010 | 0.781580 |
 |  REC | 0.664534 | 0.691375 | 0.659483 |
 |  PRE | 0.291691 | 0.296018 | 0.290736 |
-|  AP  | 0.435728 | 0.432823 | 0.437258 |
+|   AP | 0.435728 | 0.432823 | 0.437258 |
 
 
 ## Non-Linear SVM
@@ -157,14 +157,14 @@ benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
 ```
 
 |      | Train    | Validate | Test     |
-| ---: | :------  | :------  |:------   |
+| ---: | :------- | :------- | :------- |
 |  TNR | 0.792798 | 0.797639 | 0.644499 |
 |  TPR | 0.678680 | 0.681941 | 0.752155 |
 | bACC | 0.735739 | 0.739790 | 0.698327 |
 |  ROC | 0.791381 | 0.789337 | 0.786777 |
 |  REC | 0.678680 | 0.681941 | 0.752155 |
 |  PRE | 0.293732 | 0.299586 | 0.211772 |
-|  AP  | 0.436139 | 0.444426 | 0.437136 |
+|   AP | 0.436139 | 0.444426 | 0.437136 |
 
 
 ```python
@@ -219,17 +219,14 @@ rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 ```
 
 |      | Train    | Validate | Test     |
-| ---: | :------  | :------  |:------   |
+| ---: | :------- | :------- | :------- |
 |  TNR | 0.788906 | 0.787889 | 0.794745 |
 |  TPR | 0.677669 | 0.676550 | 0.668103 |
 | bACC | 0.733288 | 0.732220 | 0.731424 |
 |  ROC | 0.787619 | 0.782527 | 0.784626 |
 |  REC | 0.677669 | 0.676550 | 0.688103 |
 |  PRE | 0.289580 | 0.288175 | 0.292453 |
-|  AP  | 0.437404 | 0.453640 | 0.440392 |
-
-
-### References
+|   AP | 0.437404 | 0.453640 | 0.440392 |
 
 [@hastie_elements_2009]
 

@@ -1,3 +1,7 @@
+# References
+::: {#refs}
+:::
+
 # Appendix 1: `import_dataset`
 ```python
 def import_dataset(filename):
@@ -288,5 +292,3 @@ def dftransform(X,
 
     return X
 ```
-
-# References

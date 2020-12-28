@@ -1,10 +1,8 @@
 # Introduction
 
-## Understanding the Project
+## Motivation
 
-A retail bank has a customer call centre as one of its units, through which the bank communicates with potential new clients and offers term deposits. Term deposits are defined as such,
-
-> "A term deposit is a fixed-term investment that includes the deposit of money into an account at a financial institution. Term deposit investments usually carry short-term maturities ranging from one month to a few years and will have varying levels of required minimum deposits." 
+A retail bank has a customer call centre as one of its units, through which the bank communicates with potential new clients and offers term deposits. Term deposits are defined as a fixed-term investment that includes the deposit of money into an account at a financial institution.
 
 It is obvious that such an instrument would generate revenue for the bank, hence the bank records the outcomes of these phone calls along side other data related to the person being called, the economic benchmarks at the time of the call and certain parameters of previous contact with the given person.
 The motivation behind the research is clear, by analysing previous phone calls the bank would like to improve it's results in two dimensions:
@@ -30,7 +28,7 @@ At this point in time it would be a good idea to raise a few questions that we p
 
 And ultimately can we develop a data driven, machine learning approach to tackle this problem and answer the outlined questions?
 
-## Overview of Features
+## Dataset Description
 
 At our disposal we had 20 input and 1 output feature to work with. The input features were categorized and given to us as follows:
 
@@ -98,8 +96,4 @@ campaign (numeric; 999 means client was not previously contacted)
 
 `y`: has the client subscribed a term deposit? (binary: 'yes', 'no')
 
-The obvious challenge is the large number of categorical and or Boolean features, how to approach them and handle them appropriately. 
-
-
-
- 
+The obvious challenge is the large number of categorical and or Boolean features, how to approach them and handle them appropriately.

@@ -1,9 +1,9 @@
 # Logistic Regression
 Logistic regression is commonly used to estimate the probability of an instance belonging to a particular class. If the probability is greater than 50%, the model will classify the instance to that class, otherwise, it will not. Therefore, Logistic regression is a binary classifier that can be applied to our dataset. Underlying the model is the logistic sigmoid function as shown below. This classifier can potentially perform very well on linearly separable classes. Although this might not be the case for our dataset, we still gave it a try.
 
-$$h(x)=1 /\left(1+e^{-\left(t h e t a_{0}+t h e t a_{1} * x_{1}+t h e t a_{2} * x_{2}+t h e t a_{3} * x_{3}+. .+t h e t a_{n} * x_{n}\right)}\right)$$
+$$h(x)= \frac{1}{1+e^{ -\theta_{0}+\theta_{1}x_{1}+\theta_{2}x_{2}+\theta_{3}x_{3}+...+\theta_{n}x_{n}}}$$
 
-![Logistic sigmoid function](https://miro.medium.com/max/1400/1*RqXFpiNGwdiKBWyLJc_E7g.png)
+![Logistic Sigmoid Function](https://miro.medium.com/max/1400/1*RqXFpiNGwdiKBWyLJc_E7g.png)
 
 ## Fitting and Testing
 First, we import the Logistic Regression from SKlearn, and set two important parameters: 
@@ -30,8 +30,11 @@ print('Accuracy Score:',acctr)
 print('Accuracy Score:',accte)
 ```
 ![Performance measurement.](../figures/6_1_LR_Scores.png)
+
 ![Confusion matrix for Train set.](../figures/6_1_LR_CM_Train.png)
+
 ![Confusion matrix for Test set.](../figures/6_1_LR_CM_Test.png)
+
 ![ROC & AUC.](../figures/6_1_LR_ROC.png)
 
 ## Grid Search
@@ -68,7 +71,9 @@ print('best parameters:',GS_lrmodel_1.best_params_)
 The results show a slight improvement compared to the initial model, with a 78.69% accuracy score, a 44.18% average precision score and an ROC value of 0.783 for the test set. Additionally, this Grid Search finds {'C': 10, 'penalty': 'l2'} as the best parameter combination. The confusion matrices and performance measures are presented below.
 
 ![Performance measurement.](../figures/6_2_GS1_Scores.png)
+
 ![Confusion matrix for Train set.](../figures/6_2_GS1_CM_Train.png)
+
 ![Confusion matrix for Test set.](../figures/6_2_GS1_CM_Test.png)
 
 For the second Grid Search, we used the L1 penalty and Elasticnet penalty, which combines L1 and L2 penalties and will give a result in between. We also used the solver “Saga”, which supports the non-smooth penalty L1 and is often used to handle the potential multinomial loss in the regression.
