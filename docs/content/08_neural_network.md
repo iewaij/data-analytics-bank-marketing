@@ -2,11 +2,11 @@
 
 Neural Network is a "brain structure" with the following components:
 
-1. An input layer
-2. An arbitrary amount of hidden layers
-3. An output layer
-4. A set of weights and biases between each layer
-5. An activation function for each hidden layer
+1. An input layer;
+2. An arbitrary amount of hidden layers;
+3. An output layer;
+4. A set of weights and biases between each layer;
+5. An activation function for each hidden layer.
 
 Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of Forward Propagation and Backpropagation. The Forward Propagation is a process where the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer. The Backpropagation is to fine tune the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected outputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
 
@@ -30,8 +30,6 @@ We want to keep the neural network architecture as simple as possible so that it
 The regularization term will drive down the weights of the matrix and decorrelate the neural network, which in turn decreases the effects of the activation function and prevent overfitting by fitting a less complex model to the data.
 
 ### Activation Function
-
-![Activation Function](https://i.imgur.com/nMy80J1.png)
 
 Activation functions are mathematical equations attached to each neuron in the network and they determine the output of the learning model, the accuracy and the computational efficiency of training the model.
 

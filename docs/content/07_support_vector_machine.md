@@ -4,7 +4,7 @@ The purpose of the Support Vector Machine is to find a hyperplane that distinctl
 
 The worth of the classifier is how well it classifies the unseen data points and therefore our objective is to find a plane with the maximum margin i.e the distance of an observation from the hyperplane. The margin brings in extra confidence that the further data points will be classified correctly.
 
-## Theory and Hyperparameter
+## Hyperparameters
 
 ### Maximum Margin
 
@@ -26,7 +26,7 @@ By replacing the individual loss contribution to $max(0,1−\theta^{ T}⋅ x^{i}
 
 ![LG SVM Comparison](https://i.imgur.com/4quBUfZ.png)
 
-### Regularizaiton and Trade-off
+### Regularizaiton
 
 The regularization term plays the role of widening the distance between the two margins and tells SVM how much we want to avoid the wrong misclassification. A hyperplane with maximal margin might be extremely sensitive to a change in the data points and may lead to overfitting problems.
 
@@ -65,7 +65,8 @@ grid_best_score = random_search.best_score_
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
 # Output
-# best parameters found: {'C': 1.1361548657024574, 'loss': 'squared_hinge'}, with mean test score: 0.43354326475418103
+# best parameters found: {'C': 1.1361548657024574, 'loss': 'squared_hinge'}, 
+# with mean test score: 0.43354326475418103
 
 param_grid = [
     {"C": [5,2,1]}
@@ -88,7 +89,8 @@ print(f"best parameters found: {grid_best_params}, with mean test score: {grid_b
 linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="balanced", random_state=42)
 
 # Output
-# best parameters found: {'C': 1}, with mean test score: 0.43356240611668306
+# best parameters found: {'C': 1}, 
+# with mean test score: 0.43356240611668306
 ```
 
 |      | Train    | Validate | Test     |
@@ -131,7 +133,8 @@ grid_best_score = random_search.best_score_
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
 # Output
-# best parameters found: {'rbf__gamma': 0.0007087711398938291, 'svm__alpha': 1.2269339879156183e-07}, with mean test score: 0.4350168498949894
+# best parameters found: {'rbf__gamma': 0.0007087711398938291, 'svm__alpha': 1.2269339879156183e-07}, 
+# with mean test score: 0.4350168498949894
 
 param_grid = {
     "rbf__gamma": [0.0008, 0.0001, 0.001],
@@ -151,7 +154,8 @@ grid_best_score = grid_search.best_score_
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
 # Output
-# best parameters found: {'rbf__gamma': 0.0008, 'svm__alpha': 1e-06}, with mean test score: 0.4403394302575112
+# best parameters found: {'rbf__gamma': 0.0008, 'svm__alpha': 1e-06}, 
+# with mean test score: 0.4403394302575112
 
 rbf_sgd_tuned = rbf_sgd_clf.set_params(rbf__gamma=0.0009, svm__alpha=1e-6)
 benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
@@ -194,7 +198,8 @@ grid_best_score = random_search.best_score_
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
 # Output
-# best parameters found: {'rbf__gamma': 0.00026560333125098774, 'svm__C': 6.5900965177317055}, with mean test score: 0.4381080007088255
+# best parameters found: {'rbf__gamma': 0.00026560333125098774, 'svm__C': 6.5900965177317055}, 
+# with mean test score: 0.4381080007088255
 
 param_grid = {
     "rbf__gamma": [0.0001, 0.001, 0.01],
@@ -214,7 +219,8 @@ grid_best_score = grid_search.best_score_
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
 # Output
-# best parameters found: {'rbf__gamma': 0.001, 'svm__C': 10}, with mean test score: 0.43986477417883973
+# best parameters found: {'rbf__gamma': 0.001, 'svm__C': 10}, 
+# with mean test score: 0.43986477417883973
 
 rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 ```
