@@ -96,7 +96,7 @@ for name, importance in zip(columns, rnd_clf.feature_importances_):
 
 The features that constantly proved to be the most important for the model are:
 
-![TED Spread](../figures/09_02_table.png)
+![TED Spread](../figures/09_05_Forest_importance_table.jpg)
 
 This can also be plotted to give an informative picture about how features rank by importance:
 
@@ -113,7 +113,7 @@ plt.size=(15,10)
 plt.show()
 ```
 
-![TED Spread](../figures/09_03_table2.png)
+![TED Spread](../figures/09_04_Forest_Importance.jpg)
 
 All in all the Random Forest lived up to its expectation. By adding just a small amount of bias it greatly improves the performance of Decision Trees. They are very robust and require little to none work in terms of encoding and feature manipulation. 
 
