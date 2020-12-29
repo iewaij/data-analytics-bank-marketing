@@ -22,7 +22,7 @@ To keep the scope of this paper reasonable, we will focus on elaborating on thes
 
 The Random Forest represents a collection of decision trees.  They a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of reducing the variance. This comes at the expense of a small increase in the bias and some loss of interpretability, but generally greatly boosts the performance in the final model.
 
-![Spread](../figures/09_01_chart.png)
+![Random Forest](../figures/09_01_chart.png)
 
 In order to prepare the data for the Forest we first run it through our standard transformer, explained in the pipeline section of this text.
 
@@ -96,7 +96,7 @@ for name, importance in zip(columns, rnd_clf.feature_importances_):
 
 The features that constantly proved to be the most important for the model are:
 
-![TED Spread](../figures/09_05_Forest_importance_table.jpg)
+![Table of Feature Importance](../figures/09_05_Forest_importance_table.jpg)
 
 This can also be plotted to give an informative picture about how features rank by importance:
 
@@ -113,7 +113,7 @@ plt.size=(15,10)
 plt.show()
 ```
 
-![TED Spread](../figures/09_04_Forest_Importance.jpg)
+![Chart of Feature Importance](../figures/09_04_Forest_Importance.jpg)
 
 All in all the Random Forest lived up to its expectation. By adding just a small amount of bias it greatly improves the performance of Decision Trees. They are very robust and require little to none work in terms of encoding and feature manipulation. 
 
@@ -195,7 +195,7 @@ plt.size=(15,10)
 plt.show()
 ```
 
-![TED Spread](../figures/09_07_Feature_Importance_AdaBoost.jpg)
+![Chart of Feature Importance](../figures/09_07_Feature_Importance_AdaBoost.jpg)
 
 As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown (according to the Central Limit Theorem).
 
