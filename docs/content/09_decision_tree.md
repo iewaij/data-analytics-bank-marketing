@@ -24,14 +24,14 @@ The Random Forest represents a collection of decision trees.  They a way of aver
 
 ![Spread](../figures/09_01_chart.png)
 
-In order to prepare the data for the Forest we initially ran it through our standard transformer, explained in the pipeline section of this text.
+In order to prepare the data for the Forest we first run it through our standard transformer, explained in the pipeline section of this text.
 
 ```python
 tree_transformer = FunctionTransformer(dftransform)
 X_train, y_train, X_test, y_test, *other_sets = split_dataset(bank_mkt, tree_transformer)
 ```
 
-We then proceeded onto hyperparameter tuning. Hyperparameter tuning of the random forest is basically hyperparameter tuning of the individual tree with one prominent differences. Namely:
+We then procede onto hyperparameter tuning. Hyperparameter tuning of the random forest is basically hyperparameter tuning of the individual tree with one prominent differences. Namely:
 
 - **n_estimators:** int, *default=100* ; which basically represents the number of trees in the forest.
 
@@ -57,7 +57,7 @@ grid_best_estimator = CV_RFmodel.best_estimator_
 print(f"best mean test score: {grid_best_score}, for {grid_best_estimator}")
 ```
 
-It is worth noting that we also tried combinations of other hyperparameters. but for easier readability of the text decided to go here with the two hyperparameters that provided with highest model oscillations. The hyperparameters that were selected for the RandomForestClassifier in the definition of variable RF were the ones that showed in previous tunings to provide constant, superior results. The outputs given were 
+It is worth noting that we also tried combinations of other hyperparameters, but for easier readability of the text decided to go here with the two hyperparameters that provide with highest model oscillations. The hyperparameters that were selected for the RandomForestClassifier in the definition of variable RF are the ones that showed in previous tunings to provide constant, superior results. The outputs given were 
 
 ```
 best mean test score: 0.454011896674566,
@@ -65,7 +65,7 @@ for RandomForestClassifier(class_weight='balanced',
 max_depth=6, n_estimators= 1750,random_state=42)
 ```
 
-We decided that 1750 estimators in subsequent testing showed signs of overfitting and went to produce our final performance matrix with 1500 estimators.
+We decide that 1750 estimators in subsequent testing show signs of overfitting and went to produce our final performance matrix with 1500 estimators.
 
 ```
 RF_validation = RandomForestClassifier(random_state=42,class_weight="balanced",max_depth=6,n_estimators=1500,
