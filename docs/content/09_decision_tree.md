@@ -187,8 +187,11 @@ for name, importance in zip(columns, AB_validation.feature_importances_):
 ```python
 importances = AB_validation.feature_importances_
 indices = np.argsort(importances)
+```
 
-plt.barh(range(len(indices)), importances[indices])
+![Table of Feature Importance](../figures/09_06_AdaBoost_Table.jpg)
+
+```plt.barh(range(len(indices)), importances[indices])
 plt.yticks(range(len(indices)), [columns[i] for i in indices])
 plt.xlabel("Relative Importance")
 plt.size=(15,10)
