@@ -96,7 +96,7 @@ for name, importance in zip(columns, rnd_clf.feature_importances_):
 
 The features that constantly proved to be the most important for the model are:
 
-![](https://lh6.googleusercontent.com/EcYZq536Y5wJWX3_BFZpHy726LqA-cMujEkA1ohXdABN__eqZKE2r5XZgJWHPUh8ifc-pIU8k8ie8JIP0nAcHpbsObB9RQ5CaJUjhb6qX4LT9xKv9f7Jka_LsXigbOLv0OVv3zOFEWA)
+![TED Spread](../figures/09_02_table.png)
 
 This can also be plotted to give an informative picture about how features rank by importance:
 
@@ -113,7 +113,7 @@ plt.size=(15,10)
 plt.show()
 ```
 
-![](https://lh4.googleusercontent.com/M_3QyBZPNBvKUitLcjVzO-FkzipnksPpmU8yGq19VGwRBizZh-aDxeSJUtyc_2kgtHEvzxWb3LFAUr0iGU1XYBp9dO3JbcPECcdy5Pm1F8ut0YoGQbSsCc3XL_tcxUKU51fVl1Sw4kg)
+![TED Spread](../figures/09_03_table2.png)
 
 All in all the Random Forest lived up to its expectation. By adding just a small amount of bias it greatly improves the performance of Decision Trees. They are very robust and require little to none work in terms of encoding and feature manipulation. 
 
@@ -184,8 +184,6 @@ for name, importance in zip(columns, AB_validation.feature_importances_):
     print(name, "=", importance)
 ```
 
-![](https://lh5.googleusercontent.com/S_vlaaJDVBL2wXCQZcQSPc-xw5hrqQkOijovVgFN95K-Kc4Byknq7yqyTE-82Ora0l-jl8rCtb19VaRuHjl3b16EMkJe_qcDU3zwE53sLoaRM3YCtLjjTkHcmBXy2brEwMuoFIWmKWc)
-
 ```python
 importances = AB_validation.feature_importances_
 indices = np.argsort(importances)
@@ -197,7 +195,7 @@ plt.size=(15,10)
 plt.show()
 ```
 
-![](https://lh4.googleusercontent.com/x72n3t-gQNcTyD60U7_8buRePCaop6zyI5MUkxQk0Cfp6PKNZ1TzkDT9E7HT3iR1wN5LpFSO-VHndq_6pWIhqUR1OFLGT8fU0qVal8PuUTZk7rjZH9q7dZfeNqYegcOjByj4c1DHkGU)
+![TED Spread](../figures/09_07_Feature_Importance_AdaBoost.jpg)
 
 As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown (according to the Central Limit Theorem).
 
