@@ -9,18 +9,20 @@ titlepage: true
 toc-own-page: true
 disable-header-and-footer: true
 toc: true
-toc-depth: 2
+toc-depth: 1
 numbersections: false
-secnumdepth: 2
 monofont: JetBrains Mono
 papersize: a4
 dpi: 300
 geometry:
-- top=20mm
-- left=20mm
-- right=20mm
-- bottom=20mm
-- heightrounded
+  - top=30mm
+  - left=30mm
+  - right=30mm
+  - bottom=30mm
+  - heightrounded
+documentclass: report
+classoption:
+  - oneside
 bibliography: ../citations/citations.bib
 csl: ../citations/harvard-cite-them-right.csl
 link-citations: true
