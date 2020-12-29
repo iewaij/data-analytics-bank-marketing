@@ -32,7 +32,6 @@ aps_test = average_precision_score(y_test, y_test_pred)
 print('Accuracy Score:',acctr)
 print('Accuracy Score:',accte)
 ```
-# Performance measurement
 |      | Train    | Validate | Test     |
 | ---- | -------- | -------- | -------- |
 | TNR  | 0.798401 | 0.800376 | 0.802545 |
@@ -85,7 +84,6 @@ print('best parameters:',GS_lrmodel_1.best_params_)
 
 The results show a slight improvement compared to the initial model, with a 78.69% accuracy score, a 44.18% average precision score and an ROC value of 0.783 for the test set. Additionally, this Grid Search finds {'C': 10, 'penalty': 'l2'} as the best parameter combination. The confusion matrices and performance measures are presented below.
 
-# Performance measurement
 |      | Train    | Validate | Test     |
 | ---- | -------- | -------- | -------- |
 | TNR  | 0.800539 | 0.808758 | 0.803229 |
@@ -136,7 +134,6 @@ print('best parameters:',GS_lrmodel_2.best_params_)
 
 The results from the second Grid Search are almost identical to that of the first Grid Search. However, in the second case, {'C': 0.05, 'penalty': 'l1', 'solver': 'saga'} has been identified as the best parameter combination.
 
-# Performance measurement
 |      | Train    | Validate | Test     |
 | ---- | -------- | -------- | -------- |
 | TNR  | 0.793568 | 0.789942 | 0.798166 |
