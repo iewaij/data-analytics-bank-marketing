@@ -103,6 +103,9 @@ linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="bala
 |  PRE | 0.291691 | 0.296018 | 0.290736 |
 |   AP | 0.435728 | 0.432823 | 0.437258 |
 
+![Linear_svm_train_conf](../figures/07_01_linear_svm_train.png)
+
+![Linear_svm_test_conf](../figures/07_02_linear_svm_test.png)
 
 ## Non-Linear SVM
 
@@ -171,6 +174,10 @@ benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
 |  PRE | 0.293732 | 0.299586 | 0.211772 |
 |   AP | 0.436139 | 0.444426 | 0.437136 |
 
+![Non_linear_sgs_train_conf](../figures/07_03_non_linear_sgd_train.png)
+
+![Non_linear_sgs_test_conf](../figures/07_04_non_linear_sgd_test.png)
+
 
 ```python
 
@@ -234,6 +241,10 @@ rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 |  REC | 0.677669 | 0.676550 | 0.688103 |
 |  PRE | 0.289580 | 0.288175 | 0.292453 |
 |   AP | 0.437404 | 0.453640 | 0.440392 |
+
+![Non_linear_svc_train_conf](../figures/07_05_non_linear_svc_train.png)
+
+![Non_linear_svc_test_conf](../figures/07_06_non_linear_svc_test.png)
 
 [@hastie_elements_2009]
 
