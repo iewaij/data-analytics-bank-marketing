@@ -4,34 +4,25 @@
 
 A retail bank has a customer call centre as one of its units, through which the bank communicates with potential new clients and offers term deposits. Term deposits are defined as a fixed-term investment that includes the deposit of money into an account at a financial institution.
 
-It is obvious that such an instrument would generate revenue for the bank, hence the bank records the outcomes of these phone calls along side other data related to the person being called, the economic benchmarks at the time of the call and certain parameters of previous contact with the given person.
-The motivation behind the research is clear, by analysing previous phone calls the bank would like to improve it's results in two dimensions:
+It is obvious that such an instrument would generate revenue for the bank, hence the bank records the outcomes of these phone calls along side other data related to the person being called, the economic indicators and certain parameters of previous contact with the given person. The motivation behind the project is clear, by analysing previous phone calls the bank would like to improve its telemarketing results in two dimensions:
 
-1. The efficiency dimension, or in other words how to reduce the number of phone calls the bank is performing and therefor reduce the costs associated with telemarketing
-2. The effectiveness dimension, or in other words how to potentially improve the result and get more clients or at least the same number to deposit their money with our bank
+1. The efficiency dimension, or in other words how to reduce the number of phone calls the bank is performing and therefore reduce the costs associated with telemarketing;
+2. The effectiveness dimension, or in other words how to potentially improve the result and get more clients or at least the same number to deposit their money with our bank.
 
-In order to fully understand the objectives at hand we must also appreciate the economic and historic context from which we draw our data. It is the year 2008 and the world is about to be plunged in the deepest economic recession since the 1930s. After the credit default of The Lehman Brothers, the financial world was shook to its core and governments as well as central banks started unprecedented levels of quantitative easing in order to save jobs and revitalize the economy. 
+We also need understand the economic and historic context behind the dataset. In 2008, the world was plunged in the deepest economic recession since the 1930s. After the bankcruptcy of The Lehman Brothers, the financial market was shook to its core and governments as central banks started unprecedented levels of quantitative easing in order to save jobs and revitalize the economy. As can be seen on the above picture this caused a huge spike in the famous TED spread, one of the leading indicators for credit risk, since it represents the difference between a riskless investment (T-Bill) and the risk banks transfer when loaning to each other. The wider the spread, the more default risk is priced into the borrowing market. It is trival to conclude that such an increase in risk will have major impact not only on the telemarketing campaign but also the representability and timelessness of the data gathered through it.
 
-![Spread](../figures/1_1_TED_spread.png)
+![TED Spread](../figures/1_1_TED_spread.png)
 
-As can be seen on the above picture this caused a huge spike in the famous TED spread, one of the leading indicators for credit risk, since it represents the difference between a riskless investment (T-Bill) and the risk banks transfer when loaning to each other. The wider the spread, the more default risk is priced into the borrowing market. It takes no further economic knowledge to conclude that such an increase in risk will have major impact not only on the result of the telemarketing campaign but the representability and timelessness of the data gathered through it.
+Can we develop a data driven approach to help the bank increase its success rate of telemarketing while incorporating the economic context? There are several questions that could be interesting:
 
-At this point in time it would be a good idea to raise a few questions that we plan on answering through this paper.
-
-1. *How did the economic crisis affect consumer behaviour and how did it manifest itself in the data ?*
-
-2. *How does one's education, marital status, job... affect their economic choices ?*
-
-3. *Do people better respond to frequent calls, or first contact ?*
-
-4. *Do they prefer being called on the mobile phone or landline ?*
-
-And ultimately can we develop a data driven, machine learning approach to tackle this problem and answer the outlined questions?
+1. How did the economic crisis affect consumer behaviour and how did it manifest itself in the data?
+2. How does one's education, marital status, job, etc. affect their economic choices?
+3. Do people prefer being called on the mobile phone or landline?
+4. Does a predictive model exist that can predict a telemarkting outcome using client and economic data?
 
 ## Dataset Description
 
-At our disposal we had 20 input and 1 output feature to work with. The input features were categorized and given to us as follows:
-
+The bank marketing dataset was collected by [] and ordered by date ranging from May 2008 to November 2010. The data was ordered by date even though its year has to be infered manually. The 20 input features were categorized and described as follows:
 
 **A. Bank client data:**
 
@@ -95,5 +86,3 @@ campaign (numeric; 999 means client was not previously contacted)
 **Output variable (desired target):**
 
 `y`: has the client subscribed a term deposit? (binary: 'yes', 'no')
-
-The obvious challenge is the large number of categorical and or Boolean features, how to approach them and handle them appropriately.
