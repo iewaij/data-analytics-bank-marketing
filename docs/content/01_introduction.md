@@ -22,7 +22,7 @@ Can we develop a data driven approach to help the bank increase its success rate
 
 ## Dataset Description
 
-The bank marketing dataset was collected by [] and ordered by date ranging from May 2008 to November 2010. The data was ordered by date even though its year has to be infered manually. The 20 input features were categorized and described as follows:
+The bank marketing dataset was collectedand ordered by date ranging from May 2008 to November 2010. The data was ordered by date even though its year has to be infered manually. The 20 input features were categorized and described as follows:
 
 **A. Bank client data:**
 
