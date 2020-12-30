@@ -1,5 +1,5 @@
 ---
-title: Bank Marketing
+title: Data Analytics Project on Bank Marketing Data Set
 author: 
 - Fan Jia
 - Jiawei Li
@@ -22,6 +22,7 @@ documentclass: report
 classoption:
   - oneside
 bibliography: ../citations/citations.bib
-csl: ../citations/harvard-cite-them-right.csl
 link-citations: true
+nocite: |
+  @*
 ---

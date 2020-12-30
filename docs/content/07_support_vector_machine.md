@@ -1,4 +1,7 @@
 # Support Vector Machine
+```{=latex}
+\chapterauthor{Qiqi Zhou}
+```
 
 The purpose of the Support Vector Machine is to find a hyperplane that distinctly classifies the data points in an N-dimensional space. The hyperplane is the decision boundary that classifies the data points and support vectors are the data points that are closer to the hyperplane which influences the position and orientation of the hyperplane.
 
@@ -10,21 +13,21 @@ The worth of the classifier is how well it classifies the unseen data points and
 
 The understanding of SVM is derived from the loss function of Logistic Regression with l2 regularization:
 
- $$ 
- J(\theta)=\frac 1m \sum_{i=1}^m [y^{i}(−log(\hat{p}^{i}))+(1−y^{i})(−log(1−\hat{p}^{i}))]+ \frac λ {2m} \sum_{j=1}^n\theta_2^{(j)} 
- $$
+$$ 
+J(\theta)=\frac 1m \sum_{i=1}^m [y^{i}(−log(\hat{p}^{i}))+(1−y^{i})(−log(1−\hat{p}^{i}))]+ \frac λ {2m} \sum_{j=1}^n\theta_2^{(j)} 
+$$
 
 where
- $$
- \hat{p}^{i}=σ(\theta^{ T}⋅ x^{i})=1/(1+e^ {−  \theta ^T}⋅  x^{i})
- $$
+
+$$
+\hat{p}^{i}=σ(\theta^{ T}⋅ x^{i})=1/(1+e^ {−  \theta ^T}⋅  x^{i})
+$$
 
 In the realm of loss function of Logistic Regression, the individual loss contribution to the overall function is $−log(\hat{p}^{i})$ if $y^{i}= 1$ and $−log(1−\hat{p}^{i})$ if $y^{i}= 0$.
 
 By replacing the individual loss contribution to $max(0,1−\theta^{ T}⋅ x^{i})$ and $max(0,1+\theta^{T}⋅ x^{i})$ for $y^{i}= 1$ and $y^{i}= 0$ respectively, SVM penalizes the margin violation more than logistic regression by requiring a prediction bigger than 1 for y =1 and a prediction smaller than -1 if y = 0.
 
-
-![LG SVM Comparison](https://i.imgur.com/4quBUfZ.png)
+![Comparison of Logistic Regression and SVM.](https://i.imgur.com/4quBUfZ.png)
 
 ### Regularizaiton
 
@@ -64,13 +67,7 @@ grid_best_score = random_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
-# Output
-# best parameters found: {'C': 1.1361548657024574, 'loss': 'squared_hinge'}, 
-# with mean test score: 0.43354326475418103
-
-param_grid = [
-    {"C": [5,2,1]}
-    ]
+param_grid = [{"C": [5,2,1]}]
 grid_search = GridSearchCV(linear_svm,
                            param_grid,
                            scoring="average_precision",
@@ -85,12 +82,7 @@ grid_best_score = grid_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
-
 linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="balanced", random_state=42)
-
-# Output
-# best parameters found: {'C': 1}, 
-# with mean test score: 0.43356240611668306
 ```
 
 |      | Train    | Validate | Test     |
@@ -102,14 +94,13 @@ linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="bala
 |  REC | 0.664534 | 0.691375 | 0.659483 |
 |  PRE | 0.291691 | 0.296018 | 0.290736 |
 |   AP | 0.435728 | 0.432823 | 0.437258 |
+: Performance metrics
 
-![Linear_svm_train_conf](../figures/07_01_linear_svm_train.png)
-
-![Linear_svm_test_conf](../figures/07_02_linear_svm_test.png)
+![Confusion Matrix on the test set](../figures/07_02_linear_svm_test.png)
 
 ## Non-Linear SVM
 
-We use the pipeline to ensure that in the cross validation set, the kernel function is only applied to training fold which is exactly the same fold used for fitting the model. We also do a comparison between SGDClassifier and Linear SVC and the latter one gave us slightly better AP rate.
+We use the pipeline to ensure that in the cross validation set, the kernel function is only applied to training fold which is exactly the same fold used for fitting the model. We also do a comparison between SGDClassifier and Linear SVC and the latter one gave us slightly better AP.
 
 ```python
 rbf_sgd_clf = Pipeline([
@@ -135,10 +126,6 @@ grid_best_score = random_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
-# Output
-# best parameters found: {'rbf__gamma': 0.0007087711398938291, 'svm__alpha': 1.2269339879156183e-07}, 
-# with mean test score: 0.4350168498949894
-
 param_grid = {
     "rbf__gamma": [0.0008, 0.0001, 0.001],
     "svm__alpha": [1e-7, 1e-6, 1e-5]}
@@ -156,10 +143,6 @@ grid_best_score = grid_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
-# Output
-# best parameters found: {'rbf__gamma': 0.0008, 'svm__alpha': 1e-06}, 
-# with mean test score: 0.4403394302575112
-
 rbf_sgd_tuned = rbf_sgd_clf.set_params(rbf__gamma=0.0009, svm__alpha=1e-6)
 benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
 ```
@@ -173,14 +156,12 @@ benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
 |  REC | 0.678680 | 0.681941 | 0.752155 |
 |  PRE | 0.293732 | 0.299586 | 0.211772 |
 |   AP | 0.436139 | 0.444426 | 0.437136 |
+: Performance metrics
 
-![Non_linear_sgs_train_conf](../figures/07_03_non_linear_sgd_train.png)
-
-![Non_linear_sgs_test_conf](../figures/07_04_non_linear_sgd_test.png)
+![Confusion Matrix on the test set](../figures/07_04_non_linear_sgd_test.png)
 
 
 ```python
-
 rbf_clf = Pipeline([
     ("rbf", RBFSampler(random_state=42)),
     ("svm", LinearSVC(loss="squared_hinge", dual=False, class_weight="balanced", max_iter=1000))
@@ -204,10 +185,6 @@ grid_best_score = random_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
 
-# Output
-# best parameters found: {'rbf__gamma': 0.00026560333125098774, 'svm__C': 6.5900965177317055}, 
-# with mean test score: 0.4381080007088255
-
 param_grid = {
     "rbf__gamma": [0.0001, 0.001, 0.01],
     "svm__C": [1, 10, 20]}
@@ -224,11 +201,6 @@ grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
 
 print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
-
-# Output
-# best parameters found: {'rbf__gamma': 0.001, 'svm__C': 10}, 
-# with mean test score: 0.43986477417883973
-
 rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 ```
 
@@ -241,15 +213,7 @@ rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 |  REC | 0.677669 | 0.676550 | 0.688103 |
 |  PRE | 0.289580 | 0.288175 | 0.292453 |
 |   AP | 0.437404 | 0.453640 | 0.440392 |
+: Performance metrics
 
-![Non_linear_svc_train_conf](../figures/07_05_non_linear_svc_train.png)
+![Confusion matrix on test set](../figures/07_06_non_linear_svc_test.png)
 
-![Non_linear_svc_test_conf](../figures/07_06_non_linear_svc_test.png)
-
-[@hastie_elements_2009]
-
-[@chen_support_2019]
-
-[@patel_chapter_2017]
-
-[@noauthor_machine_nodate]

@@ -2,7 +2,7 @@
 ::: {#refs}
 :::
 
-# Appendix 1: `import_dataset`
+# Appendix 1: `import_dataset()`
 ```python
 def import_dataset(filename):
     """
@@ -67,15 +67,17 @@ def import_dataset(filename):
     bank_mkt = bank_mkt.drop_duplicates().reset_index(drop=True)
     # reorder ordinal categorical data
     bank_mkt["education"] = bank_mkt["education"].cat.reorder_categories(
-        ["illiterate", "basic.4y", "basic.6y", "basic.9y", "high.school", "professional.course", "university.degree"], ordered=True)
+        ["illiterate", "basic.4y", "basic.6y", "basic.9y", "high.school",
+         "professional.course", "university.degree"], ordered=True)
     return bank_mkt
 ```
-# Appendix 2: `split_dataset`
+# Appendix 2: `split_dataset()`
 ```python
 def split_dataset(data, preprocessor=None, random_state=62):
     """
     Split dataset into train, test and validation sets using preprocessor.
-    Because the random state of validation set is not specified, the validation set will be different each time when the function is called.
+    Because the random state of validation set is not specified,
+    the validation set will be different each time when the function is called.
 
     Parameters
     ----------
@@ -92,9 +94,8 @@ def split_dataset(data, preprocessor=None, random_state=62):
     Examples
     --------
         from sklearn.preprocessing import OrdinalEncoder
-        data = import_dataset("../data/BankMarketing.csv").interpolate(method="pad").loc[:, ["job", "education", "y"]]
-        # To unpack all train, test, and validation sets 
-        X_train, y_train, X_test, y_test, X_ttrain, y_ttrain, X_validate, y_validate = split_dataset(data, OrdinalEncoder())
+        data = import_dataset("../data/BankMarketing.csv").interpolate(
+            method="pad").loc[:, ["job", "education", "y"]]
         # To unpack train and test sets.
         X_train, y_train, X_test, y_test, *other_sets = split_dataset(data, OrdinalEncoder())
         # To unpack test and validation set
@@ -129,16 +130,18 @@ def split_dataset(data, preprocessor=None, random_state=62):
         X_ttrain = preprocessor.fit_transform(X_ttrain, y_ttrain)
         X_validate = preprocessor.transform(X_validate)
 
-    return (X_train, y_train, X_test, y_test, X_ttrain, y_ttrain, X_validate, y_validate)
+    return (X_train, y_train, X_test, y_test,
+            X_ttrain, y_ttrain, X_validate, y_validate)
 ```
 
-# Appendix 3: `benchmark`
+# Appendix 3: `benchmark()`
 
 ```python
 def benchmark(data, preprocessor=None, clf=None):
     """
     Benchmark preprocessor and clf's performance on train, validation and test sets. 
-    All the data transformation should be handled by preprocessor and estimation should be handled by clf.
+    All the data transformation should be handled by preprocessor 
+    and estimation should be handled by clf.
 
     Parameters
     ----------
@@ -149,7 +152,8 @@ def benchmark(data, preprocessor=None, clf=None):
         clf : estimator, default = None
 
     """
-    X_train, y_train, X_test, y_test, X_ttrain, y_ttrain, X_validate, y_validate = split_dataset(
+    X_train, y_train, X_test, y_test, X_ttrain, \
+        y_ttrain, X_validate, y_validate = split_dataset(
         data, preprocessor)
     X_sets = [X_ttrain, X_validate, X_test]
     y_sets = [y_ttrain, y_validate, y_test]
@@ -187,7 +191,7 @@ def benchmark(data, preprocessor=None, clf=None):
     return metric_df
 ```
 
-# Appendix 4: `dftransform`
+# Appendix 4: `dftransform()`
 
 ```python
 def dftransform(X,
@@ -252,8 +256,10 @@ def dftransform(X,
     if cut != None:
         if "pdays" in cut:
             # Cut pdays into categories
-            X["pdays"] = pd.cut(X["pdays"], [0, 3, 5, 10, 15, 30, 1000], labels=[
-                                3, 5, 10, 15, 30, 1000], include_lowest=True).astype("Int64")
+            X["pdays"] = pd.cut(X["pdays"],
+                                [0, 3, 5, 10, 15, 30, 1000],
+                                labels=[3, 5, 10, 15, 30, 1000],
+                                include_lowest=True).astype("Int64")
 
     if cyclic != None:
         if "month" in cyclic:

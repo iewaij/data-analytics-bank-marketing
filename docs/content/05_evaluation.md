@@ -1,4 +1,7 @@
 # Performance Evaluation
+```{=latex}
+\chapterauthor{Jiawei Li}
+```
 
 As discussed in chapter 3, we split data into different sets and tune hyperparameters by comparing model performance on these sets. How do we define the performance of machine learning models? A plain and simple approach is using accuracy scores:
 
@@ -6,7 +9,7 @@ $$
 \text{Accuracy} = \frac{\text{Number of Correct Predictions}}{\text{Number of Total Predictions}}
 $$
 
-However, the accuracy score may be too simplistic. First, it does not reflect the unbalanced outcome of our dataset. If the model predicts every outcome as negative while the majority of the outcomes is negative, the model can still achieve a very high accuracy score. Second, the accuracy score does not distinct false positive and false negative errors which may cost the business differently. In the bank marketing context, missing a potential customer (false negative) costs more than phoning an uninterested buyer (false positive). These problems can be solved by using a confusion matrix and utilising more metrics for model evaluation. 
+However, the accuracy score may be too simplistic. First, it does not reflect the unbalanced outcome of our data set. If the model predicts every outcome as negative while the majority of the outcomes is negative, the model can still achieve a very high accuracy score. Second, the accuracy score does not distinct false positive and false negative errors which may cost the business differently. In the bank marketing context, missing a potential customer (false negative) costs more than phoning an uninterested buyer (false positive). These problems can be solved by using a confusion matrix and utilising more metrics for model evaluation. 
 
 ## Confusion Matrix
 The confusion matrix is a contingency table that outputs the counts of the true positive (TP), true negative (TN), false positive (FP), and false negative (FN) predictions. We can use an analogy of fishing to gain more intuitions: The sea consists of fish and rubbish. A fisherman throws the net into the sea and hopes to capture as many fish and as little rubbish as possible. After the fisherman retrieves the net, the fish in the net (the wanted capture) is a true positive outcome, the rubbish in the net (the unwanted capture) is a false positive outcome, the fish in the sea (the wanted leftover) is a false negative outcome, and the rubbish in the sea (the unwanted leftover) is the true negative outcome.
@@ -20,9 +23,9 @@ from sklearn.model_selection import cross_val_predict
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import confusion_matrix
 
-bank_mkt = import_dataset("../data/BankMarketing.csv")
+bank_mkt = import_data set("../data/BankMarketing.csv")
 preprocessor = FunctionTransformer(dftransform)
-X_train, y_train, *other_sets = split_dataset(bank_mkt, preprocessor)
+X_train, y_train, *other_sets = split_data set(bank_mkt, preprocessor)
 clf = KNeighborsClassifier(n_neighbors=10)
 y_pred = cross_val_predict(clf, X_train, y_train, cv=5, n_jobs=-1)
 conf_mat = confusion_matrix(y_train, y_pred)
@@ -34,7 +37,7 @@ conf_ax.set_xlabel("Predicted")
 conf_ax.set_ylabel("True")
 ```
 
-![The confusion matrix of a KNN classifier.](../figures/5_2_Conf_Mat_KNN.png)
+![The confusion matrix of a KNN classifier](../figures/5_2_Conf_Mat_KNN.png)
 
 ## Metrics From Confusion Matrix
 
@@ -74,7 +77,7 @@ $$
 bACC = \frac{TPR+TNR}{2}
 $$
 
-A performance metric table of classifiers on bank marketing dataset is shown below.
+A performance metrics table of classifiers on bank marketing data set is shown below.
 
 |      | Constant Prediction | Random Prediction | K-Nearest Neighbors | Linear SVM | Decision Tree | Logistic Regression |
 | :--- | ------------------: | ----------------: | ------------------: | ---------: | ------------: | ------------------: |
@@ -85,6 +88,7 @@ A performance metric table of classifiers on bank marketing dataset is shown bel
 | REC  |                   1 |          0.495284 |            0.208569 |  0.0382646 |      0.613851 |            0.698733 |
 | PRE  |            0.112659 |          0.111923 |            0.607535 |    0.47973 |      0.352087 |            0.255317 |
 | F1   |            0.202505 |          0.182586 |            0.310532 |   0.070876 |        0.4475 |            0.373981 |
+: Performance metrics of various classifiers
 
 ## Metrics From Decision Function
 
@@ -100,9 +104,9 @@ The following code plots the logistic regression's precision and recall against 
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_recall_curve
 
-bank_mkt = import_dataset("../data/BankMarketing.csv")
+bank_mkt = import_data set("../data/BankMarketing.csv")
 preprocessor = FunctionTransformer(dftransform)
-X_train, y_train, *other_sets = split_dataset(bank_mkt, preprocessor)
+X_train, y_train, *other_sets = split_data set(bank_mkt, preprocessor)
 clf = LogisticRegression(class_weight="balanced")
 y_score = cross_val_predict(clf, X_train, y_train, cv=5, method="decision_function")
 f, ax = plt.subplots()
@@ -115,11 +119,11 @@ threshold = 0
 pre_rec_ax.plot((threshold, threshold), (-2, 2), linestyle="--", linewidth=1)
 ```
 
-![Precision-recall curve against the threshold.](../figures/5_3_Pre_Rec_Logi.png)
+![Precision-recall curve against the threshold](../figures/5_3_Pre_Rec_Logi.png)
 
 We can also plot precision and recall against each other as shown in the following graph. For a marketing campaign, the bank wants to capture as many potential clients as possible given certain budget constraints. Therefore the precision-recall curve should be pushed as far as possible. However, such a mechanism is not reflected by the metrics derived from confusion matrix and F1 can be biased towards models with equal precision and recall.
 
-![Precision-recall curve with F1 contour.](../figures/5_4_Pre_Rec_F1.svg)
+![Precision-recall curve with F1 contour](../figures/5_4_Pre_Rec_F1.svg)
 
 To solve this problem, we introduce receiver operating characteristic (ROC) and average precision (AP) as alternative metrics that incorporate model thresholds. Average precision (AP) summarises the area under the precision-recall curve as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight.
 
@@ -129,8 +133,8 @@ $$
 
 A receiver operating characteristic (ROC) adopts the same logic by plotting TPR against FPR at various threshold settings and calculating the area under the curve, plotted as follows. 
 
-![ROC curve with bACC contour.](../figures/5_5_ROC_bACC.svg)
+![ROC curve with bACC contour](../figures/5_5_ROC_bACC.svg)
 
 ## Performance Evaluation in Practice
 
-In practice, we utilise multiple metrics to evaluate and optimise our models. When metrics show conflicting results, we prioritise AP for two reasons. First, AP has a range between the minority class percentage and 1. It gives a more straightforward picture of prediction improvements in an imbalanced dataset. Second, AP puts more weight on positive outcomes. In our case, losing a potential subscriber costs the bank more than phoning an uninterested buyer. AP matches this reality more when we evaluate model performance.
+In practice, we utilise confusion matrix and multiple metrics to evaluate and optimise our models. When dealing with imbalanced data set and metrics show conflicting results, AP is prefered [@saito_precision-recall_2015]. First, AP has a range between the minority class percentage and 1. It gives a more straightforward picture of prediction improvements on an imbalanced data set. Second, AP puts more weight on positive outcomes. In our case, losing a potential subscriber costs the bank more than phoning an uninterested buyer. AP matches this reality more when we evaluate model performance.

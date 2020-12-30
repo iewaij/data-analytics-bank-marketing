@@ -1,4 +1,7 @@
 # Decision Tree and Its Ensembles
+```{=latex}
+\chapterauthor{Strahinja Trenkic}
+```
 
 ## Decison Tree
 A decision tree is a flowchart-like structure in which each internal node represents a "test" on an attribute (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules.
@@ -11,7 +14,7 @@ Here is an outline of hyperparameters most commonly tuned for performance:
 - **min_samples_split:** The minimum number of samples required to split an internal node.
 - **criterion:** The function to measure the quality of a split. Supported criteria are “gini” for the Gini impurity and “entropy” for the information gain. Note: this parameter is tree-specific.
 - **min_samples_leaf:** The minimum number of samples required to be at a leaf node.
-- **class_weight:** Weights associated with classes in the form `{class_label: weight}`. If not given, all classes are supposed to have weight one.
+- **class_weight:** Weights associated with classes. If not given, all classes are supposed to have weight one.
 - **random_state:** Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node.
 
 It is important to note that Decision Trees can be combined to form Forests and can be used as primitive estimators in AdaBoost. This makes them redundant in terms of accuracy to these more advanced models that use them as a base. It is still however necessary to understand the individual tree estimator in order to understand how these more advance structures work. The tree is also cheaper in terms of computing requirements and can be used as an initial estimator or for feature importance analysis. 
@@ -21,8 +24,6 @@ To keep the scope of this paper reasonable, we will focus on elaborating on thes
 ## Random Forest
 
 The Random Forest represents a collection of decision trees.  They a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of reducing the variance. This comes at the expense of a small increase in the bias and some loss of interpretability, but generally greatly boosts the performance in the final model.
-
-![Random Forest](../figures/09_01_chart.png)
 
 In order to prepare the data for the Forest we first run it through our standard transformer, explained in the pipeline section of this text.
 
@@ -85,6 +86,7 @@ benchmark(bank_mkt, tree_transformer, RF_validation)
 | REC  | 0.627821 | 0.629380 | 0.618534 |
 | PRE  | 0.374147 | 0.371519 | 0.378378 |
 | AP   | 0.503536 | 0.449784 | 0.474725 |
+: Performance metrics
 
 As can be seen from the table RandomForestClassifier gives strong values in AUC ROC and proves in our dataset to be one of the best performing models. 
 
@@ -183,6 +185,7 @@ benchmark(bank_mkt, tree_transformer, AB_validation)
 | PRE  | 0.780308 | 0.58023  | 0.628933 |
 | F1   | 0.523125 | 0.354662 | 0.380386 |
 | AP   | 0.632423 | 0.374018 | 0.423666 |
+: Performance metrics
 
 In a similar fashion we derive feature importance as well:
 
@@ -204,6 +207,37 @@ plt.show()
 
 As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown (according to the Central Limit Theorem).
 
-Feature importance for both AdaBoost and the Random Forest was strikingly similar. In the paper Random Forests (Breiman, 1999), the author states the following conjecture: "AdaBoost is a Random Forest". This is an interesting claim, yet to be proven or disproven but AdaBoost with the base estimator of a tree stump can in certain datasets behave very much like a Random Forest of sorts. Proven or disproven it just confirms once more what we discussed in class, that Machine Learning is a trial and error process and data speaks its own language. There are no universal truths and ad-hoc solutions in this exciting field.
+Feature importance for both AdaBoost and the Random Forest was strikingly similar. In the paper Random Forests, @breiman_random_2001 states the following conjecture: "AdaBoost is a Random Forest". This is an interesting claim, yet to be proven or disproven but AdaBoost with the base estimator of a tree stump can in certain datasets behave very much like a Random Forest of sorts. Proven or disproven it just confirms once more what we discussed in class, that Machine Learning is a trial and error process and data speaks its own language. There are no universal truths and ad-hoc solutions in this exciting field.
 
 ## XGBoost
+Gradient Boosting is another boosting algorithm. Similar to AdaBoost, Gradient Boosting sequentially add predictors to an ensemble and corrects its predecessor. However, instead of tuning the weights at each iteration, Gradient Boosting fits the residual errors made by the predecessor. Even though Gradient Boosting is part of the `scikit-learn` collections, better performance can be achieved by using other libraries, such as `XGBoost`.
+
+In our practice, even though `XGBoost` provides dozens of hyperparameters, just by tuning `max_depth` manually and dropping demographic features gives us satisfactory results.
+
+```python
+drop_features = ["age",
+                 "job",
+                 "marital",
+                 "education",
+                 "housing",
+                 "loan",
+                 "default",
+                 "duration",
+                 "y"]
+drop_prep = FunctionTransformer(dftransform, 
+                                kw_args={"drop": drop_features,
+                                         "to_float":True}
+xgb_clf = XGBClassifier(max_depth=3, scale_pos_weight=8)
+benchmark(bank_mkt, drop_prep, xgb_clf)
+```
+
+|      | Train    | Validate | Test     |
+| ---- | -------- | -------- | -------- |
+| TNR  | 0.849335 | 0.845535 | 0.856596 |
+| TPR  | 0.666218 | 0.659030 | 0.644397 |
+| bACC | 0.757776 | 0.752283 | 0.750496 |
+| ROC  | 0.826341 | 0.807138 | 0.812991 |
+| REC  | 0.666218 | 0.659030 | 0.644397 |
+| PRE  | 0.359571 | 0.351293 | 0.363305 |
+| AP   | 0.518830 | 0.479562 | 0.483435 |
+: Performance metrics

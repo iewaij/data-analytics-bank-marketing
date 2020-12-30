@@ -1,13 +1,16 @@
 # Feature Engineering
+ ```{=latex}
+\chapterauthor{Jiawei Li}
+```
 
-Feature Engineering is a practice of using domain knowledge to incorporate more features and improve machine learning models. Given that the dataset has relatively few features and rows, dimensionality reduction will not be applied. We instead focus on improving feature quality and generating new features, such as incorporating dates. As a result, our feature engineering approach includes missing value imputation, feature generation, feature transformations and adjusting sample weights.
+Feature Engineering is a practice of using domain knowledge to incorporate more features and improve machine learning models. Given that the data set has relatively few features and rows, dimensionality reduction will not be applied. We instead focus on improving feature quality and generating new features, such as incorporating dates. As a result, our feature engineering approach includes missing value imputation, feature generation, feature transformations and adjusting sample weights.
 
 ## Incorporate Dates
 
-The most important feature in the dataset is the date of telemarketing which gives us the economic context. However, the dataset only includes `month` and `day_of_week` while `year` is missing. With the help of the dataset description, we find that the dataset is ordered by date and the telemarketing was conducted from May 2008 to November 2010. Even without this description, we can still reverse engineer the year information using the economic index, such as `CPI`. By manually inspecting `month`, we can infer each row's `year`.
+The most important feature in the data set is the date of telemarketing which gives us the economic context. However, the data set only includes `month` and `day_of_week` while `year` is missing. With the help of the data set description, we find that the data set is ordered by date and the telemarketing was conducted from May 2008 to November 2010. Even without this description, we can still reverse engineer the year information using the economic index, such as `CPI`. By manually inspecting `month`, we can infer each row's `year`.
 
 ```python
-bank_mkt = import_dataset("../data/BankMarketing.csv")
+bank_mkt = import_data set("../data/BankMarketing.csv")
 bank_mkt.loc[bank_mkt.index < 27682, "year"] = 2008
 bank_mkt.loc[(27682<=bank_mkt.index) & (bank_mkt.index<39118), "year"] = 2009
 bank_mkt.loc[39118<=bank_mkt.index, "year"] = 2010
@@ -49,7 +52,8 @@ from sklearn.impute import SimpleImputer
 freq_features = ["job", "marital", "education", "default", "housing", "loan"]
 
 freq_imputer = ColumnTransformer([
-    ("freq_imputer", SimpleImputer(missing_values=-1, strategy="most_frequent"), freq_features)
+    ("freq_imputer", SimpleImputer(missing_values=-1, strategy="most_frequent"),
+    freq_features)
 ], remainder="passthrough")
 
 freq_encoder = make_pipeline(cat_encoder, freq_imputer)
@@ -63,12 +67,27 @@ Another imputation method worth mentioning is iterative imputation which attempt
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 
-ite_features = ["age", "job", "marital", "education", "default", "housing", "loan", "contact", "campaign", "month", "day_of_week", "pdays", "previous"]
+ite_features = ["age", 
+                "job", 
+                "marital", 
+                "education", 
+                "default", 
+                "housing", 
+                "loan", 
+                "contact", 
+                "campaign", 
+                "month", 
+                "day_of_week", 
+                "pdays", 
+                "previous"]
 
 ite_imputer = ColumnTransformer([
     ("ite_imputer",
      make_pipeline(
-         IterativeImputer(max_iter=100, missing_values=-1, initial_strategy="most_frequent", random_state=42),
+         IterativeImputer(max_iter=100,
+                          missing_values=-1,
+                          initial_strategy="most_frequent",
+                          random_state=42),
          FunctionTransformer(np.round)
      ),
      ite_features),
@@ -94,3 +113,22 @@ drop_features = ["age",
                  "y"]
 bank_mkt = bank_mkt.drop(drop_features, axis=1)
 ```
+
+## Feature Engineering in Practice
+During our project, we implement different feature engineering strategies inside a function `dttransform()`. Each strategy can be called by passing its corresponding parameters and put into a preprocessing pipeline as demonstrated in the following code.
+
+```python
+drop_features = ["age",
+                 "job",
+                 "marital",
+                 "education",
+                 "housing",
+                 "loan",
+                 "default",
+                 "duration",
+                 "y"]
+drop_prep = FunctionTransformer(dftransform, 
+                                kw_args={"drop": drop_features})
+```
+
+Following this method, we build classifiers using different feature engineering strategies and compare them with their baseline performance. We then select the best feature engineering strategies and tune the hyperparameters for each classifier. However, it should be noted that feature engineering strategies can also be regarded as hyperparameters for the model. It is also possible to use the grid search to find the best feature engineering strategies and hyperparameters.

@@ -1,12 +1,15 @@
 # Data Preparation and Pipelines
- 
-After inspecting and exploring the dataset, this chapter focuses on data preparation and pipelines which build the foundation for the following chapters. Data preparation or data transformation is a process that transforms the data into proper types, shapes and sets. For example, categorical data are usually stored as strings in the original dataset and can not be fitted in `scikit-learn` models. To solve this issue, We need to utilise `pandas` or `scikit-learn` to transform such data into integers. It should be noted that simply transforming data in a `jupyter` notebook is not a best practice because such code is not reusable and readable. In our analytical practice, we wrap the data preparation procesedures into documented and modular `python` functions and `scikit-learn` pipelines. Such practice ensures that all collaborators can build and evaluate models from the same ground. The high-level overview of the data preparation and pipeline is shown in the flow chart. The code implementation will be provided in the appendix section.
+ ```{=latex}
+\chapterauthor{Jiawei Li}
+```
 
-![Data Life Cycle](../figures/3_1_Data_Lifecycle.png)
+After inspecting and exploring the data set, this chapter focuses on data preparation and pipelines which build the foundation for the following chapters. Data preparation or data transformation is a process that transforms the data into proper types, shapes and sets. For example, categorical data are usually stored as strings in the original data set and can not be fitted in `scikit-learn` models. To solve this issue, We need to utilise `pandas` or `scikit-learn` to transform such data into integers. It should be noted that simply transforming data in a `jupyter` notebook is not a best practice because such code is not reusable and readable. In our analytical practice, we wrap the data preparation procesedures into documented and modular `python` functions and `scikit-learn` pipelines. Such practice ensures that all collaborators can build and evaluate models from the same ground. The high-level overview of the data preparation and pipeline is shown in the flow chart. The code implementation will be provided in the appendix section.
+
+![Data life cycle](../figures/3_1_Data_Lifecycle.png)
 
 ## Import Data
 
-First, the `BankMarkteting.csv` file is imported using `read_csv()` from `pandas` and duplicated rows, missing values, categorical and boolean data are properly processed. The import process is abstracted into the function `import_dataset()`. A sample code is shown below:
+First, the `BankMarkteting.csv` file is imported using `read_csv()` from `pandas` and duplicated rows, missing values, categorical and boolean data are properly processed. The import process is abstracted into the function `import_data set()`. A sample code is shown below:
 
 ```python
 import pandas as pd
@@ -34,7 +37,7 @@ bank_mkt = bank_mkt.drop_duplicates().reset_index(drop=True)
 
 ## Partition Data
 
-After importing the data, we need to split the dataset into the train set and test set. `scikit-learn` models will then be trained and tuned on the train set. We only use the test set for final validation purposes. However, simply sampling the dataset may lead to unrepresentative partition given that our dataset is imbalanced and clients have different features. To solve this problem, `scikit-learn` provides a useful function `StratifiedShuffleSplit()` to select representative data into the test set and train set, which is shown below as a sample code:
+After importing the data, we need to split the data set into the train set and test set. `scikit-learn` models will then be trained and tuned on the train set. We only use the test set for final validation purposes. However, simply sampling the data set may lead to unrepresentative partition given that our data set is imbalanced and clients have different features. To solve this problem, `scikit-learn` provides a useful function `StratifiedShuffleSplit()` to select representative data into the test set and train set, which is shown below as a sample code:
 
 ```python
 from sklearn.model_selection import StratifiedShuffleSplit
@@ -116,11 +119,11 @@ X_train = hot_preprocessor.fit_transform(X_train, y_train)
 X_test = hot_preprocessor.transform(X_test)
 ```
 
-## Workflows with Pipelines
+## Data Pipelines in Practice
 
-In our project, the data partition and preprocessing is combined by the function `split_dataset()` which accepts `preprocessor` as a parameter. Its functionality is further extended by the benchmarking function `benchmark()` which accepts `data`, `preprocessor`, `clf` as parameters and output model performance on train, validation and test set. With these functions, an ideal workflow will be:
+In our project, the data partition and preprocessing is combined by the function `split_data set()` which accepts `preprocessor` as a parameter. Its functionality is further extended by the benchmarking function `benchmark()` which accepts `data`, `preprocessor`, `clf` as parameters and output model performance on train, validation and test set. With these functions, an ideal workflow will be:
 
-1. Import data using `import_dataset()`;
+1. Import data using `import_data set()`;
 2. Build a preprocessing pipeline `preprocessor`;
 3. Build an estimator `clf`;
 4. Tune the estimator by optimising model's performance on the train and validation set using `benchmark(data, preprocessor, clf)` or `scikit-learn`'s grid search functions;

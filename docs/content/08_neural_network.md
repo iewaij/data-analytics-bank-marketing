@@ -1,15 +1,17 @@
 # Neural Network
+```{=latex}
+\chapterauthor{Qiqi Zhou}
+```
 
 Neural Network is a "brain structure" with the following components:
 
-1. An input layer;
-2. An arbitrary amount of hidden layers;
-3. An output layer;
-4. A set of weights and biases between each layer;
-5. An activation function for each hidden layer.
+1. an input layer;
+2. an arbitrary amount of hidden layers;
+3. an output layer;
+4. a set of weights and biases between each layer;
+5. an activation function for each hidden layer.
 
 Training the neural network model is to find the right values for the weights and biases and it involves multiple iterations of exposing the training dataset to the network. Each iteration of the training process consists of Forward Propagation and Backpropagation. The Forward Propagation is a process where the input data is fed in the forward direction. Each hidden layer accepts the input data and processes it as per the activation function and passes the results to the successive layer. The Backpropagation is to fine tune the weights of a neural net based on error rate obtained in the previous iteration. Error is calculated between the expected outputs and the outputs forward propagated from the network. These errors are then propagated backwards from the output layer to the hidden layer, finding contributions to the errors and updating the weights.
-
 
 ## Hyperparameters
 
@@ -78,9 +80,9 @@ nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 |  REC | 0.470192 | 0.295148 | 0.310345 |
 |  PRE | 0.790935 | 0.478166 | 0.566929 |
 |   AP | 0.688217 | 0.354089 | 0.396211 |
+: Performance metrics
 
-![NN_train_conf](../figures/08_01_NN_train.png)
-![NN_test_conf](../figures/08_02_NN_test.png)
+![Confusion Matrix on the test set](../figures/08_02_NN_test.png)
 
 ## Reflections
 
@@ -91,9 +93,3 @@ Neural networks are more suitable for the first three types of data, that is, da
 For tabular data where there is no obvious pattern, an inefficient fully connected network may not work as well as the more traditional machine learning models such as Gradient Boosting Tree. 
 
 In the case of tabular data, feature engineering might be more important because it integrates the prior knowledge into the data and makes the model understand the data better.
-
-[@loy_how_2020]
-
-[@noauthor_7_nodate]
-
-[@brownlee_understand_2019]
