@@ -26,63 +26,57 @@ The bank marketing dataset was collectedand ordered by date ranging from May 200
 
 **A. Bank client data:**
 
-`age`: age (numeric)
+`age`: age 
 
-`job`: type of job (categorical: 'admin.', 'blue-collar', 'entrepreneur', 'housemaid', 'management',
-'retired', 'self-employed', 'services', 'student', 'technician', 'unemployed', 'unknown')
+`job`: type of job
 
-`marital`: marital status (categorical: 'divorced', 'married', 'single', 'unknown'; note: 'divorced'
-means divorced or widowed)
+`marital`: marital status
 
-`education`: (categorical: 'basic.4y', 'basic.6y', 'basic.9y', 'high.school', 'illiterate',
-'professional.course', 'university.degree', 'unknown')
+`education`: education level
 
-`default`: has credit in default? (categorical: 'no', 'yes', 'unknown')
+`default`: has credit in default?)
 
-`housing`: has housing loan? (categorical: 'no', 'yes', 'unknown')
+`housing`: has housing loan?)
 
-`loan`: has personal loan? (categorical: 'no', 'yes', 'unknown')
+`loan`: has personal loan?)
 
 **B. Related with the last contact of the current campaign:**
 
-`contact`: contact communication type (categorical: 'cellular', 'telephone')
+`contact`: contact communication type
 
-`month`: last contact month of year (categorical: 'jan', 'feb', 'mar', ..., 'nov', 'dec')
+`month`: last contact month of year
 
-`day_of_week`: last contact day of the week (categorical: 'mon', 'tue', 'wed', 'thu', 'fri')
+`day_of_week`: last contact day of the week
 
-`duration`: last contact duration, in seconds (numeric). Important note: this attribute highly
-affects the output target (e.g., if duration=0 then y='no'). Yet, the duration is not known before a
-call is performed. Also, after the end of the call y is obviously known. Thus, this input should only
-be included for benchmark purposes and should be discarded if the intention is to have a
-realistic predictive model.
+`duration`: last contact duration, in seconds 
+
 
 **C. Other attributes:**
 
 
-`campaign`: number of contacts performed during this campaign and for this client (numeric,
-includes last contact)
+`campaign`: number of contacts performed during this campaign and for this client
 
 `pdays`: number of days that passed by after the client was last contacted from a previous
-campaign (numeric; 999 means client was not previously contacted)
+campaign
 
-`previous`: number of contacts performed before this campaign and for this client (numeric)
+`previous`: number of contacts performed before this campaign and for this client
 
-`poutcome`: outcome of the previous marketing campaign (categorical: 'failure', 'nonexistent',
-'success')
+`poutcome`: outcome of the previous marketing campaign
 
-**D. Social and economic context attributes**
+**D. Social and economic context attributes:**
 
-`emp.var.rate`: employment variation rate, quarterly indicator (numeric)
+`emp.var.rate`: employment variation rate, quarterly indicator
 
-`cons.price.idx`: consumer price index, monthly indicator (numeric)
+`cons.price.idx`: consumer price index, monthly indicator
 
-`cons.conf.idx`: consumer confidence index, monthly indicator (numeric)
+`cons.conf.idx`: consumer confidence index, monthly indicator
 
-`euribor3m`: euribor 3 month rate, daily indicator (numeric)
+`euribor3m`: euribor 3 month rate, daily indicator
 
-`nr.employed`: number of employees, quarterly indicator (numeric)
+`nr.employed`: number of employees, quarterly indicator
 
-**Output variable (desired target):**
+**Output variable:**
 
-`y`: has the client subscribed a term deposit? (binary: 'yes', 'no')
+`y`: has the client subscribed a term deposit?
+
+It is important to note that `duration` attribute highly affects the output targetd. Yet, the duration is not known before a call is performed. Also, after the end of the call `y` is obviously known. Thus, this input should only be included for benchmark purposes and should be discarded.

@@ -7,12 +7,12 @@ In Machine Learning this type of structure can be used to advise in classificati
 
 Here is an outline of hyperparameters most commonly tuned for performance:
 
-- **max_depth:** int, *default=None*; The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples.
-- **min_samples_split:** int or float, *default=2*; The minimum number of samples required to split an internal node.
-- **criterion:**  {“gini”, “entropy”}, *default=”gini”*; The function to measure the quality of a split. Supported criteria are “gini” for the Gini impurity and “entropy” for the information gain. Note: this parameter is tree-specific.
-- **min_samples_leaf:** int or float, *default=1*; The minimum number of samples required to be at a leaf node.
-- **class_weight:** {“balanced”, “balanced_subsample”}, *default=None*; Weights associated with classes in the form `{class_label: weight}`. If not given, all classes are supposed to have weight one.
-- **random_state:** int or Random State, *default=None; Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node.
+- **max_depth:** The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples.
+- **min_samples_split:** The minimum number of samples required to split an internal node.
+- **criterion:** The function to measure the quality of a split. Supported criteria are “gini” for the Gini impurity and “entropy” for the information gain. Note: this parameter is tree-specific.
+- **min_samples_leaf:** The minimum number of samples required to be at a leaf node.
+- **class_weight:** Weights associated with classes in the form `{class_label: weight}`. If not given, all classes are supposed to have weight one.
+- **random_state:** Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node.
 
 It is important to note that Decision Trees can be combined to form Forests and can be used as primitive estimators in AdaBoost. This makes them redundant in terms of accuracy to these more advanced models that use them as a base. It is still however necessary to understand the individual tree estimator in order to understand how these more advance structures work. The tree is also cheaper in terms of computing requirements and can be used as an initial estimator or for feature importance analysis. 
 
@@ -33,7 +33,7 @@ X_train, y_train, X_test, y_test, *other_sets = split_dataset(bank_mkt, tree_tra
 
 We then procede onto hyperparameter tuning. Hyperparameter tuning of the random forest is basically hyperparameter tuning of the individual tree with one prominent differences. Namely:
 
-- **n_estimators:** int, *default=100* ; which basically represents the number of trees in the forest.
+- **n_estimators:** which basically represents the number of trees in the forest.
 
 In the case of our project:
 
@@ -67,11 +67,15 @@ max_depth=6, n_estimators= 1750,random_state=42)
 
 We decide that 1750 estimators in subsequent testing show signs of overfitting and went to produce our final performance matrix with 1500 estimators.
 
-```
-RF_validation = RandomForestClassifier(random_state=42,class_weight="balanced",max_depth=6,n_estimators=1500,
+```python
+RF_validation = RandomForestClassifier(random_state=42,
+                                       class_weight="balanced",
+                                       max_depth=6,
+                                       n_estimators=1500,
                                        max_leaf_nodes=1000)
 benchmark(bank_mkt, tree_transformer, RF_validation)
 ```
+
 |      | Train    | Validate | Test     |
 | ---- | -------- | -------- | -------- |
 | TNR  | 0.866655 | 0.864865 | 0.870963 |
@@ -104,16 +108,14 @@ This can also be plotted to give an informative picture about how features rank 
 importances = rnd_clf.feature_importances_
 indices = np.argsort(importances)
 
-plt.title('Feature Importances')
 plt.barh(range(len(indices)), importances[indices], color='b', align='center')
 plt.yticks(range(len(indices)), [columns[i] for i in indices])
 plt.xlabel('Relative Importance')
-plt.savefig("Feature importance.png")
 plt.size=(15,10)
 plt.show()
 ```
 
-![Chart of Feature Importance](../figures/09_04_Forest_Importance.jpg)
+![Feature importance](../figures/09_04_Forest_Importance.jpg)
 
 All in all the Random Forest lived up to its expectation. By adding just a small amount of bias it greatly improves the performance of Decision Trees. They are very robust and require little to none work in terms of encoding and feature manipulation. 
 
@@ -123,24 +125,28 @@ An AdaBoost classifier is a meta-estimator that begins by fitting a classifier o
 
 The AdaBoost uses simple, primitive individual classifiers but in comparison with the Random Forest it gives them different, ever changing weights to their final decision. The individual primitive estimator is one of the hyperparameters
 
-- **base_estimator:** object, *default=None*; The base estimator from which the boosted ensemble is built. Support for sample weighting is required, as well as proper `classes_` and `n_classes_` attributes. If `None`, then the base estimator is `DecisionTreeClassifier(max_depth=1)`.
+- **base_estimator:** The base estimator from which the boosted ensemble is built. Support for sample weighting is required, as well as proper `classes_` and `n_classes_` attributes. If `None`, then the base estimator is `DecisionTreeClassifier(max_depth=1)`.
 
 The process of tuning this parameter can at starts feel counterintuitive. Why wouldn't a tree of max_depth=2 return better overall results than this stump with only depth level of one. In this question lies the beauty and genius of this model. Because many individually primitive estimators with weighted, individually adjusted  decisions will overall provide with a more effective and efficient model.
 
 The other important hyperparameters to tune in the AdaBoost Classifier are
 
-- **learning_rate:** float, *default=1*; Learning rate shrinks the contribution of each classifier by `learning_rate`. There is a trade-off between `learning_rate` and `n_estimators`.
-- **n_estimators:** int, *default=50*; The maximum number of estimators at which boosting is terminated. In case of perfect fit, the learning procedure is stopped early.
+- **learning_rate:** Learning rate shrinks the contribution of each classifier by `learning_rate`. There is a trade-off between `learning_rate` and `n_estimators`.
+- **n_estimators:** The maximum number of estimators at which boosting is terminated. In case of perfect fit, the learning procedure is stopped early.
 
 ```python
-AB= AdaBoostClassifier(n_estimators=100,random_state=42,learning_rate=1.0)
-
+AB = AdaBoostClassifier(n_estimators=100,random_state=42,learning_rate=1.0)
 param_grid = {
     'learning_rate':[0.8],
     'n_estimators':[800],
-    'base_estimator':[DecisionTreeClassifier(max_depth=1),DecisionTreeClassifier(max_depth=4)]
+    'base_estimator':[DecisionTreeClassifier(max_depth=1),
+                      DecisionTreeClassifier(max_depth=4)]
 }
-CV_RFmodel = GridSearchCV(estimator=AB,param_grid=param_grid,scoring="average_precision",n_jobs=-1,cv=2)
+CV_RFmodel = GridSearchCV(estimator=AB,
+                          param_grid=param_grid,
+                          scoring="average_precision",
+                          n_jobs=-1,
+                          cv=5)
 CV_RFmodel.fit(X_train,y_train)
 grid_results = CV_RFmodel.cv_results_
 grid_best_params = CV_RFmodel.best_params_
@@ -160,7 +166,8 @@ learning_rate=0.8, n_estimators=800, random_state=42)
 We proceeded to find the full performance matrix:
 
 ```python
-AB_validation = AdaBoostClassifier(n_estimators=800,learning_rate=0.8,random_state=42,
+AB_validation = AdaBoostClassifier(n_estimators=800,
+                                   learning_rate=0.8,random_state=42,
                                    base_estimator = DecisionTreeClassifier(max_depth=2,min_samples_split=2))
 
 benchmark(bank_mkt, tree_transformer, AB_validation)
@@ -182,23 +189,18 @@ In a similar fashion we derive feature importance as well:
 ```python
 for name, importance in zip(columns, AB_validation.feature_importances_):
     print(name, "=", importance)
-```
-
-```python
 importances = AB_validation.feature_importances_
 indices = np.argsort(importances)
-```
-
-![Table of Feature Importance](../figures/09_06_AdaBoost_Table.jpg)
-
-```plt.barh(range(len(indices)), importances[indices])
+plt.barh(range(len(indices)), importances[indices])
 plt.yticks(range(len(indices)), [columns[i] for i in indices])
 plt.xlabel("Relative Importance")
 plt.size=(15,10)
 plt.show()
 ```
 
-![Chart of Feature Importance](../figures/09_07_Feature_Importance_AdaBoost.jpg)
+![Feature importance](../figures/09_06_AdaBoost_Table.jpg)
+
+![Feature importance](../figures/09_07_Feature_Importance_AdaBoost.jpg)
 
 As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown (according to the Central Limit Theorem).
 
