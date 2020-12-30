@@ -1,14 +1,5 @@
 # Introduction
 ```{=latex}
-\makeatletter
-\newcommand{\chapterauthor}[1]{%
-  {\parindent0pt\vspace*{-25pt}%
-  \linespread{1.1}\large\scshape#1%
-  \par\nobreak\vspace*{35pt}}
-  \@afterheading%
-}
-\makeatother
-
 \chapterauthor{Strahinja Trenkic}
 ```
 

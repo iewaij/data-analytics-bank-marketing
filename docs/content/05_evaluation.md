@@ -79,15 +79,26 @@ $$
 
 A performance metrics table of classifiers on bank marketing data set is shown below.
 
-|      | Constant Prediction | Random Prediction | K-Nearest Neighbors | Linear SVM | Decision Tree | Logistic Regression |
-| :--- | ------------------: | ----------------: | ------------------: | ---------: | ------------: | ------------------: |
-| FPR  |                   1 |          0.498957 |           0.0171063 | 0.00526874 |      0.143419 |             0.25875 |
-| TNR  |                   0 |          0.501043 |            0.982894 |   0.994731 |      0.856581 |             0.74125 |
-| TPR  |                   1 |          0.495284 |            0.208569 |  0.0382646 |      0.613851 |            0.698733 |
-| bACC |                 0.5 |          0.498164 |            0.595731 |   0.516498 |      0.735216 |            0.719992 |
-| REC  |                   1 |          0.495284 |            0.208569 |  0.0382646 |      0.613851 |            0.698733 |
-| PRE  |            0.112659 |          0.111923 |            0.607535 |    0.47973 |      0.352087 |            0.255317 |
-| F1   |            0.202505 |          0.182586 |            0.310532 |   0.070876 |        0.4475 |            0.373981 |
+|      | Constant Prediction | Random Prediction | K-Nearest Neighbors |
+| :--- | ------------------: | ----------------: | ------------------: |
+| FPR  |                   1 |             0.498 |              0.0171 |
+| TNR  |                   0 |             0.501 |               0.982 |
+| TPR  |                   1 |             0.495 |               0.208 |
+| bACC |                 0.5 |             0.498 |               0.595 |
+| REC  |                   1 |             0.495 |               0.208 |
+| PRE  |               0.112 |             0.111 |               0.607 |
+| F1   |               0.202 |             0.182 |               0.310 |
+: Performance metrics of various classifiers
+
+|      | Linear SVM | Decision Tree | Logistic Regression |
+| :--- | ---------: | ------------: | ------------------: |
+| FPR  |      0.005 |         0.143 |               0.258 |
+| TNR  |      0.994 |         0.856 |               0.741 |
+| TPR  |      0.038 |         0.613 |               0.698 |
+| bACC |      0.516 |         0.735 |               0.719 |
+| REC  |      0.038 |         0.613 |               0.698 |
+| PRE  |       0.47 |         0.352 |               0.255 |
+| F1   |      0.070 |         0.447 |               0.373 |
 : Performance metrics of various classifiers
 
 ## Metrics From Decision Function
