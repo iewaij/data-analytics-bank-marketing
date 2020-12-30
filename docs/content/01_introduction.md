@@ -12,17 +12,17 @@ Such an instrument would generate revenue for the bank, hence the bank records t
 1. The efficiency dimension, or in other words how to reduce the number of phone calls the bank is performing and therefore reduce the costs associated with telemarketing;
 2. The effectiveness dimension, or in other words how to potentially improve the result and get more clients or at least the same number to deposit their money with our bank.
 
-We also need to understand the economic and historic context behind the data set. In 2008, the world was plunged in the deepest economic recession since the 1930s. After the bankruptcy of The Lehman Brothers, the financial market was shaken to its core and governments as central banks started unprecedented levels of quantitative easing to save jobs and revitalize the economy. As can be seen on the above picture this caused a huge spike in the famous TED spread, one of the leading indicators for credit risk, since it represents the difference between a riskless investment (T-Bill) and the risk banks transfer when loaning to each other. The wider the spread, the more default risk is priced into the borrowing market. It is trivial to conclude that such an increase in risk will have a major impact not only on the telemarketing campaign but also the representability and timelessness of the data gathered through it.
+We also need to understand the economic and historic context behind the data set. In 2008, the world was plunged in the deepest economic recession since the 1930s. After the bankruptcy of The Lehman Brothers, the financial market was shaken to its core and governments as central banks started unprecedented levels of quantitative easing to save jobs and revitalize the economy. As can be seen on the chart below this caused a huge spike in the famous TED spread, one of the leading indicators for credit risk, since it represents the difference between a riskless investment (T-Bill) and the risk banks transfer when loaning to each other. The wider the spread, the more default risk is priced into the borrowing market. It is trivial to conclude that such an increase in risk will have a major impact not only on the telemarketing campaign but also the representability and timelessness of the data gathered through it.
 
 ![TED spread, 2008-2009](../figures/1_1_TED_spread.png)
 
-Given that the data set is based on a Portuguese bank, it is also worth mentioning that Portugal and other European countries were facing a fiscal debt crisis. @lane_european_2012 discussed this issue and showed that Portugal started increasing its debt level after the 2008 financial crisis and had to increase its bond yield in 2010, which implied that its government was facing high debt default risk.
+Given that the data set is based on a Portuguese bank, it is also worth mentioning that Portugal and other European countries were facing a fiscal debt crisis. @lane_european_2012 discussed this issue and showed that Portugal started increasing its debt level after the 2008 financial crisis and had to increase its bond yield in 2010, which implied that its government was facing high debt default risk. These phenomena can be observed graphically on figures 2 and 3
 
 ![The evolution of public debt, 1982–2011](../figures/1_2_Public_Debt.png)
 
 ![Yields on 10-year sovereign bonds, 2009–2012](../figures/1_3_Yield.png)
 
-Can we develop a data-driven approach to help the bank increase its success rate of telemarketing while incorporating the economic context? There are several questions that could be interesting:
+Can we develop a data-driven approach to help the bank increase its success rate of telemarketing while incorporating the economic context ? Several other questions can be raised at this point:
 
 1. How did the economic crisis affect consumer behaviour and how did it manifest itself in the data?
 2. How does one's education, marital status, job, etc. affect their economic choices?
