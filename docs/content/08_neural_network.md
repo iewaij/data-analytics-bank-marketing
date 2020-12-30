@@ -79,6 +79,8 @@ nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 |  PRE | 0.790935 | 0.478166 | 0.566929 |
 |   AP | 0.688217 | 0.354089 | 0.396211 |
 
+![NN_train_conf](../figures/08_01_NN_train.png)
+![NN_test_conf](../figures/08_02_NN_test.png)
 
 ## Reflections
 
