@@ -202,7 +202,7 @@ Feature importance for both AdaBoost and the Random Forest was strikingly simila
 ## XGBoost
 Gradient Boosting is another boosting algorithm. Similar to AdaBoost, Gradient Boosting sequentially add predictors to an ensemble and corrects its predecessor. However, instead of tuning the weights at each iteration, Gradient Boosting fits the residual errors made by the predecessor. Even though Gradient Boosting is part of the `scikit-learn` collections, better performance can be achieved by using other libraries, such as `XGBoost`.
 
-In our practice, even though `XGBoost` provides dozens of hyperparameters, just by tuning `max_depth` manually and dropping demographic features gives us satisfactory results. The feature importance plot shows that economic indicators and previous compaign outcome are the key predicators.
+In our practice, even though `XGBoost` provides dozens of hyperparameters, just by tuning `max_depth` manually and dropping demographic features gives us satisfactory results.
 
 ```python
 drop_features = ["age",
@@ -231,5 +231,7 @@ benchmark(bank_mkt, drop_prep, xgb_clf)
 : Performance metrics of XGBoost
 
 ![Confusion Matrix of XGBoost](../figures/9_5_Conf_Mat_3.png){width=45%}
+
+The feature importance plot shows that economic indicators and previous compaign outcome are the key predicators.
 
 ![Feature importance of XGBoost](../figures/9_6_Feature_Imp_3.png)

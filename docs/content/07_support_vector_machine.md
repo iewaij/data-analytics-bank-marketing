@@ -23,11 +23,7 @@ $$
 \hat{p}^{i}=σ(\theta^{ T}⋅ x^{i})=1/(1+e^ {−  \theta ^T}⋅  x^{i})
 $$
 
-In the realm of loss function of Logistic Regression, the individual loss contribution to the overall function is $−log(\hat{p}^{i})$ if $y^{i}= 1$ and $−log(1−\hat{p}^{i})$ if $y^{i}= 0$.
-
-By replacing the individual loss contribution to $max(0,1−\theta^{ T}⋅ x^{i})$ and $max(0,1+\theta^{T}⋅ x^{i})$ for $y^{i}= 1$ and $y^{i}= 0$ respectively, SVM penalizes the margin violation more than logistic regression by requiring a prediction bigger than 1 for y =1 and a prediction smaller than -1 if y = 0.
-
-![Comparison of Logistic Regression and SVM.](https://i.imgur.com/4quBUfZ.png)
+In the realm of loss function of Logistic Regression, the individual loss contribution to the overall function is $−log(\hat{p}^{i})$ if $y^{i}= 1$ and $−log(1−\hat{p}^{i})$ if $y^{i}= 0$. By replacing the individual loss contribution to $max(0,1−\theta^{ T}⋅ x^{i})$ and $max(0,1+\theta^{T}⋅ x^{i})$ for $y^{i}= 1$ and $y^{i}= 0$ respectively, SVM penalizes the margin violation more than logistic regression by requiring a prediction bigger than 1 for y =1 and a prediction smaller than -1 if y = 0.
 
 ### Regularizaiton
 
@@ -74,12 +70,10 @@ grid_search = GridSearchCV(linear_svm,
                            return_train_score=True,
                            cv=5,
                            n_jobs=-1)
-
 grid_fit = grid_search.fit(X_train, y_train)
 grid_results = grid_search.cv_results_
 grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
-
 print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 
 linear_svm = LinearSVC(loss="squared_hinge",
@@ -111,29 +105,24 @@ rbf_sgd_clf = Pipeline([
     ("rbf", RBFSampler(random_state=42)),
     ("svm", SGDClassifier(class_weight="balanced"))
 ])
-
 param_distributions = {
     "rbf__gamma": loguniform(1e-6, 1e-3),
     "svm__alpha": loguniform(1e-10, 1e-6)}
-
 random_search = RandomizedSearchCV(rbf_sgd_clf,
                                    param_distributions,
                                    scoring="average_precision",
                                    cv=5,
                                    n_jobs=-1,
                                    n_iter=10)
-
 grid_fit = random_search.fit(X_train, y_train)
 grid_results = random_search.cv_results_
 grid_best_params = random_search.best_params_
 grid_best_score = random_search.best_score_
-
 print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 
 param_grid = {
     "rbf__gamma": [0.0008, 0.0001, 0.001],
     "svm__alpha": [1e-7, 1e-6, 1e-5]}
-
 grid_search = GridSearchCV(rbf_sgd_clf,
                            param_grid,
                            scoring="average_precision",
@@ -144,7 +133,6 @@ grid_fit = grid_search.fit(X_train, y_train)
 grid_results = grid_search.cv_results_
 grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
-
 print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 
 rbf_sgd_tuned = rbf_sgd_clf.set_params(rbf__gamma=0.0009, svm__alpha=1e-6)

@@ -115,7 +115,7 @@ bank_mkt = bank_mkt.drop(drop_features, axis=1)
 ```
 
 ## Feature Engineering in Practice
-During our project, we implement different feature engineering strategies inside a function `dttransform()`. Each strategy can be called by passing its corresponding parameters and put into a preprocessing pipeline as demonstrated in the following code.
+During our project, we implement different feature engineering strategies, such as target encoding and cyclic encoding, inside a function `dttransform()`. Each strategy can be called by passing its corresponding parameters and put into a preprocessing pipeline as demonstrated in the following code.
 
 ```python
 drop_features = ["age",

@@ -16,7 +16,7 @@ The Confusion Matrix is a contingency table that outputs the counts of the true 
 
 ![Confusion Matrix](../figures/5_1_Conf_Mat.png){width=45%}
 
-The Confusion Matrix can be computed by calling `confusion_matrix` in `scikit-learn` as follows:
+The Confusion Matrix can be computed by calling `confusion_matrix()` in `scikit-learn` as follows:
 
 ```python
 from sklearn.model_selection import cross_val_predict

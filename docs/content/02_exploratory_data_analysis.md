@@ -89,12 +89,12 @@ Furthermore, we explore some multivariate distributions of the positive outcome.
 
 ![Positive outcome percentage by `education` and `marital`](../figures/2_15_Education+Marital.png)
 
-### Key Numerical Features
+### Numerical Features
 We also made a scatterplot across important quantitative features with the outcome variable denoted by two colors.
 
-![Scatterplots of key numerical features](../figures/2_16_Numerial_features.png)
+![Scatterplots of numerical features](../figures/2_16_Numerial_features.png){width=60%}
 
 ### Correlation Heatmap
 With correlation heatmap, we get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We were worried about collinearity and tried many ways to deal with these features, such as deletion or transformation, but all efforts led to relatively poor model results. Then we realized that they are probably very important features in our data set, so we kept them for the moment. In addition, some features show great correlations with the outcome, such as `previous` and `poutcome`. We tried to use PCA on the entire data set to avoid collinearity, but again, all efforts led to poor model results. Therefore, we decided to keep all features and make changes if needed for specific models.
 
-![Correlation heatmap](../figures/2_17_Heatmap.png)
+![Correlation heatmap](../figures/2_17_Heatmap.png){width=60%}
