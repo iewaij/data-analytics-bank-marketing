@@ -10,7 +10,7 @@ The first thing we investigate is the target variable `y`, which is abinary vari
 
 ![Distribution of camaign outcome](../figures/2_1_Y_distribution.png)
 
-There are more than 40,000 observations in our data set, and only 11.3% of them have positive “YES” outcomes, which means that we have a significantly unbalanced data set. Since our data was collected during the 2008 financial crisis, we pay particular attention to this time factor and visualize the positive Y values across that specific time frame.
+There are more than 40,000 observations in our data set, and only 11.3% of them have positive outcomes, which means that we have a significantly unbalanced data set. Since our data was collected during the 2008 financial crisis, we pay particular attention to this time factor and visualize the positive Y values across that specific time frame.
 
 ![Uneven distribution of positive outcome during the financial crisis](../figures/2_2_Uneven_distribution.png)
 
@@ -18,12 +18,12 @@ In the graph above, the thin orange line indicates the outbreak of the financial
 
 ![Positive outcome rates by month](../figures/2_3_Positive_rate_by_month.png)
 
-![Five economic indicators](../figures/2_4_Five_econ_indicators.png)
+![Five economic indicators](../figures/2_4_Five_econ_indicators.png){width=100%}
 
 Highly relevant to the crisis are the five economic indicators in our data set, displayed as above, which show significant predicting power in almost all of our models. In 2008, all of them went down first, but the consumer confidence index (green line) was the leading recovery factor, followed by the consumer price index (orange line). The recovery of the positive outcome rate of our campaign started at the same time. Furthermore, the drop of interest rates captured by the Euribor 3-month rate (red line) significantly correlated with the campaign success.
 
 ## Missing Values
-We use the `info()` function to get an overview of our data and find out many missing values, especially for features like Pdays and Poutcome, in which 90% of the rows have missing values, as shown in the bar chart below. These missing values require a lot of special attention during the feature engineering process.
+We use the `info()` function to get an overview of our data and find out many missing values, especially for features like `pdays` and `poutcome`, in which 90% of the rows have missing values, as shown in the bar chart below. These missing values require a lot of special attention during the feature engineering process.
 
 ![Percentage of missing values](../figures/2_5_Missing_value_percentage.png)
 
@@ -61,7 +61,7 @@ With regard to the months in which the last contact was made, the distribution c
 ![Outcome percentage and distribution by month](../figures/2_11_Month.png)
 
 ### `pdays`
-Next is the most challenging feature, pdays, which represents the number of days passed since the last contact with a client. It has almost 40,000 missing values. As demonstrated in the graph below, the "Na" category on the top dominates the entire distribution. Simultaneously, the other 1500 rows that do have values seem to show positive relationships with the outcome. We spent a significant amount of time and effort to deal with this feature, and this process will be discussed in the feature engineering section.
+Next is the most challenging feature, pdays, which represents the number of days passed since the last contact with a client. It has almost 40,000 missing values. As demonstrated in the graph below, the "NA" category on the top dominates the entire distribution. Simultaneously, the other 1500 rows that do have values seem to show positive relationships with the outcome. We spent a significant amount of time and effort to deal with this feature, and this process will be discussed in the feature engineering section.
 
 ![Outcome percentage and distribution by `pdays`](../figures/2_12_Pdays.png)
 
@@ -71,11 +71,11 @@ The previous feature is also very challenging, which measures the number of cont
 ![Outcome percentage and distribution by `previous`](../figures/2_13_Previous.png)
 
 ### `poutcome`
-This is the feature that reports the outcomes of the previous campaign. Over 35,000 observations have missing values, as presented below. However, when combining this featuring with Pdays and Previous, there seem to be some contradictions.
+This is the feature that reports the outcomes of the previous campaign. Over 35,000 observations have missing values, as presented below. However, when combining this featuring with `pdays` and `previous`, there seem to be some contradictions.
 
 ![`poutcome` distribution](../figures/2_14_Poutcome.png)
 
- Missing values in Pdays mean that the clients were not previously contacted and therefore should not have values in Poutcome. But Poutcome has fewer missing values than Pdays does, as seen in the second graph below. We print out the 4110 rows where clients have not been contacted but have Poutcome values and see how many times they have been contacted before. The results suggest that maybe these clients have been actually contacted, but it was more than 30 days ago, thus the contact date was not recorded.
+ Missing values in `pdays` mean that the clients were not previously contacted and therefore should not have values in `poutcome`. But `poutcome` has fewer missing values than `pdays` does, as seen in the second graph below. We print out the 4110 rows where clients have not been contacted but have `poutcome` values and see how many times they have been contacted before. The results suggest that maybe these clients have been actually contacted, but it was more than 30 days ago, thus the contact date was not recorded.
 
 ![`pdays` and `poutcome`](../figures/2_14_Pdays+Previous.png)
 
@@ -95,6 +95,6 @@ We also made a scatterplot across important quantitative features with the outco
 ![Scatterplots of key numerical features](../figures/2_16_Numerial_features.png)
 
 ### Correlation Heatmap
-With correlation heatmap, we get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We were worried about collinearity and tried many ways to deal with these features, such as deletion or transformation, but all efforts led to relatively poor model results. Then we realized that they are probably very important features in our data set, so we kept them for the moment. In addition, some features show great correlations with the outcome, such as Previous and Poutcome. We tried to use PCA on the entire data set to avoid collinearity, but again, all efforts led to poor model results. Therefore, we decided to keep all features and make changes if needed for specific models.
+With correlation heatmap, we get a better look at the correlations among features. Four out of five economic indicators have strong correlations with each other. We were worried about collinearity and tried many ways to deal with these features, such as deletion or transformation, but all efforts led to relatively poor model results. Then we realized that they are probably very important features in our data set, so we kept them for the moment. In addition, some features show great correlations with the outcome, such as `previous` and `poutcome`. We tried to use PCA on the entire data set to avoid collinearity, but again, all efforts led to poor model results. Therefore, we decided to keep all features and make changes if needed for specific models.
 
 ![Correlation heatmap](../figures/2_17_Heatmap.png)

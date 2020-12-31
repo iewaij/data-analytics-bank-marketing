@@ -82,7 +82,7 @@ nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 |   AP | 0.688217 | 0.354089 | 0.396211 |
 : Performance metrics of Neural Network
 
-![Confusion Matrix of Neural Network](../figures/8_1_Conf_Mat.png)
+![Confusion Matrix of Neural Network](../figures/8_1_Conf_Mat.png){width=45%}
 
 ## Reflections
 

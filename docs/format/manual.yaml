@@ -21,6 +21,15 @@ geometry:
 documentclass: report
 classoption:
   - oneside
+header-includes: |
+  \usepackage{float}
+  \let\origfigure\figure
+  \let\endorigfigure\endfigure
+  \renewenvironment{figure}[1][2] {
+      \expandafter\origfigure\expandafter[H]
+  } {
+      \endorigfigure
+  }
 bibliography: ../citations/citations.bib
 link-citations: true
 nocite: |

@@ -14,7 +14,7 @@ The worth of the classifier is how well it classifies the unseen data points and
 The understanding of SVM is derived from the loss function of Logistic Regression with l2 regularization:
 
 $$ 
-J(\theta)=\frac 1m \sum_{i=1}^m [y^{i}(−log(\hat{p}^{i}))+(1−y^{i})(−log(1−\hat{p}^{i}))]+ \frac λ {2m} \sum_{j=1}^n\theta_2^{(j)} 
+J(\theta)=\frac 1m \sum_{i=1}^m [y^{i}(−log(\hat{p}^{i}))+(1−y^{i})(−log(1−\hat{p}^{i}))]+ \frac λ {2m} \sum_{j=1}^n\theta_2^{j} 
 $$
 
 where
@@ -65,7 +65,7 @@ grid_results = random_search.cv_results_
 grid_best_params = random_search.best_params_
 grid_best_score = random_search.best_score_
 
-print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
+print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 
 param_grid = [{"C": [5,2,1]}]
 grid_search = GridSearchCV(linear_svm,
@@ -80,9 +80,13 @@ grid_results = grid_search.cv_results_
 grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
 
-print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
+print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 
-linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="balanced", random_state=42)
+linear_svm = LinearSVC(loss="squared_hinge",
+                       C=1,
+                       dual=False,
+                       class_weight="balanced",
+                       random_state=42)
 ```
 
 |      | Train    | Validate | Test     |
@@ -96,7 +100,7 @@ linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="bala
 |   AP | 0.435728 | 0.432823 | 0.437258 |
 : Performance metrics of Linear SVM
 
-![Confusion matrix of Linear SVM](../figures/7_1_Conf_Mat_1.png)
+![Confusion Matrix of Linear SVM](../figures/7_1_Conf_Mat_1.png){width=45%}
 
 ## Grid Search for Non-Linear SVM
 
@@ -124,7 +128,7 @@ grid_results = random_search.cv_results_
 grid_best_params = random_search.best_params_
 grid_best_score = random_search.best_score_
 
-print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
+print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 
 param_grid = {
     "rbf__gamma": [0.0008, 0.0001, 0.001],
@@ -141,7 +145,7 @@ grid_results = grid_search.cv_results_
 grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
 
-print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
+print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 
 rbf_sgd_tuned = rbf_sgd_clf.set_params(rbf__gamma=0.0009, svm__alpha=1e-6)
 benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
@@ -158,7 +162,7 @@ benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
 |   AP | 0.436139 | 0.444426 | 0.437136 |
 : Performance metrics of SVM using `SGDClassifier`
 
-![Confusion matrix of SVM using `SGDClassifier`](../figures/7_2_Conf_Mat_2.png)
+![Confusion Matrix of SVM using `SGDClassifier`](../figures/7_2_Conf_Mat_2.png){width=45%}
 
 ```python
 rbf_clf = Pipeline([
@@ -182,7 +186,7 @@ grid_results = random_search.cv_results_
 grid_best_params = random_search.best_params_
 grid_best_score = random_search.best_score_
 
-print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
+print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 
 param_grid = {
     "rbf__gamma": [0.0001, 0.001, 0.01],
@@ -199,7 +203,7 @@ grid_results = grid_search.cv_results_
 grid_best_params = grid_search.best_params_
 grid_best_score = grid_search.best_score_
 
-print(f"best parameters found: {grid_best_params}, with mean test score: {grid_best_score}")
+print(f"best parameters: {grid_best_params}, mean test score: {grid_best_score}")
 rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 ```
 
@@ -214,4 +218,4 @@ rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 |   AP | 0.437404 | 0.453640 | 0.440392 |
 : Performance metrics of SVM using `LinearSVC`
 
-![Confusion matrix of SVM using `LinearSVC`](../figures/7_3_Conf_Mat_3.png)
+![Confusion Matrix of SVM using `LinearSVC`](../figures/7_3_Conf_Mat_3.png){width=45%}

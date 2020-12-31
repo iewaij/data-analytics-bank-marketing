@@ -16,7 +16,7 @@ We also need to understand the economic and historic context behind the data set
 
 ![TED spread, 2008-2009](../figures/1_1_TED_spread.png)
 
-Given that the data set is based on a Portuguese bank, it is also worth mentioning that Portugal and other European countries were facing a fiscal debt crisis. @lane_european_2012 discussed this issue and showed that Portugal started increasing its debt level after the 2008 financial crisis and had to increase its bond yield in 2010, which implied that its government was facing high debt default risk. These phenomena can be observed graphically on figures 2 and 3
+Given that the data set is based on a Portuguese bank, it is also worth mentioning that Portugal and other European countries were facing a fiscal debt crisis. @lane_european_2012 discussed this issue and showed that Portugal started increasing its debt level after the 2008 financial crisis and had to increase its bond yield in 2010, which implied that its government was facing high debt default risk, as shown by figures 2 and 3.
 
 ![The evolution of public debt, 1982–2011](../figures/1_2_Public_Debt.png)
 
@@ -29,7 +29,7 @@ Can we develop a data-driven approach to help the bank increase its success rate
 3. Do people prefer being called on the mobile phone or landline?
 4. Does a predictive model exist that can predict a telemarketing outcome using client and economic data?
 
-## Dataset Description
+## Data Set Description
 
 The bank marketing data set was collected by @moro_data_2014 and ordered by date ranging from May 2008 to November 2010. The data was ordered by date even though its year has to be inferred manually. The 20 input features were categorized and described as follows:
 

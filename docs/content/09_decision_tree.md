@@ -49,7 +49,11 @@ param_grid = {
     'max_depth':[6,8,10],
     'n_estimators':[1000,1500,1750,2000]
 }
-CV_RFmodel = GridSearchCV(estimator=RF,param_grid=param_grid,scoring="average_precision",n_jobs=-1,cv=2)
+CV_RFmodel = GridSearchCV(estimator=RF,
+                          param_grid=param_grid,
+                          scoring="average_precision",
+                          n_jobs=-1,
+                          cv=2)
 CV_RFmodel.fit(X_train,y_train)
 grid_results = CV_RFmodel.cv_results_
 grid_best_params = CV_RFmodel.best_params_
@@ -86,7 +90,7 @@ benchmark(bank_mkt, tree_transformer, RF_validation)
 | AP   | 0.503536 | 0.449784 | 0.474725 |
 : Performance metrics of Random Forest
 
-![Confusion Matrix of Random Forest](../figures/9_1_Conf_Mat_1.png)
+![Confusion Matrix of Random Forest](../figures/9_1_Conf_Mat_1.png){width=45%}
 
 As can be seen from the table, `RandomForestClassifier` gives strong values in AUC ROC and proves in our dataset to be one of the best performing models. 
 
@@ -187,11 +191,11 @@ plt.barh(range(len(indices)), importances[indices])
 plt.yticks(range(len(indices)), [columns[i] for i in indices])
 plt.show()
 ```
-![Confusion Matrix of AdaBoost](../figures/9_3_Conf_Mat_2.png)
+![Confusion Matrix of AdaBoost](../figures/9_3_Conf_Mat_2.png){width=45%}
 
 ![Feature importance of AdaBoost](../figures/9_4_Feature_Imp_2.png)
 
-As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown (according to the Central Limit Theorem).
+As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown according to the Central Limit Theorem.
 
 Feature importance for both AdaBoost and the Random Forest was strikingly similar. In the paper Random Forests, @breiman_random_2001 states the following conjecture: "AdaBoost is a Random Forest". This is an interesting claim, yet to be proven or disproven but AdaBoost with the base estimator of a tree stump can in certain datasets behave very much like a Random Forest of sorts. Proven or disproven it just confirms once more what we discussed in class, that Machine Learning is a trial and error process and data speaks its own language. There are no universal truths and ad-hoc solutions in this exciting field.
 
@@ -226,6 +230,6 @@ benchmark(bank_mkt, drop_prep, xgb_clf)
 | AP   | 0.518830 | 0.479562 | 0.483435 |
 : Performance metrics of XGBoost
 
-![Confusion Matrix of XGBoost](../figures/9_5_Conf_Mat_3.png)
+![Confusion Matrix of XGBoost](../figures/9_5_Conf_Mat_3.png){width=45%}
 
 ![Feature importance of XGBoost](../figures/9_6_Feature_Imp_3.png)

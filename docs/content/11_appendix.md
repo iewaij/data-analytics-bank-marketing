@@ -139,9 +139,8 @@ def split_dataset(data, preprocessor=None, random_state=62):
 ```python
 def benchmark(data, preprocessor=None, clf=None):
     """
-    Benchmark preprocessor and clf's performance on train, validation and test sets. 
-    All the data transformation should be handled by preprocessor 
-    and estimation should be handled by clf.
+    Benchmark preprocessor and clf's performance on train, validation and test sets.
+    All the data transformation should be handled by preprocessor and estimation should be handled by clf.
 
     Parameters
     ----------
@@ -152,9 +151,16 @@ def benchmark(data, preprocessor=None, clf=None):
         clf : estimator, default = None
 
     """
-    X_train, y_train, X_test, y_test, X_ttrain, \
-        y_ttrain, X_validate, y_validate = split_dataset(
-        data, preprocessor)
+    (
+        X_train,
+        y_train,
+        X_test,
+        y_test,
+        X_ttrain,
+        y_ttrain,
+        X_validate,
+        y_validate,
+    ) = split_dataset(data, preprocessor)
     X_sets = [X_ttrain, X_validate, X_test]
     y_sets = [y_ttrain, y_validate, y_test]
 
@@ -163,9 +169,8 @@ def benchmark(data, preprocessor=None, clf=None):
     metric_df = pd.DataFrame(index=metric_names, columns=set_names)
 
     try:
-        clf.fit(X_ttrain, y_ttrain, eval_set=(
-            X_validate, y_validate), verbose=False)
-    except (ValueError, TypeError):
+        clf.fit(X_ttrain, y_ttrain, eval_set=(X_validate, y_validate), verbose=False)
+    except (ValueError, TypeError, KeyError):
         clf.fit(X_ttrain, y_ttrain)
 
     for name, X, y in zip(set_names, X_sets, y_sets):
@@ -179,13 +184,15 @@ def benchmark(data, preprocessor=None, clf=None):
         except AttributeError:
             y_score = clf.predict_proba(X)[:, 1]
 
-        metrics = [recall_score(y, y_pred, pos_label=0),
-                   recall_score(y, y_pred),
-                   balanced_accuracy_score(y, y_pred),
-                   roc_auc_score(y, y_score),
-                   recall_score(y, y_pred),
-                   precision_score(y, y_pred),
-                   average_precision_score(y, y_score)]
+        metrics = [
+            recall_score(y, y_pred, pos_label=0),
+            recall_score(y, y_pred),
+            balanced_accuracy_score(y, y_pred),
+            roc_auc_score(y, y_score),
+            recall_score(y, y_pred),
+            precision_score(y, y_pred),
+            average_precision_score(y, y_score),
+        ]
         metric_df[name] = metrics
 
     return metric_df
