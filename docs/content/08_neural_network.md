@@ -80,9 +80,9 @@ nn_best = benchmark(bank_mkt, hot_transformer, mlp_trained)
 |  REC | 0.470192 | 0.295148 | 0.310345 |
 |  PRE | 0.790935 | 0.478166 | 0.566929 |
 |   AP | 0.688217 | 0.354089 | 0.396211 |
-: Performance metrics
+: Performance metrics of Neural Network
 
-![Confusion Matrix on the test set](../figures/08_02_NN_test.png)
+![Confusion Matrix of Neural Network](../figures/8_1_Conf_Mat.png)
 
 ## Reflections
 

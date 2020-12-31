@@ -41,7 +41,11 @@ conf_ax.set_ylabel("True")
 
 ## Metrics From Confusion Matrix
 
-From the Confusion Matrix, we can derive some key performance metrics such as precision and recall. 
+From the Confusion Matrix, we can derive some key performance metrics such as precision and recall. Accuracy, for example, can be written as follows:
+
+$$
+ACC = \frac{TP+TN}{TP+FP+TN+FN} 
+$$
 
 Precision (PRE) measures the accuracy of the predicted positive outcomes. As in the fisherman analogy, precision is the fish in the net divided by the total number of objects (fish and rubbish) in the net.
 
@@ -79,15 +83,15 @@ $$
 
 A performance metrics table of classifiers on bank marketing data set is shown below.
 
-|      | Constant Prediction | Random Prediction | K-Nearest Neighbors |
-| :--- | ------------------: | ----------------: | ------------------: |
-| FPR  |                   1 |             0.498 |              0.0171 |
-| TNR  |                   0 |             0.501 |               0.982 |
-| TPR  |                   1 |             0.495 |               0.208 |
-| bACC |                 0.5 |             0.498 |               0.595 |
-| REC  |                   1 |             0.495 |               0.208 |
-| PRE  |               0.112 |             0.111 |               0.607 |
-| F1   |               0.202 |             0.182 |               0.310 |
+|      | Constant Prediction | Random Prediction | K-Nearest Neighbors | Linear SVM | Decision Tree | Logistic Regression |
+| :--- | ------------------: | ----------------: | ------------------: | ---------: | ------------: | ------------------: |
+| FPR  |                   1 |             0.498 |              0.0171 |      0.005 |         0.143 |               0.258 |
+| TNR  |                   0 |             0.501 |               0.982 |      0.994 |         0.856 |               0.741 |
+| TPR  |                   1 |             0.495 |               0.208 |      0.038 |         0.613 |               0.698 |
+| bACC |                 0.5 |             0.498 |               0.595 |      0.516 |         0.735 |               0.719 |
+| REC  |                   1 |             0.495 |               0.208 |      0.038 |         0.613 |               0.698 |
+| PRE  |               0.112 |             0.111 |               0.607 |       0.47 |         0.352 |               0.255 |
+| F1   |               0.202 |             0.182 |               0.310 |      0.070 |         0.447 |               0.373 |
 : Performance metrics of various classifiers
 
 |      | Linear SVM | Decision Tree | Logistic Regression |
@@ -103,7 +107,7 @@ A performance metrics table of classifiers on bank marketing data set is shown b
 
 ## Metrics From Decision Function
 
-As hinted in the precision-recall trade-off, fisherman can narrow or loss his net. Bank may be happy to capture more potential customers by phoning more clients. A classifier can also adjust its threshold and therefore achieves different precision and recall results. For example, a logistic regression classifier uses the following decision function to distinct the label 0 and 1. When the result of the decision function is 0, the probability for each label is 0.5.
+As hinted in the precision-recall trade-off, fisherman can narrow or loss his net. Bank may be happy to capture more potential customers by phoning more clients. A classifier can also adjust its threshold and therefore achieves different precision and recall results. For example, a logistic regression classifier uses the following decision function to distinct the label 0 and 1. When the result of the decision function is 0, the probability for each label is 0.5. It should be noted that not all classifiers have decision functions, predicted probabilies should be used in these cases. 
 
 $$
 \text{Decision Function} = b_0 + b_1 x_1 + ... +b_k x_k
@@ -148,4 +152,4 @@ A receiver operating characteristic (ROC) adopts the same logic by plotting TPR 
 
 ## Performance Evaluation in Practice
 
-In practice, we utilise confusion matrix and multiple metrics to evaluate and optimise our models. When dealing with imbalanced data set and metrics show conflicting results, AP is prefered [@saito_precision-recall_2015]. First, AP has a range between the minority class percentage and 1. It gives a more straightforward picture of prediction improvements on an imbalanced data set. Second, AP puts more weight on positive outcomes. In our case, losing a potential subscriber costs the bank more than phoning an uninterested buyer. AP matches this reality more when we evaluate model performance.
+In practice, we utilise confusion matrix and multiple metrics to evaluate and optimise our models. When dealing with imbalanced data set and metrics show conflicting results, AP is prefered for two reasons[@saito_precision-recall_2015]. First, AP has a range between the minority class percentage and 1. It gives a more straightforward picture of prediction improvements on an imbalanced data set. Second, AP puts more weight on positive outcomes. In our case, losing a potential subscriber costs the bank more than phoning an uninterested buyer. AP matches this reality more when we evaluate model performance.

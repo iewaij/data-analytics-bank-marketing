@@ -66,13 +66,11 @@ for RandomForestClassifier(class_weight='balanced',
 max_depth=6, n_estimators= 1750,random_state=42)
 ```
 
-We decide that 1750 estimators in subsequent testing show signs of overfitting and went to produce our final performance matrix with 1500 estimators.
-
 ```python
 RF_validation = RandomForestClassifier(random_state=42,
                                        class_weight="balanced",
                                        max_depth=6,
-                                       n_estimators=1500,
+                                       n_estimators=1750,
                                        max_leaf_nodes=1000)
 benchmark(bank_mkt, tree_transformer, RF_validation)
 ```
@@ -86,11 +84,13 @@ benchmark(bank_mkt, tree_transformer, RF_validation)
 | REC  | 0.627821 | 0.629380 | 0.618534 |
 | PRE  | 0.374147 | 0.371519 | 0.378378 |
 | AP   | 0.503536 | 0.449784 | 0.474725 |
-: Performance metrics
+: Performance metrics of Random Forest
 
-As can be seen from the table RandomForestClassifier gives strong values in AUC ROC and proves in our dataset to be one of the best performing models. 
+![Confusion Matrix of Random Forest](../figures/9_1_Conf_Mat_1.png)
 
-One interesting use of the RandomForestClassifier is that it also returns feature importance metrics for individual features within the dataset. This can be a very useful method of the class since it allows a positive feedback loop between feature engineering, model testing and then returning to feature engineering for additional optimisations and manipulations on the most useful features. On the other hand features that show no importance in the classification can be dropped or merged.
+As can be seen from the table, `RandomForestClassifier` gives strong values in AUC ROC and proves in our dataset to be one of the best performing models. 
+
+One interesting use of the `RandomForestClassifier` is that it also returns feature importance metrics for individual features within the dataset. This can be a very useful method of the class since it allows a positive feedback loop between feature engineering, model testing and then returning to feature engineering for additional optimisations and manipulations on the most useful features. On the other hand, features that show no importance in the classification can be dropped or merged. This can be plotted to give an informative picture about how features rank by importance:
 
 ```python
 columns = bank_mkt.drop(["duration", "y"], axis=1).columns.tolist()
@@ -98,26 +98,15 @@ rnd_clf = RandomForestClassifier(n_estimators=1750,max_depth=6, n_jobs=-1, rando
 rnd_clf.fit(X_train, y_train)
 for name, importance in zip(columns, rnd_clf.feature_importances_):
     print(name, "=", importance)
-```
-
-The features that constantly proved to be the most important for the model are:
-
-![Table of Feature Importance](../figures/09_05_Forest_importance_table.jpg)
-
-This can also be plotted to give an informative picture about how features rank by importance:
-
-```python
 importances = rnd_clf.feature_importances_
 indices = np.argsort(importances)
-
 plt.barh(range(len(indices)), importances[indices], color='b', align='center')
 plt.yticks(range(len(indices)), [columns[i] for i in indices])
-plt.xlabel('Relative Importance')
 plt.size=(15,10)
 plt.show()
 ```
 
-![Feature importance](../figures/09_04_Forest_Importance.jpg)
+![Feature importance of Random Forest](../figures/9_2_Feature_Imp_1.png)
 
 All in all the Random Forest lived up to its expectation. By adding just a small amount of bias it greatly improves the performance of Decision Trees. They are very robust and require little to none work in terms of encoding and feature manipulation. 
 
@@ -185,9 +174,9 @@ benchmark(bank_mkt, tree_transformer, AB_validation)
 | PRE  | 0.780308 | 0.58023  | 0.628933 |
 | F1   | 0.523125 | 0.354662 | 0.380386 |
 | AP   | 0.632423 | 0.374018 | 0.423666 |
-: Performance metrics
+: Performance metrics of AdaBoost
 
-In a similar fashion we derive feature importance as well:
+In a similar fashion we derive the feature importance as well:
 
 ```python
 for name, importance in zip(columns, AB_validation.feature_importances_):
@@ -196,14 +185,11 @@ importances = AB_validation.feature_importances_
 indices = np.argsort(importances)
 plt.barh(range(len(indices)), importances[indices])
 plt.yticks(range(len(indices)), [columns[i] for i in indices])
-plt.xlabel("Relative Importance")
-plt.size=(15,10)
 plt.show()
 ```
+![Confusion Matrix of AdaBoost](../figures/9_3_Conf_Mat_2.png)
 
-![Feature importance](../figures/09_06_AdaBoost_Table.jpg)
-
-![Feature importance](../figures/09_07_Feature_Importance_AdaBoost.jpg)
+![Feature importance of AdaBoost](../figures/9_4_Feature_Imp_2.png)
 
 As we can see the AdaBoost gave strong results in the area underneath the ROC curve but was still behind the Random Forest for our dataset. The main advantages of Random forests over AdaBoost are that it is less affected by noise and it generalizes better in reducing variance because the generalization error reaches a limit with an increasing number of trees being grown (according to the Central Limit Theorem).
 
@@ -212,7 +198,7 @@ Feature importance for both AdaBoost and the Random Forest was strikingly simila
 ## XGBoost
 Gradient Boosting is another boosting algorithm. Similar to AdaBoost, Gradient Boosting sequentially add predictors to an ensemble and corrects its predecessor. However, instead of tuning the weights at each iteration, Gradient Boosting fits the residual errors made by the predecessor. Even though Gradient Boosting is part of the `scikit-learn` collections, better performance can be achieved by using other libraries, such as `XGBoost`.
 
-In our practice, even though `XGBoost` provides dozens of hyperparameters, just by tuning `max_depth` manually and dropping demographic features gives us satisfactory results.
+In our practice, even though `XGBoost` provides dozens of hyperparameters, just by tuning `max_depth` manually and dropping demographic features gives us satisfactory results. The feature importance plot shows that economic indicators and previous compaign outcome are the key predicators.
 
 ```python
 drop_features = ["age",
@@ -221,9 +207,7 @@ drop_features = ["age",
                  "education",
                  "housing",
                  "loan",
-                 "default",
-                 "duration",
-                 "y"]
+                 "default"]
 drop_prep = FunctionTransformer(dftransform, 
                                 kw_args={"drop": drop_features,
                                          "to_float":True}
@@ -240,4 +224,8 @@ benchmark(bank_mkt, drop_prep, xgb_clf)
 | REC  | 0.666218 | 0.659030 | 0.644397 |
 | PRE  | 0.359571 | 0.351293 | 0.363305 |
 | AP   | 0.518830 | 0.479562 | 0.483435 |
-: Performance metrics
+: Performance metrics of XGBoost
+
+![Confusion Matrix of XGBoost](../figures/9_5_Conf_Mat_3.png)
+
+![Feature importance of XGBoost](../figures/9_6_Feature_Imp_3.png)

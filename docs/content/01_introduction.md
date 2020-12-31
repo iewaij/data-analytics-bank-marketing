@@ -22,7 +22,7 @@ Given that the data set is based on a Portuguese bank, it is also worth mentioni
 
 ![Yields on 10-year sovereign bonds, 2009–2012](../figures/1_3_Yield.png)
 
-Can we develop a data-driven approach to help the bank increase its success rate of telemarketing while incorporating the economic context ? Several other questions can be raised at this point:
+Can we develop a data-driven approach to help the bank increase its success rate of telemarketing while incorporating the economic context? Several other questions can be raised at this point:
 
 1. How did the economic crisis affect consumer behaviour and how did it manifest itself in the data?
 2. How does one's education, marital status, job, etc. affect their economic choices?

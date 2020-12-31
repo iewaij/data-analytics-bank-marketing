@@ -1,7 +1,13 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.metrics import average_precision_score, precision_score, recall_score, balanced_accuracy_score, roc_auc_score
+from sklearn.metrics import (
+    average_precision_score,
+    precision_score,
+    recall_score,
+    balanced_accuracy_score,
+    roc_auc_score,
+)
 from catboost import CatBoostClassifier
 import matplotlib.pyplot as plt
 
@@ -23,53 +29,67 @@ def import_dataset(filename):
     --------
         bank_mkt = import_dataset("../data/BankMarketing.csv")
     """
-    bank_mkt = pd.read_csv(filename,
-                           na_values=["unknown", "nonexistent"],
-                           true_values=["yes", "success"],
-                           false_values=["no", "failure"])
+    bank_mkt = pd.read_csv(
+        filename,
+        na_values=["unknown", "nonexistent"],
+        true_values=["yes", "success"],
+        false_values=["no", "failure"],
+    )
     # Treat pdays = 999 as missing values
     bank_mkt["pdays"] = bank_mkt["pdays"].replace(999, pd.NA)
     # `month` will be encoded to the corresponding number, e.g. "mar" -> 3
-    month_map = {"mar": 3,
-                 "apr": 4,
-                 "may": 5,
-                 "jun": 6,
-                 "jul": 7,
-                 "aug": 8,
-                 "sep": 9,
-                 "oct": 10,
-                 "nov": 11,
-                 "dec": 12}
+    month_map = {
+        "mar": 3,
+        "apr": 4,
+        "may": 5,
+        "jun": 6,
+        "jul": 7,
+        "aug": 8,
+        "sep": 9,
+        "oct": 10,
+        "nov": 11,
+        "dec": 12,
+    }
     bank_mkt["month"] = bank_mkt["month"].replace(month_map)
     # `day_of_week` will be encoded to the corresponding number, e.g. "wed" -> 3
-    dow_map = {"mon": 1,
-               "tue": 2,
-               "wed": 3,
-               "thu": 4,
-               "fri": 5}
+    dow_map = {"mon": 1, "tue": 2, "wed": 3, "thu": 4, "fri": 5}
     bank_mkt["day_of_week"] = bank_mkt["day_of_week"].replace(dow_map)
     # Convert types, "Int64" is nullable integer data type in pandas
-    bank_mkt = bank_mkt.astype(dtype={"age": "Int64",
-                                      "job": "category",
-                                      "marital": "category",
-                                      "education": "category",
-                                      "default": "boolean",
-                                      "housing": "boolean",
-                                      "loan": "boolean",
-                                      "contact": "category",
-                                      "month": "Int64",
-                                      "day_of_week": "Int64",
-                                      "duration": "Int64",
-                                      "campaign": "Int64",
-                                      "pdays": "Int64",
-                                      "previous": "Int64",
-                                      "poutcome": "boolean",
-                                      "y": "boolean"})
+    bank_mkt = bank_mkt.astype(
+        dtype={
+            "age": "Int64",
+            "job": "category",
+            "marital": "category",
+            "education": "category",
+            "default": "boolean",
+            "housing": "boolean",
+            "loan": "boolean",
+            "contact": "category",
+            "month": "Int64",
+            "day_of_week": "Int64",
+            "duration": "Int64",
+            "campaign": "Int64",
+            "pdays": "Int64",
+            "previous": "Int64",
+            "poutcome": "boolean",
+            "y": "boolean",
+        }
+    )
     # Drop 12 duplicated rows
     bank_mkt = bank_mkt.drop_duplicates().reset_index(drop=True)
     # reorder ordinal categorical data
     bank_mkt["education"] = bank_mkt["education"].cat.reorder_categories(
-        ["illiterate", "basic.4y", "basic.6y", "basic.9y", "high.school", "professional.course", "university.degree"], ordered=True)
+        [
+            "illiterate",
+            "basic.4y",
+            "basic.6y",
+            "basic.9y",
+            "high.school",
+            "professional.course",
+            "university.degree",
+        ],
+        ordered=True,
+    )
     return bank_mkt
 
 
@@ -94,7 +114,7 @@ def split_dataset(data, preprocessor=None, random_state=62):
     --------
         from sklearn.preprocessing import OrdinalEncoder
         data = import_dataset("../data/BankMarketing.csv").interpolate(method="pad").loc[:, ["job", "education", "y"]]
-        # To unpack all train, test, and validation sets 
+        # To unpack all train, test, and validation sets
         X_train, y_train, X_test, y_test, X_ttrain, y_ttrain, X_validate, y_validate = split_dataset(data, OrdinalEncoder())
         # To unpack train and test sets.
         X_train, y_train, X_test, y_test, *other_sets = split_dataset(data, OrdinalEncoder())
@@ -104,8 +124,11 @@ def split_dataset(data, preprocessor=None, random_state=62):
         X_train, y_train, *other_sets = split_dataset(data, OneHotEncoder())
     """
     train_test_split = StratifiedShuffleSplit(
-        n_splits=1, test_size=0.2, random_state=random_state)
-    for train_index, test_index in train_test_split.split(data.drop("y", axis=1), data["y"]):
+        n_splits=1, test_size=0.2, random_state=random_state
+    )
+    for train_index, test_index in train_test_split.split(
+        data.drop("y", axis=1), data["y"]
+    ):
         train_set = data.iloc[train_index]
         test_set = data.iloc[test_index]
 
@@ -130,12 +153,21 @@ def split_dataset(data, preprocessor=None, random_state=62):
         X_ttrain = preprocessor.fit_transform(X_ttrain, y_ttrain)
         X_validate = preprocessor.transform(X_validate)
 
-    return (X_train, y_train, X_test, y_test, X_ttrain, y_ttrain, X_validate, y_validate)
+    return (
+        X_train,
+        y_train,
+        X_test,
+        y_test,
+        X_ttrain,
+        y_ttrain,
+        X_validate,
+        y_validate,
+    )
 
 
 def benchmark(data, preprocessor=None, clf=None):
     """
-    Benchmark preprocessor and clf's performance on train, validation and test sets. 
+    Benchmark preprocessor and clf's performance on train, validation and test sets.
     All the data transformation should be handled by preprocessor and estimation should be handled by clf.
 
     Parameters
@@ -147,8 +179,16 @@ def benchmark(data, preprocessor=None, clf=None):
         clf : estimator, default = None
 
     """
-    X_train, y_train, X_test, y_test, X_ttrain, y_ttrain, X_validate, y_validate = split_dataset(
-        data, preprocessor)
+    (
+        X_train,
+        y_train,
+        X_test,
+        y_test,
+        X_ttrain,
+        y_ttrain,
+        X_validate,
+        y_validate,
+    ) = split_dataset(data, preprocessor)
     X_sets = [X_ttrain, X_validate, X_test]
     y_sets = [y_ttrain, y_validate, y_test]
 
@@ -157,9 +197,8 @@ def benchmark(data, preprocessor=None, clf=None):
     metric_df = pd.DataFrame(index=metric_names, columns=set_names)
 
     try:
-        clf.fit(X_ttrain, y_ttrain, eval_set=(
-            X_validate, y_validate), verbose=False)
-    except (ValueError, TypeError):
+        clf.fit(X_ttrain, y_ttrain, eval_set=(X_validate, y_validate), verbose=False)
+    except (ValueError, TypeError, KeyError):
         clf.fit(X_ttrain, y_ttrain)
 
     for name, X, y in zip(set_names, X_sets, y_sets):
@@ -173,22 +212,33 @@ def benchmark(data, preprocessor=None, clf=None):
         except AttributeError:
             y_score = clf.predict_proba(X)[:, 1]
 
-        metrics = [recall_score(y, y_pred, pos_label=0),
-                   recall_score(y, y_pred),
-                   balanced_accuracy_score(y, y_pred),
-                   roc_auc_score(y, y_score),
-                   recall_score(y, y_pred),
-                   precision_score(y, y_pred),
-                   average_precision_score(y, y_score)]
+        metrics = [
+            recall_score(y, y_pred, pos_label=0),
+            recall_score(y, y_pred),
+            balanced_accuracy_score(y, y_pred),
+            roc_auc_score(y, y_score),
+            recall_score(y, y_pred),
+            precision_score(y, y_pred),
+            average_precision_score(y, y_score),
+        ]
         metric_df[name] = metrics
 
     return metric_df
 
 
-def render_benchmark(data, col_width=3.0, row_height=0.625, font_size=14,
-                     header_color='#334074', row_colors=['#f1f1f2', 'w'], edge_color='w',
-                     bbox=[0, 0, 1, 1], header_columns=0,
-                     ax=None, **kwargs):
+def render_benchmark(
+    data,
+    col_width=3.0,
+    row_height=0.625,
+    font_size=14,
+    header_color="#334074",
+    row_colors=["#f1f1f2", "w"],
+    edge_color="w",
+    bbox=[0, 0, 1, 1],
+    header_columns=0,
+    ax=None,
+    **kwargs
+):
     """
     Reference
     ---------
@@ -201,43 +251,48 @@ def render_benchmark(data, col_width=3.0, row_height=0.625, font_size=14,
     fig.savefig("logit_best.png")
     """
     data = data.round(decimals=3)
-    #data = data.rename({"index": "Metrics"}, axis=1)
+    # data = data.rename({"index": "Metrics"}, axis=1)
     if ax is None:
-        size = (np.array(data.shape[::-1]) + np.array([0, 1])
-                ) * np.array([col_width, row_height])
+        size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array(
+            [col_width, row_height]
+        )
         fig, ax = plt.subplots(figsize=size)
-        ax.axis('off')
-    mpl_table = ax.table(cellText=data.values,
-                         bbox=bbox,
-                         colLabels=data.columns,
-                         rowLabels=data.index,
-                         colLoc="left",
-                         rowLoc="right",
-                         **kwargs)
+        ax.axis("off")
+    mpl_table = ax.table(
+        cellText=data.values,
+        bbox=bbox,
+        colLabels=data.columns,
+        rowLabels=data.index,
+        colLoc="left",
+        rowLoc="right",
+        **kwargs
+    )
     mpl_table.auto_set_font_size(False)
     mpl_table.set_fontsize(font_size)
 
     for k, cell in mpl_table._cells.items():
         cell.set_edgecolor(edge_color)
         if k[0] == 0:
-            cell.set_text_props(weight='bold', color='w')
+            cell.set_text_props(weight="bold", color="w")
             cell.set_facecolor(header_color)
         elif k[1] < header_columns:
-            cell.set_text_props(weight='bold')
+            cell.set_text_props(weight="bold")
             cell.set_facecolor(row_colors[k[0] % len(row_colors)])
         else:
             cell.set_facecolor(row_colors[k[0] % len(row_colors)])
     return ax.get_figure(), ax
 
 
-def dftransform(X,
-                drop=None,
-                cut=None,
-                gen=None,
-                cyclic=None,
-                target=None,
-                fillna=True,
-                to_float=False):
+def dftransform(
+    X,
+    drop=None,
+    cut=None,
+    gen=None,
+    cyclic=None,
+    target=None,
+    fillna=True,
+    to_float=False,
+):
     """
     Encode, transform, and generate categorical data in the dataframe.
 
@@ -292,17 +347,21 @@ def dftransform(X,
     if cut != None:
         if "pdays" in cut:
             # Cut pdays into categories
-            X["pdays"] = pd.cut(X["pdays"], [0, 3, 5, 10, 15, 30, 1000], labels=[
-                                3, 5, 10, 15, 30, 1000], include_lowest=True).astype("Int64")
+            X["pdays"] = pd.cut(
+                X["pdays"],
+                [0, 3, 5, 10, 15, 30, 1000],
+                labels=[3, 5, 10, 15, 30, 1000],
+                include_lowest=True,
+            ).astype("Int64")
 
     if cyclic != None:
         if "month" in cyclic:
-            X['month_sin'] = np.sin(2 * np.pi * X["month"]/12)
-            X['month_cos'] = np.cos(2 * np.pi * X["month"]/12)
+            X["month_sin"] = np.sin(2 * np.pi * X["month"] / 12)
+            X["month_cos"] = np.cos(2 * np.pi * X["month"] / 12)
             X = X.drop("month", axis=1)
         if "day_of_week" in cyclic:
-            X['day_sin'] = np.sin(2 * np.pi * X["day_of_week"]/5)
-            X['day_cos'] = np.cos(2 * np.pi * X["day_of_week"]/5)
+            X["day_sin"] = np.sin(2 * np.pi * X["day_of_week"] / 5)
+            X["day_cos"] = np.cos(2 * np.pi * X["day_of_week"] / 5)
             X = X.drop("day_of_week", axis=1)
 
     # Transform target encoded feature as str
@@ -310,8 +369,11 @@ def dftransform(X,
         X[target] = X[target].astype("str")
 
     # Other categorical features will be coded as its order in pandas categorical index
-    X = X.apply(lambda x: x.cat.codes if pd.api.types.is_categorical_dtype(
-        x) else (x.astype("Int64") if pd.api.types.is_bool_dtype(x) else x))
+    X = X.apply(
+        lambda x: x.cat.codes
+        if pd.api.types.is_categorical_dtype(x)
+        else (x.astype("Int64") if pd.api.types.is_bool_dtype(x) else x)
+    )
 
     if fillna:
         # Clients who have been contacted but do not have pdays record should be encoded as 999

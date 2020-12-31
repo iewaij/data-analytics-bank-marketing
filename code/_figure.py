@@ -194,7 +194,7 @@ def eda_figures():
 
 # Feature Engineering
 def conf_mat_annot():
-    f, ax = plt.subplots()
+    f, ax = plt.subplots(figsize=(4.8, 4.8))
     conf_mat = np.array([[100, 30], [30, 100]])
     conf_label = np.array([["TN", "FP"], ["FN", "TP"]])
     conf_ax = sns.heatmap(
@@ -209,7 +209,7 @@ def conf_mat_annot():
     )
     conf_ax.set_xlabel("Predicted")
     conf_ax.set_ylabel("True")
-    f.savefig("../docs/figures/5_1_Conf_Mat.png")
+    f.savefig("../docs/figures/5_1_Conf_Mat.png", bbox_inches="tight")
 
 
 def conf_mat_knn():
@@ -223,13 +223,25 @@ def conf_mat_knn():
     clf = KNeighborsClassifier(n_neighbors=10)
     y_pred = cross_val_predict(clf, X_train, y_train, cv=5)
     conf_mat = confusion_matrix(y_train, y_pred)
-    f, ax = plt.subplots()
+    f, ax = plt.subplots(figsize=(4.8, 4.8))
     conf_ax = sns.heatmap(
         conf_mat, ax=ax, annot=True, fmt="", cmap=plt.cm.Blues, cbar=False
     )
     conf_ax.set_xlabel("Predicted")
     conf_ax.set_ylabel("True")
-    f.savefig("../docs/figures/5_2_Conf_Mat_KNN.png")
+    f.savefig("../docs/figures/5_2_Conf_Mat_KNN.png", bbox_inches="tight")
+
+
+def conf_plot(clf):
+    f, ax = plt.subplots(figsize=(4.8, 4.8))
+    y_test_pred = clf.predict(X_test)
+    conf_mat = confusion_matrix(y_test, y_test_pred)
+    conf_ax = sns.heatmap(
+        conf_mat, ax=ax, annot=True, fmt="", cmap=plt.cm.Blues, cbar=False
+    )
+    conf_ax.set_xlabel("Predicted")
+    conf_ax.set_ylabel("True")
+    f.savefig("../docs/figures/Conf_Mat.png", bbox_inches="tight")
 
 
 def pre_rec_threshold():
@@ -253,8 +265,17 @@ def pre_rec_threshold():
     f.savefig("../docs/figures/5_3_Pre_Rec_Logi.png", bbox_inches="tight")
 
 
+def tree_importance():
+    columns = X_train.columns.tolist()
+    importances = rf.feature_importances_
+    indices = np.argsort(importances)
+    plt.barh(range(len(indices)), importances[indices], color="b", align="center")
+    plt.yticks(range(len(indices)), [columns[i] for i in indices])
+    plt.show()
+
+
 if __name__ == "__main__":
     # eda_figures()
-    # conf_mat_annot()
-    # conf_mat_knn()
+    conf_mat_annot()
+    conf_mat_knn()
     pre_rec_threshold()

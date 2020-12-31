@@ -45,7 +45,7 @@ Gamma controls how far the influence of a single observation on the decision bou
 
 For linearly separable and almost linearly separable data, SVM works well. For data that is not linearly separable, we can project the data to a space where it is linearly separable. What Kernel Trick does it utilizes the existing features and applies some transformations to create new features and calculates the nonlinear decision boundary in higher dimension by using these features.
 
-## Linear SVM
+## Grid Search for Linear SVM
 
 ``` python
 linear_svm = LinearSVC(dual=False, class_weight="balanced", random_state=42)
@@ -94,11 +94,11 @@ linear_svm = LinearSVC(loss="squared_hinge", C=1, dual=False, class_weight="bala
 |  REC | 0.664534 | 0.691375 | 0.659483 |
 |  PRE | 0.291691 | 0.296018 | 0.290736 |
 |   AP | 0.435728 | 0.432823 | 0.437258 |
-: Performance metrics
+: Performance metrics of Linear SVM
 
-![Confusion Matrix on the test set](../figures/07_02_linear_svm_test.png)
+![Confusion matrix of Linear SVM](../figures/7_1_Conf_Mat_1.png)
 
-## Non-Linear SVM
+## Grid Search for Non-Linear SVM
 
 We use the pipeline to ensure that in the cross validation set, the kernel function is only applied to training fold which is exactly the same fold used for fitting the model. We also do a comparison between SGDClassifier and Linear SVC and the latter one gave us slightly better AP.
 
@@ -156,10 +156,9 @@ benchmark(bank_mkt, hot_transformer, rbf_sgd_tuned)
 |  REC | 0.678680 | 0.681941 | 0.752155 |
 |  PRE | 0.293732 | 0.299586 | 0.211772 |
 |   AP | 0.436139 | 0.444426 | 0.437136 |
-: Performance metrics
+: Performance metrics of SVM using `SGDClassifier`
 
-![Confusion Matrix on the test set](../figures/07_04_non_linear_sgd_test.png)
-
+![Confusion matrix of SVM using `SGDClassifier`](../figures/7_2_Conf_Mat_2.png)
 
 ```python
 rbf_clf = Pipeline([
@@ -213,7 +212,6 @@ rbf_tuned = rbf_clf.set_params(rbf__gamma=0.0009, svm__C=1)
 |  REC | 0.677669 | 0.676550 | 0.688103 |
 |  PRE | 0.289580 | 0.288175 | 0.292453 |
 |   AP | 0.437404 | 0.453640 | 0.440392 |
-: Performance metrics
+: Performance metrics of SVM using `LinearSVC`
 
-![Confusion matrix on test set](../figures/07_06_non_linear_svc_test.png)
-
+![Confusion matrix of SVM using `LinearSVC`](../figures/7_3_Conf_Mat_3.png)
